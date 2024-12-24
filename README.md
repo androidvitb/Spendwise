@@ -2,7 +2,7 @@
 
 SpendWise is a budgeting and expense tracking web application. It helps users manage their personal finances with ease. Built using **HTML**, **Tailwind CSS**, and **JavaScript**, SpendWise offers a simple yet effective solution to track daily expenses and stay on top of budgets.
 
-🔗 **Live Preview**: [SpendWise Website](#)  
+🔗 **Live Preview**: [SpendWise Website](https://spendwise-ten.vercel.app/)
 
 ### ( Beginner Friendly )
 ### **Repository Under**: AcWoC'25
