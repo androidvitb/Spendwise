@@ -137,6 +137,10 @@ function hamburgers() {
 
 // Render Charts and Graphs
 function drawChart(windowWidth) {
+  if (expenses.length === 0) {
+    document.getElementById("bar").innerHTML = "<p class='my-6'>No Data to Show !!</p>";
+    return; 
+  }
   // Initialize chart data
   const categoryData = expenses.reduce(
     (acc, expense) => {
