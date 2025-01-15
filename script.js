@@ -242,3 +242,17 @@ scrollButton.onclick = () => {
     behavior: "smooth",
   });
 };
+const darkModeToggle = document.getElementById("dark-mode-toggle");
+const body = document.body;
+
+const savedDarkMode = localStorage.getItem("darkMode");
+if (savedDarkMode === "enabled") {
+  body.classList.add("dark");
+}
+
+darkModeToggle.addEventListener("click", () => {
+  body.classList.toggle("dark");
+
+  const isDarkMode = body.classList.contains("dark");
+  localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
+});
