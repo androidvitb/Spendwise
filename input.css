@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#scrollButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: block;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    text-align: center;
+    line-height: 50px;  /* Center the icon vertically */
+    z-index: 1000;
+}
+
+#scrollButton i {
+    font-size: 24px;
+}
+
+/* Hover effect */
+#scrollButton:hover {
+    background-color: #0056b3;  /* Darker background color */
+    transform: scale(1.1);  /* Slightly increase the size */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);  /* Stronger shadow for depth */
+}
+
+#scrollButton:active {
+    transform: scale(0.9);  /* Slightly shrink the button when clicked */
+}

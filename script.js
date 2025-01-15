@@ -222,3 +222,23 @@ google.charts.setOnLoadCallback(() => drawChart(window.innerWidth));
 window.addEventListener("resize", function () {
   drawChart(window.innerWidth);
 });
+
+// Get the button element
+const scrollButton = document.getElementById("scrollButton");
+
+// Show the button when the user scrolls down 200px from the top
+window.onscroll = () => {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    scrollButton.style.display = "block";
+  } else {
+    scrollButton.style.display = "none";
+  }
+};
+
+// Scroll to the top when the button is clicked
+scrollButton.onclick = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
