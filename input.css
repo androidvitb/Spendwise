@@ -34,5 +34,34 @@
 }
 
 #scrollButton:active {
-    transform: scale(0.9);  /* Slightly shrink the button when clicked */
+    transform: scale(0.9);  
 }
+/* for dark mode button  */
+body.dark {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+  
+  body.dark header {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+  }
+  
+  body.dark main {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+  }
+  
+  body.dark footer {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+  }
+  
+  body.dark button {
+    background-color: #377f8e;
+    color: white;
+  }
+  
+  body.dark button:hover {
+    background-color: #1f3c42;
+  }
