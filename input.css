@@ -65,3 +65,7 @@ body.dark {
   body.dark button:hover {
     background-color: #1f3c42;
   }
+
+html {
+  scroll-behavior: smooth;
+}
