@@ -298,24 +298,44 @@
       </Expense_Tracker>
     </content>
 
-    <footer class="block relative w-full h-[250px] bg-slate-100">
-      <Text
-        class="block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center"
-      >
-        <div class="block w-full">
-          <div
-            class="text-[30px] text-[#377f8e] w-[100px] mx-auto text-center"
-            style="font-family: Playfair Display"
-          >
-            Logo
-          </div>
+    <footer class="block relative w-full bg-slate-100 overflow-hidden py-8">
+    <div class="block w-full max-w-4xl mx-auto px-4 text-center animate-fade-in">
+      <div class="block w-full mb-4">
+        <div class="text-[24px] md:text-[30px] text-[#377f8e] w-auto mx-auto text-center"
+          style="font-family: 'Playfair Display'; animation: bounce 2s infinite;">
+          Logo
         </div>
-        <p class="text-[20px] text-[#377f8e]">Copyright By SpendWise</p>
-        <p class="text-[20px] text-[#377f8e]">All rights reserved</p>
-      </Text>
-    </footer>
-
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="script.js" type="module"></script>
+      </div>
+      <p class="text-[16px] md:text-[20px] text-[#377f8e]">
+        Track expenses, organize finances, and achieve your goals effortlessly with SpendWise.
+      </p>
+      <p class="text-[14px] md:text-[18px] text-[#377f8e] mt-2">
+        Copyright © SpendWise.
+      </p>
+      <p class="text-[14px] md:text-[18px] text-[#377f8e] mt-2">
+        All rights reserved.
+      </p>
+      <div class="flex justify-center mt-4 space-x-4">
+        <a href="https://facebook.com" target="_blank"
+          class="text-[#377f8e] hover:text-blue-600 transition-transform transform hover:scale-110"
+          style="animation: fade-in 1s ease-out;" aria-label="Facebook">
+          <i class="fab fa-facebook fa-lg"></i>
+        </a>
+        <a href="https://instagram.com" target="_blank"
+          class="text-[#377f8e] hover:text-pink-500 transition-transform transform hover:scale-110"
+          aria-label="Instagram">
+          <i class="fab fa-instagram fa-lg"></i>
+        </a>
+        <a href="https://www.linkedin.com/company/android-club-vit-bhopal" target="_blank"
+          class="text-[#377f8e] hover:text-blue-700 transition-transform transform hover:scale-110"
+          aria-label="LinkedIn">
+          <i class="fab fa-linkedin fa-lg"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="script.js" type="module"></script>
   </body>
 </html>
