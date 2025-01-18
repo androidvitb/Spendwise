@@ -16,6 +16,7 @@ const expensesTableBody = document.getElementById("tableBody");
 // Initialize expenses array from localStorage
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 let totalAmount = 0;
+let currentEditIndex = null;
 
 // Function to render expenses
 function renderExpenses() {
@@ -29,49 +30,91 @@ function renderExpenses() {
     const amountCell = newRow.insertCell();
     const dateCell = newRow.insertCell();
     const categoryCell = newRow.insertCell();
+    const editCell = newRow.insertCell();
     const deleteCell = newRow.insertCell();
+
+    const editBtn = document.createElement("button");
     const deleteBtn = document.createElement("button");
 
+    // Edit button
+    editBtn.textContent = "Edit";
+    editBtn.classList.add(
+      "mx-auto",
+      "my-[7px]",
+      "p-2",
+      "min-w-[80px]",
+      "bg-[#377f8e]",
+      "text-white",
+      "text-base",
+      "font-normal",
+      "hover:bg-[#1f3c42]"
+    );
+
+    // Delete button
     deleteBtn.textContent = "Delete";
     deleteBtn.classList.add(
       "mx-auto",
       "my-[7px]",
       "p-2",
+      "min-w-[80px]",
       "bg-[#377f8e]",
       "text-white",
       "text-base",
-      "font-normal"
+      "font-normal",
+      "hover:bg-[#1f3c42]"
     );
-    titleCell.classList.add("border-[1px]", "border-r-[#377f8e]");
-    amountCell.classList.add("border-[1px]", "border-r-[#377f8e]");
-    dateCell.classList.add("border-[1px]", "border-r-[#377f8e]");
-    categoryCell.classList.add("border-[1px]", "border-r-[#377f8e]");
-    deleteCell.classList.add(
-      "border-[1px]",
-      "border-r-[#377f8e]",
-      "flex",
-      "justify-center",
-      "items-center"
-    );
+
+    // Add cell classes
+    titleCell.classList.add("border-[1px]", "border-r-[#377f8e]", "px-4");
+    amountCell.classList.add("border-[1px]", "border-r-[#377f8e]", "px-4", "text-center");
+    dateCell.classList.add("border-[1px]", "border-r-[#377f8e]", "px-4", "text-center");
+    categoryCell.classList.add("border-[1px]", "border-r-[#377f8e]", "px-4", "text-center");
+    editCell.classList.add("border-[1px]", "border-r-[#377f8e]", "text-center");
+    deleteCell.classList.add("border-[1px]", "text-center");
+
     titleCell.textContent = expense.title;
     amountCell.textContent = expense.amount;
     dateCell.textContent = `${expense.date} ${expense.time}`;
     categoryCell.textContent = expense.category;
-    deleteCell.appendChild(deleteBtn);
 
-    totalAmount += expense.amount;
+    // Create wrapper divs for buttons to ensure proper centering
+    const editWrapper = document.createElement("div");
+    editWrapper.classList.add("flex", "justify-center");
+    editWrapper.appendChild(editBtn);
+    editCell.appendChild(editWrapper);
 
+    const deleteWrapper = document.createElement("div");
+    deleteWrapper.classList.add("flex", "justify-center");
+    deleteWrapper.appendChild(deleteBtn);
+    deleteCell.appendChild(deleteWrapper);
+
+    totalAmount += parseFloat(expense.amount);
+
+    // Edit button click handler
+    editBtn.addEventListener("click", () => {
+      currentEditIndex = index;
+      titleInput.value = expense.title;
+      amountInput.value = expense.amount;
+      dateInput.value = expense.date;
+      timeInput.value = expense.time;
+      categoryInput.value = expense.category;
+      addBtn.textContent = "Update Expense";
+    });
+
+    // Delete button click handler
     deleteBtn.addEventListener("click", () => {
       expenses.splice(index, 1);
       localStorage.setItem("expenses", JSON.stringify(expenses));
       renderExpenses();
+      drawChart(window.innerWidth);
     });
   });
 
   totalAmountCell.textContent = totalAmount.toFixed(2);
 }
 
-// Add new expense
+
+// Add/Update expense handler
 addBtn.addEventListener("click", () => {
   const title = titleInput.value.trim();
   const amount = parseFloat(amountInput.value);
@@ -85,23 +128,38 @@ addBtn.addEventListener("click", () => {
     return;
   }
 
-  const newExpense = { title, amount, date, time, category };
+  const expenseData = { title, amount, date, time, category };
 
-  expenses.push(newExpense);
+  if (currentEditIndex !== null) {
+    // Update existing expense
+    expenses[currentEditIndex] = expenseData;
+    currentEditIndex = null;
+    addBtn.textContent = "Add Expense";
+  } else {
+    // Add new expense
+    expenses.push(expenseData);
+  }
+
   localStorage.setItem("expenses", JSON.stringify(expenses));
 
   renderExpenses();
   drawChart(window.innerWidth);
+  resetForm();
+});
+
+// Function to reset form
+function resetForm() {
   titleInput.value = "";
   amountInput.value = "";
   dateInput.value = "";
   timeInput.value = "";
-  categoryInput.value = "";
-});
+  categoryInput.value = "personal";
+  addBtn.textContent = "Add Expense";
+  currentEditIndex = null;
+}
 
 // Render expenses on page load
 renderExpenses();
-
 
 window.addEventListener("resize", function () {
   var windowWidth = window.innerWidth;
@@ -139,8 +197,10 @@ function hamburgers() {
 function drawChart(windowWidth) {
   if (expenses.length === 0) {
     document.getElementById("bar").innerHTML = "<p class='my-6'>No Data to Show !!</p>";
-    return; 
+    document.getElementById("pie").innerHTML = "<p class='my-6'>No Data to Show !!</p>";
+    return;
   }
+
   // Initialize chart data
   const categoryData = expenses.reduce(
     (acc, expense) => {
@@ -148,9 +208,9 @@ function drawChart(windowWidth) {
         (item) => item[0] === expense.category
       );
       if (categoryIndex === -1) {
-        acc.push([expense.category, expense.amount]);
+        acc.push([expense.category, parseFloat(expense.amount)]);
       } else {
-        acc[categoryIndex][1] += expense.amount;
+        acc[categoryIndex][1] += parseFloat(expense.amount);
       }
       return acc;
     },
@@ -253,7 +313,7 @@ darkModeToggle.addEventListener('click', (event) => {
 
   // Toggle the 'dark' class on the body
   document.body.classList.toggle('dark');
-  
+
   // Change the button text based on the current mode
   if (document.body.classList.contains('dark')) {
     darkModeToggle.textContent = 'Light Mode';
@@ -261,4 +321,3 @@ darkModeToggle.addEventListener('click', (event) => {
     darkModeToggle.textContent = 'Dark Mode';
   }
 });
-
