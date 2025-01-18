@@ -42,6 +42,7 @@ function renderExpenses() {
       "mx-auto",
       "my-[7px]",
       "p-2",
+      "min-w-[80px]",
       "bg-[#377f8e]",
       "text-white",
       "text-base",
@@ -55,6 +56,7 @@ function renderExpenses() {
       "mx-auto",
       "my-[7px]",
       "p-2",
+      "min-w-[80px]",
       "bg-[#377f8e]",
       "text-white",
       "text-base",
@@ -63,31 +65,28 @@ function renderExpenses() {
     );
 
     // Add cell classes
-    titleCell.classList.add("border-[1px]", "border-r-[#377f8e]");
-    amountCell.classList.add("border-[1px]", "border-r-[#377f8e]");
-    dateCell.classList.add("border-[1px]", "border-r-[#377f8e]");
-    categoryCell.classList.add("border-[1px]", "border-r-[#377f8e]");
-    editCell.classList.add(
-      "border-[1px]",
-      "border-r-[#377f8e]",
-      "flex",
-      "justify-center",
-      "items-center"
-    );
-    deleteCell.classList.add(
-      "border-[1px]",
-      "border-r-[#377f8e]",
-      "flex",
-      "justify-center",
-      "items-center"
-    );
+    titleCell.classList.add("border-[1px]", "border-r-[#377f8e]", "px-4");
+    amountCell.classList.add("border-[1px]", "border-r-[#377f8e]", "px-4", "text-center");
+    dateCell.classList.add("border-[1px]", "border-r-[#377f8e]", "px-4", "text-center");
+    categoryCell.classList.add("border-[1px]", "border-r-[#377f8e]", "px-4", "text-center");
+    editCell.classList.add("border-[1px]", "border-r-[#377f8e]", "text-center");
+    deleteCell.classList.add("border-[1px]", "text-center");
 
     titleCell.textContent = expense.title;
     amountCell.textContent = expense.amount;
     dateCell.textContent = `${expense.date} ${expense.time}`;
     categoryCell.textContent = expense.category;
-    editCell.appendChild(editBtn);
-    deleteCell.appendChild(deleteBtn);
+
+    // Create wrapper divs for buttons to ensure proper centering
+    const editWrapper = document.createElement("div");
+    editWrapper.classList.add("flex", "justify-center");
+    editWrapper.appendChild(editBtn);
+    editCell.appendChild(editWrapper);
+
+    const deleteWrapper = document.createElement("div");
+    deleteWrapper.classList.add("flex", "justify-center");
+    deleteWrapper.appendChild(deleteBtn);
+    deleteCell.appendChild(deleteWrapper);
 
     totalAmount += parseFloat(expense.amount);
 
@@ -113,6 +112,7 @@ function renderExpenses() {
 
   totalAmountCell.textContent = totalAmount.toFixed(2);
 }
+
 
 // Add/Update expense handler
 addBtn.addEventListener("click", () => {
