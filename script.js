@@ -12,6 +12,68 @@ const timeInput = document.getElementById("expense-time");
 const categoryInput = document.getElementById("expense-category");
 const totalAmountCell = document.getElementById("total-amount");
 const expensesTableBody = document.getElementById("tableBody");
+const currencySelect = document.getElementById("currency-select");
+let currentCurrency = "USD";
+
+// Example exchange rates (for demonstration purposes only)
+const exchangeRates = {
+  USD: 1,
+  EUR: 0.85,
+  INR: 75,
+  GBP: 0.75,
+};
+
+function convertCurrency(amount, toCurrency) {
+  return (amount * exchangeRates[toCurrency]).toFixed(2);
+}
+
+currencySelect.addEventListener("change", () => {
+  currentCurrency = currencySelect.value;
+
+  // Update displayed amounts
+  expenses.forEach((expense) => {
+    expense.convertedAmount = convertCurrency(expense.amount, currentCurrency);
+  });
+  renderExpenses();
+});
+
+
+document.getElementById("export-excel").addEventListener("click", () => {
+  const rows = [["Title", "Amount", "Date", "Category"]];
+  expenses.forEach((expense) => {
+    rows.push([expense.title, `${currentCurrency} ${expense.convertedAmount || expense.amount}`, expense.date, expense.category]);
+  });
+
+  const worksheet = XLSX.utils.aoa_to_sheet(rows);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Expenses");
+
+  XLSX.writeFile(workbook, "expenses.xlsx");
+});
+
+document.getElementById("export-pdf").addEventListener("click", () => {
+  const { jsPDF } = window.jspdf;
+
+  const doc = new jsPDF();
+  doc.text("Expense Tracker", 20, 10);
+
+  const rows = expenses.map((expense) => [
+    expense.title,
+    `${currentCurrency} ${expense.convertedAmount || expense.amount}`,
+    expense.date,
+    expense.category,
+  ]);
+
+  doc.autoTable({
+    head: [["Title", "Amount", "Date", "Category"]],
+    body: rows,
+    startY: 20, // Ensure table doesn't overlap with the title
+  });
+
+  doc.save("expenses.pdf");
+});
+
+
 
 // Initialize expenses array from localStorage
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
@@ -73,7 +135,7 @@ function renderExpenses() {
     deleteCell.classList.add("border-[1px]", "text-center");
 
     titleCell.textContent = expense.title;
-    amountCell.textContent = expense.amount;
+    amountCell.textContent = `${currentCurrency} ${expense.convertedAmount || expense.amount}`;
     dateCell.textContent = `${expense.date} ${expense.time}`;
     categoryCell.textContent = expense.category;
 
@@ -110,8 +172,10 @@ function renderExpenses() {
     });
   });
 
-  totalAmountCell.textContent = totalAmount.toFixed(2);
+  const convertedTotalAmount = convertCurrency(totalAmount, currentCurrency);
+  totalAmountCell.textContent = `${currentCurrency} ${convertedTotalAmount}`;
 }
+
 
 
 // Add/Update expense handler

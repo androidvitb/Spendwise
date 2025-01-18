@@ -11,9 +11,20 @@
       rel="stylesheet"
     />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
+
+
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="input.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
   </head>
   <body class="m-0 p-0 overflow-x-hidden">
     <!-- Header -->
@@ -146,6 +157,18 @@
           </Content-Button>
         </Content-Box>
       </Main_Text_Container>
+
+      
+      <div class="flex justify-center my-4">
+        <label for="currency-select" class="mr-2 text-lg font-medium">Select Currency:</label>
+        <select id="currency-select" class="px-3 py-2 border rounded">
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="INR">INR</option>
+          <option value="GBP">GBP</option>
+        </select>
+      </div>
+      
       <Expense_Tracker
       id="expense-tracker"
         class="flex flex-col justify-center items-center w-full h-auto"
@@ -278,6 +301,7 @@
             </table>
           </div>
         </Main_Tracker>
+        
 
         <Graphs&Charts id="insight-section" class="block w-svw">
           <Text-1
@@ -285,11 +309,21 @@
             style="font-family: 'Playfair Display'"
             >Insights</Text-1
           >
+          
           <main class="w-full flex justify-center max-lg:flex-col">
             <Bar_Graph id="bar" class="max-w-[50%]"></Bar_Graph>
             <Pie_Chart id="pie" class="max-w-[50%] right-0"></Pie_Chart>
           </main>
         </Graphs&Charts>
+        <div class="flex justify-center space-x-4 my-4">
+          <button id="export-excel" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+            Export as Excel
+          </button>
+          <button id="export-pdf" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+            Export as PDF
+          </button>
+        </div>
+        
       </Expense_Tracker>
     </content>
 
