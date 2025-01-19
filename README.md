@@ -12,6 +12,9 @@ SpendWise is a budgeting and expense tracking web application. It helps users ma
 ## 🚀 Features  
 - **Expense Tracking**: Add and categorize your daily expenses.  
 - **Graphs and Charts**: Monitor spending through graphs and charts.  
+**Project Updates: Enhancing Features and User Experience**  
+
+"There's a significant updates to the project to improve functionality and user experience. An AI-powered summary for expenses has been introduced to provide quick and insightful analysis. The UI has been enhanced with hover effects for a smoother and more interactive experience. Additionally, the tags feature has been refined for better accuracy and relevance, making it easier to organize and retrieve information. These updates aim to make the project more efficient, user-friendly, and intuitive."
 
 ---
 
