@@ -69,17 +69,6 @@ body.dark {
 html {
   scroll-behavior: smooth;
 }
-/* Header Styling */
-header {
-  background: rgb(55 127 142 / var(--tw-bg-opacity, 1));
-  color: white;
-  padding: 15px;
-  text-align: center;
-  font-size: 2rem;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
 /* Table Styling */
 table {
   width: 100%;
@@ -145,7 +134,10 @@ form button {
 form button:hover {
   background-color: #4548a0;
 }
-
+input:checked~.dot {
+  transform: translateX(100%);
+  /* background-color: #132b50; */
+}
 /* Total Section */
 .total {
   font-size: 1.2rem;
