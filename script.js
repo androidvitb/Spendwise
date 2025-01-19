@@ -174,6 +174,9 @@ function renderExpenses() {
 
   const convertedTotalAmount = convertCurrency(totalAmount, currentCurrency);
   totalAmountCell.textContent = `${currentCurrency} ${convertedTotalAmount}`;
+
+  // Generate Insights
+  generateAISummary();
 }
 
 
@@ -384,4 +387,117 @@ darkModeToggle.addEventListener('click', (event) => {
   } else {
     darkModeToggle.textContent = 'Dark Mode';
   }
+});
+
+function generateAISummary() {
+  const insights = [];
+  const categoryTotals = expenses.reduce((totals, expense) => {
+    totals[expense.category] = (totals[expense.category] || 0) + expense.amount;
+    return totals;
+  }, {});
+
+  // Example AI Insights
+  const highestCategory = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1])[0];
+  if (highestCategory) {
+    insights.push(`You spend the most on "${highestCategory[0]}" with a total of ${currentCurrency} ${highestCategory[1].toFixed(2)}.`);
+  }
+
+  const totalSpent = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+  if (totalSpent > 1000) { // Adjust threshold as needed
+    insights.push(`Your total spending this month is high (${currentCurrency} ${totalSpent.toFixed(2)}). Consider optimizing your budget.`);
+  } else {
+    insights.push(`Your total spending this month is within a healthy range (${currentCurrency} ${totalSpent.toFixed(2)}). Keep it up!`);
+  }
+
+  // Add suggestions
+  insights.push("Tip: Review your subscriptions to identify unnecessary expenses.");
+
+  // Populate the AI Summary section
+  const aiSummary = document.getElementById("ai-summary");
+  aiSummary.innerHTML = insights.map((insight) => `<li>${insight}</li>`).join("");
+}
+
+// Custom Categories
+const addCategoryBtn = document.getElementById("add-category-btn");
+const categoryList = document.getElementById("custom-category-list");
+
+addCategoryBtn.addEventListener("click", () => {
+  const newCategory = prompt("Enter a new category:").trim();
+  if (newCategory && !customCategories.includes(newCategory)) {
+    customCategories.push(newCategory);
+    const option = document.createElement("option");
+    option.value = newCategory;
+    option.textContent = newCategory;
+    categoryInput.appendChild(option);
+
+    // Update the displayed category list
+    const listItem = document.createElement("li");
+    listItem.textContent = newCategory;
+    categoryList.appendChild(listItem);
+  }
+});
+
+const languages = {
+  en: {
+    home: "Home",
+    expenses: "Expenses",
+    graphs: "Graphs",
+    aboutUs: "About Us",
+    contactUs: "Contact Us",
+    darkMode: "Dark Mode",
+    currencySelect: "Select Currency:",
+    expenseList: "Expenses List",
+    addExpense: "Add An Expense",
+    expenseTitle: "Expense Title:",
+    amount: "Amount:",
+    date: "Date:",
+    time: "Time:",
+    tags: "Tags:",
+    add: "Add Expense",
+    insights: "Insights",
+    aiSummary: "AI-Powered Summary",
+    exportExcel: "Export as Excel",
+    exportPdf: "Export as PDF",
+  },
+  es: {
+    home: "Inicio",
+    expenses: "Gastos",
+    graphs: "Gráficos",
+    aboutUs: "Sobre Nosotros",
+    contactUs: "Contáctanos",
+    darkMode: "Modo Oscuro",
+    currencySelect: "Seleccionar Moneda:",
+    expenseList: "Lista de Gastos",
+    addExpense: "Añadir un Gasto",
+    expenseTitle: "Título del Gasto:",
+    amount: "Cantidad:",
+    date: "Fecha:",
+    time: "Hora:",
+    tags: "Etiquetas:",
+    add: "Añadir Gasto",
+    insights: "Perspectivas",
+    aiSummary: "Resumen con IA",
+    exportExcel: "Exportar como Excel",
+    exportPdf: "Exportar como PDF",
+  },
+  // Add more languages here...
+};
+function updateLanguage(lang) {
+  const elements = document.querySelectorAll("[data-translate]");
+  elements.forEach((element) => {
+    const key = element.getAttribute("data-translate");
+    if (languages[lang][key]) {
+      element.textContent = languages[lang][key];
+    }
+  });
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const savedLanguage = localStorage.getItem("language") || "en";
+  document.getElementById("language-select").value = savedLanguage;
+  updateLanguage(savedLanguage);
+});
+document.getElementById("language-select").addEventListener("change", (event) => {
+  const selectedLanguage = event.target.value;
+  localStorage.setItem("language", selectedLanguage);
+  updateLanguage(selectedLanguage);
 });
