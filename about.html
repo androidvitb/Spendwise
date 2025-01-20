@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spendwise | Abouts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="input.css" />
+  </head>
+  <body class="m-0 p-0 overflow-x-hidden">
+    <!-- Header -->
+    <header
+      class="bg-white text-[#7fb0ba] py-[14px] min-h-[50px] flex justify-center items-center"
+    >
+      <header-content class="flex w-[1150px] items-center">
+        <logo-container
+          class="flex items-center w-[105px] h-[52px] max-w-[135px] px-[15px]"
+        >
+          <div class="text-[26px]" style="font-family: 'Playfair Display'">
+            Logo
+          </div>
+        </logo-container>
+        <div class="w-[70%] lg:w-0"></div>
+        <navigator
+          class="flex w-[75%] overflow-hidden max-lg:hidden max-lg:fixed max-lg:z-10 max-lg:top-0 max-lg:right-0 max-lg:w-[300px] max-lg:h-full max-lg:bg-white"
+          id="Navigator"
+        >
+          <ul
+            class="max-lg:py-20 max-lg:px-5 flex max-lg:block list-none"
+            id="ul"
+          >
+            <li class="p-2">
+              <a href="/index.html" style="font-weight: 600; color: #96c2db">Home</a>
+            </li>
+            <li class="p-2">
+              <a
+                href="#expense-tracker"
+                class="text-[#377f8e] hover:text-[#96c2db] no-underline text-base font-normal"
+                >Expenses</a
+              >
+            </li>
+            <li class="p-2">
+              <a
+                href="#insight-section"
+                class="text-[#377f8e] hover:text-[#96c2db] no-underline text-base font-normal"
+                >Graphs</a
+              >
+            </li>
+            <li class="p-2">
+              <a
+                href="#about-us"
+                class="text-[#377f8e] hover:text-[#96c2db] no-underline text-base font-normal"
+                >About Us</a
+              >
+            </li>
+          </ul>
+        </navigator>
+        <div
+          class="hidden z-10 mx-[20px] max-lg:block max-lg:static max-lg:right-0 max-lg:top-[25px]"
+          id="hamburger"
+          onclick="hamburgers()"
+        >
+          <div
+            id="bar1"
+            class="w-[25px] h-[4px] rounded-full bg-[#377f8e] my-[4px] transition duration-300"
+          ></div>
+          <div
+            id="bar2"
+            class="w-[25px] h-[4px] rounded-full bg-[#377f8e] my-[4px] transition duration-300"
+          ></div>
+          <div
+            id="bar3"
+            class="w-[25px] h-[4px] rounded-full bg-[#377f8e] my-[4px] transition duration-300"
+          ></div>
+        </div>
+        <div class="flex space-x-4">
+          <a href="#contact-us">
+            <button
+              class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-white hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal"
+            >
+              Contact Us
+            </button>
+          </a>
+
+          <button
+            id="dark-mode-toggle"
+            class="mx-auto my-[10px] min-w-[130px] min-h-[45px] hover:bg-[#377f8e] hover:text-white text-[#377f8e] border border-[#377f8e] text-base font-normal"
+          >
+            Dark Mode
+          </button>
+        </div>
+      </header-content>
+    </header>
+    <!-- About Us Section -->
+    <section id="about-us" class="w-full p-8 bg-white">
+      <h2
+        class="text-3xl text-center text-[#377f8e] mb-10 font-bold"
+        style="font-family: 'Playfair Display'"
+      >
+        About Us
+      </h2>
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-lg text-gray-700 mb-6">
+          SpendWise is your trusted companion for personal finance management.
+          Our mission is to help individuals and businesses track, analyze, and
+          optimize their expenses with ease.
+        </p>
+        <p class="text-lg text-gray-700 mb-6">
+          Founded in 2024, we've been committed to providing intuitive tools
+          that make financial management accessible to everyone. Our expense
+          tracker combines simplicity with powerful features to give you
+          complete control over your finances.
+        </p>
+      </div>
+    </section>
+    <footer class="block relative w-full h-[250px] bg-slate-100">
+      <Text
+        class="block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center"
+      >
+        <div class="block w-full">
+          <div
+            class="text-[30px] text-[#377f8e] w-[100px] mx-auto text-center"
+            style="font-family: Playfair Display"
+          >
+            Logo
+          </div>
+        </div>
+        <p class="text-[20px] text-[#377f8e]">Copyright By SpendWise</p>
+        <p class="text-[20px] text-[#377f8e]">All rights reserved</p>
+      </Text>
+    </footer>
+  </body>
+</html>
