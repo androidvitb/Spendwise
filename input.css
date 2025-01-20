@@ -69,6 +69,211 @@ body.dark {
 html {
   scroll-behavior: smooth;
 }
+
+
+/* Enhanced Star Rating Styles */
+.star-rating {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(55, 127, 142, 0.05);
+    border-radius: 1rem;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.star-rating::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(55, 127, 142, 0.1) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.star {
+    cursor: pointer;
+    font-size: 28px;
+    color: #e4e4e4;
+    transition: all 0.3s ease;
+    position: relative;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.star:hover {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.star.active {
+    color: #377f8e;
+    text-shadow: 0 0 10px rgba(55, 127, 142, 0.5);
+}
+
+/* Star hover effects */
+.star-rating:hover .star:not(:hover):not(.active) {
+    color: #e4e4e4;
+    transform: scale(0.95);
+    opacity: 0.7;
+}
+
+.star-rating .star:hover ~ .star {
+    transform: scale(0.95);
+    opacity: 0.7;
+}
+
+/* Star click animation */
+.star.active {
+    animation: starPop 0.3s ease-out;
+}
+
+@keyframes starPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3) rotate(10deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+
+/* Rating group enhancements */
+.rating-group {
+    background: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(55, 127, 142, 0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.rating-group:hover {
+    transform: translateY(-2px);
+}
+
+.rating-group p {
+    color: #377f8e;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 0.75rem;
+}
+
+.rating-group p::after {
+    content: '*';
+    color: #ff4444;
+    margin-left: 4px;
+}
+
+/* Tooltip on hover */
+.star::before {
+    content: attr(data-rating-text);
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: #377f8e;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.star:hover::before {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+}
+
+/* Feedback Form Transitions */
+.feedback-transition {
+    transition: all 0.3s ease-in-out;
+}
+
+#issues-box.show {
+    display: block;
+    animation: slideDown 0.3s ease-in-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced Feedback Form Styles */
+#feedback-section {
+    position: relative;
+    overflow: hidden;
+}
+
+#feedback-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(55, 127, 142, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+}
+
+#feedback-form .star-rating {
+    justify-content: center;
+    padding: 0.5rem;
+    background: rgba(55, 127, 142, 0.05);
+    border-radius: 0.5rem;
+}
+
+#feedback-form input:focus,
+#feedback-form textarea:focus {
+    box-shadow: 0 0 0 2px rgba(55, 127, 142, 0.2);
+    outline: none;
+}
+
+/* Animate form elements on hover */
+#feedback-form input:hover,
+#feedback-form textarea:hover,
+#feedback-form .star-rating:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+}
+
+/* Card hover effects */
+.feedback-card {
+    transition: all 0.3s ease;
+}
+
+.feedback-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(55, 127, 142, 0.2);
+}
+
+/* Required field styling */
+.required-error .star-rating {
+    border: 2px solid #ff4444;
+    animation: shake 0.5s ease-in-out;
+}
+
+.error-message {
+    color: #ff4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+    text-align: center;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
 /* Table Styling */
 table {
   width: 100%;
@@ -145,3 +350,4 @@ input:checked~.dot {
   text-align: right;
   font-weight: bold;
 }
+

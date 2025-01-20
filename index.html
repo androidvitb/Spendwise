@@ -360,9 +360,6 @@ livr.net/npm/chart.js"></script>
             <Bar_Graph id="bar" class="max-w-[50%]"></Bar_Graph>
             <Pie_Chart id="pie" class="max-w-[50%] right-0"></Pie_Chart>
           </main>
-        </Graphs&Charts>
-        <Graphs&Charts id="insight-section" class="block w-svw">
-  
   <!-- AI-Powered Summary Section -->
   <div class="flex flex-col items-center mt-8">
     <h3 class="text-xl font-bold text-[#377f8e]" id="ai-summary-title">AI-Powered Summary</h3>
@@ -382,6 +379,97 @@ livr.net/npm/chart.js"></script>
       </Expense_Tracker>
     </content>
 
+    <!-- Feedback Section -->
+    <section id="feedback-section" class="w-full min-h-[600px] p-8 bg-gradient-to-br from-[#e5edf1] to-white">
+      <h2 class="text-3xl text-center text-[#377f8e] mb-10 font-bold" style="font-family: 'Playfair Display'">Your Feedback Matters</h2>
+      
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+        <!-- Left side - Form -->
+        <div class="w-full md:w-1/2 bg-white rounded-2xl shadow-lg p-6 transform hover:scale-[1.02] transition-transform duration-300">
+          <form id="feedback-form" class="space-y-6">
+            <h3 class="text-xl text-[#377f8e] mb-4 font-semibold">Share Your Experience</h3>
+            <div class="space-y-4">
+              <input type="text" id="name" placeholder="Your Name (Optional)" 
+                     class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]">
+              
+              <input type="email" id="email" placeholder="Your Email (Optional)"
+                     class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]">
+
+              <div class="rating-group">
+                  <p class="mb-2">How satisfied are you with our application?</p>
+                  <div class="star-rating" data-rating="satisfaction"></div>
+              </div>
+
+              <div class="rating-group">
+                  <p class="mb-2">How would you rate the ease of use?</p>
+                  <div class="star-rating" data-rating="ease"></div>
+              </div>
+
+              <div class="rating-group">
+                  <p class="mb-2">How would you rate our features?</p>
+                  <div class="star-rating" data-rating="features"></div>
+              </div>
+
+              <div class="space-y-2">
+                  <p class="mb-2">Have you faced any issues?</p>
+                  <div class="space-x-4">
+                      <label class="inline-flex items-center">
+                          <input type="radio" name="issues" value="yes" class="form-radio text-[#377f8e]">
+                          <span class="ml-2">Yes</span>
+                      </label>
+                      <label class="inline-flex items-center">
+                          <input type="radio" name="issues" value="no" class="form-radio text-[#377f8e]">
+                          <span class="ml-2">No</span>
+                      </label>
+                  </div>
+              </div>
+
+              <div id="issues-box" class="hidden">
+                  <textarea id="issues-detail" rows="3" placeholder="Please describe the issues you faced"
+                          class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"></textarea>
+              </div>
+
+              <div>
+                  <textarea id="suggestions" rows="3" placeholder="Any suggestions to improve our application?"
+                          class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"></textarea>
+              </div>
+          </div>
+
+          <button type="submit" 
+                  class="w-full py-2 px-4 bg-[#377f8e] text-white rounded-lg hover:bg-[#1f3c42] transition-colors">
+              Submit Feedback
+          </button>
+      </form>
+        </div>
+
+        <!-- Right side - Engagement Content -->
+        <div class="w-full md:w-1/2 flex flex-col justify-center items-center space-y-8 p-6">
+          <div class="text-center space-y-6">
+            <i class="fas fa-comments text-6xl text-[#377f8e]"></i>
+            <h3 class="text-2xl font-semibold text-[#377f8e]" style="font-family: 'Playfair Display'">Help Us Improve</h3>
+            <p class="text-lg text-gray-600 max-w-md">
+              Your feedback helps us create a better experience for everyone. Share your thoughts and be part of our journey to excellence!
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-6 mt-8 w-full max-w-md">
+            <div class="text-center p-4 bg-white rounded-lg shadow-md">
+              <i class="fas fa-star text-2xl text-[#377f8e] mb-2"></i>
+              <p class="text-gray-600">Rate our features</p>
+            </div>
+            <div class="text-center p-4 bg-white rounded-lg shadow-md">
+              <i class="fas fa-lightbulb text-2xl text-[#377f8e] mb-2"></i>
+              <p class="text-gray-600">Share your ideas</p>
+            </div>
+            <div class="text-center p-4 bg-white rounded-lg shadow-md">
+              <i class="fas fa-bug text-2xl text-[#377f8e] mb-2"></i>
+              <p class="text-gray-600">Report issues</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer class="block relative w-full h-[250px] bg-slate-100">
       <Text
         class="block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center"
@@ -400,6 +488,9 @@ livr.net/npm/chart.js"></script>
     </footer>
 
     <script src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="script.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="feedback.js"></script>
   </body>
 </html>
