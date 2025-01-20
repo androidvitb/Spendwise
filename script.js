@@ -80,6 +80,7 @@ let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 let totalAmount = 0;
 let currentEditIndex = null;
 
+
 // Function to render expenses
 function renderExpenses() {
   expensesTableBody.innerHTML = "";
@@ -605,3 +606,49 @@ function displayExtractedData(data) {
   outputDiv.style.display = "block";
   document.getElementById("receiptDetails").innerHTML = receiptHTML;
 }
+
+// Function to dynamically add extracted receipt data to the expenses list
+document.getElementById("addToExpenses").addEventListener("click", () => {
+  // Mock data from receipt (replace with your dynamic data)
+  const receiptData = {
+    title: "Sample Expense", // Example: "Grocery Shopping"
+    amount: 74.88, // Example: Extracted total amount
+    date: "2025-01-20", // Example: Extracted date
+    tags: "Personal", // Example: Extracted or default category
+  };
+
+  // Validate data (optional)
+  if (!receiptData.title || !receiptData.amount || !receiptData.date) {
+    alert("Incomplete receipt data. Cannot add to expenses.");
+    return;
+  }
+
+  // Find target elements
+  const tableBody = document.getElementById("tableBody");
+  const totalAmountSpan = document.getElementById("total-amount");
+
+  // Create a new row for the table
+  const newRow = document.createElement("tr");
+  newRow.classList.add("border-b-[1px]", "border-slate-300");
+  newRow.innerHTML = `
+    <td class="px-4 py-2">${receiptData.title}</td>
+    <td class="px-4 py-2">${receiptData.amount.toFixed(2)}</td>
+    <td class="px-4 py-2">${receiptData.date}</td>
+    <td class="px-4 py-2">${receiptData.tags}</td>
+    <td class="px-4 py-2">
+      <button class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600">Edit</button>
+    </td>
+    <td class="px-4 py-2">
+      <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+    </td>
+  `;
+
+  // Append new row to table body
+  tableBody.appendChild(newRow);
+
+  // Update total amount
+  const currentTotal = parseFloat(totalAmountSpan.textContent) || 0;
+  totalAmountSpan.textContent = (currentTotal + receiptData.amount).toFixed(2);
+
+  alert("Expense added successfully!");
+});
