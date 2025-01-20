@@ -46,30 +46,16 @@
             id="ul"
           >
             <li class="p-2">
-              <a href="#expenses" style="font-weight: 600; color: #96c2db"
-                >Home</a
-              >
+              <a href="#home" style="font-weight: 600; color: #96c2db">Home</a>
             </li>
             <li class="p-2">
-              <a
-                href="#expense-tracker"
-                class="text-[#377f8e] hover:text-[#96c2db] no-underline text-base font-normal"
-                >Expenses</a
-              >
+              <a href="#expense-tracker" class="text-[#377f8e] hover:text-[#96c2db] no-underline text-base font-normal">Expenses</a>
             </li>
             <li class="p-2">
-              <a
-                href="#insight-section"
-                class="text-[#377f8e] hover:text-[#96c2db] no-underline text-base font-normal"
-                >Graphs</a
-              >
+              <a href="#insight-section" class="text-[#377f8e] hover:text-[#96c2db] no-underline text-base font-normal">Graphs</a>
             </li>
             <li class="p-2">
-              <a
-                href="#expenses"
-                class="text-[#377f8e] hover:text-[#96c2db] no-underline text-base font-normal"
-                >About Us</a
-              >
+              <a href="#about-us" class="text-[#377f8e] hover:text-[#96c2db] no-underline text-base font-normal">About Us</a>
             </li>
           </ul>
         </navigator>
@@ -92,11 +78,12 @@
           ></div>
         </div>
         <div class="flex space-x-4">
-          <button
-          class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-white hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal"
-          >
-            Contact Us
-          </button>
+          <a href="#contact-us">
+            <button
+              class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-white hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal">
+              Contact Us
+            </button>
+          </a>
   
           <button
             id="dark-mode-toggle"
@@ -146,11 +133,12 @@
             </p>
           </Content-Paragraph>
           <Content-Button>
-            <button
-              class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-transparent hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal"
-            >
-              GET STARTED
-            </button>
+            <a href="#expense-tracker">
+              <button
+                class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-transparent hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal">
+                GET STARTED
+              </button>
+            </a>
           </Content-Button>
         </Content-Box>
       </Main_Text_Container>
@@ -437,7 +425,46 @@
         </div>
       </div>
     </section>
-
+    <!-- About Us Section -->
+    <section id="about-us" class="w-full p-8 bg-white">
+      <h2 class="text-3xl text-center text-[#377f8e] mb-10 font-bold" style="font-family: 'Playfair Display'">About Us</h2>
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-lg text-gray-700 mb-6">
+          SpendWise is your trusted companion for personal finance management. Our mission is to help individuals and
+          businesses track, analyze, and optimize their expenses with ease.
+        </p>
+        <p class="text-lg text-gray-700 mb-6">
+          Founded in 2024, we've been committed to providing intuitive tools that make financial management accessible to
+          everyone. Our expense tracker combines simplicity with powerful features to give you complete control over your
+          finances.
+        </p>
+      </div>
+    </section>
+    
+    <!-- Contact Us Section -->
+    <section id="contact-us" class="w-full p-8 bg-gradient-to-br from-[#e5edf1] to-white">
+      <h2 class="text-3xl text-center text-[#377f8e] mb-10 font-bold" style="font-family: 'Playfair Display'">Contact Us
+      </h2>
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-lg text-gray-700 mb-6">
+          Have questions or need support? We're here to help!
+        </p>
+        <div class="flex flex-col md:flex-row justify-center gap-8 mb-8">
+          <div class="text-center">
+            <i class="fas fa-envelope text-2xl text-[#377f8e] mb-2"></i>
+            <p class="text-gray-700">support@spendwise.com</p>
+          </div>
+          <div class="text-center">
+            <i class="fas fa-phone text-2xl text-[#377f8e] mb-2"></i>
+            <p class="text-gray-700">+1 (555) 123-4567</p>
+          </div>
+          <div class="text-center">
+            <i class="fas fa-location-dot text-2xl text-[#377f8e] mb-2"></i>
+            <p class="text-gray-700">123 Finance Street, NY 10001</p>
+          </div>
+        </div>
+      </div>
+    </section>
     <footer class="block relative w-full h-[250px] bg-slate-100">
       <Text
         class="block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center"
