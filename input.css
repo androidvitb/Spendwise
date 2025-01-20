@@ -273,7 +273,7 @@ html {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
-
+}
 /* Table Styling */
 table {
   width: 100%;
@@ -349,5 +349,5 @@ input:checked~.dot {
   margin-top: 10px;
   text-align: right;
   font-weight: bold;
-
 }
+
