@@ -10,7 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
       rel="stylesheet"
     />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
@@ -19,12 +22,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="input.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
-<script src="https://cdn.jsde
-livr.net/npm/chart.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.0.0-beta.2/dist/tesseract.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.0.0-beta.2/dist/tesseract.min.js"></script>
   </head>
   <body class="m-0 p-0 overflow-x-hidden">
     <!-- Header -->
@@ -49,9 +50,7 @@ livr.net/npm/chart.js"></script>
             id="ul"
           >
             <li class="p-2">
-              <a href="#expenses" style="font-weight: 600; color: #96c2db"
-                >Home</a
-              >
+              <a href="#home" style="font-weight: 600; color: #96c2db">Home</a>
             </li>
             <li class="p-2">
               <a
@@ -69,7 +68,7 @@ livr.net/npm/chart.js"></script>
             </li>
             <li class="p-2">
               <a
-                href="#expenses"
+                href="/about.html"
                 class="text-[#377f8e] hover:text-[#96c2db] no-underline text-base font-normal"
                 >About Us</a
               >
@@ -95,15 +94,17 @@ livr.net/npm/chart.js"></script>
           ></div>
         </div>
         <div class="flex space-x-4">
-          <button
-          class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-white hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal"
-          >
-            Contact Us
-          </button>
-  
+          <a href="#contact-us">
+            <button
+              class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-white hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal"
+            >
+              Contact Us
+            </button>
+          </a>
+
           <button
             id="dark-mode-toggle"
-            class=" mx-auto my-[10px] min-w-[130px] min-h-[45px] hover:bg-[#377f8e] hover:text-white text-[#377f8e] border border-[#377f8e] text-base font-normal"
+            class="mx-auto my-[10px] min-w-[130px] min-h-[45px] hover:bg-[#377f8e] hover:text-white text-[#377f8e] border border-[#377f8e] text-base font-normal"
           >
             Dark Mode
           </button>
@@ -149,18 +150,24 @@ livr.net/npm/chart.js"></script>
             </p>
           </Content-Paragraph>
           <Content-Button>
-            <button
-              class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-transparent hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal"
-            >
-              GET STARTED
-            </button>
+            <a href="#expense-tracker">
+              <button
+                class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-transparent hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal"
+              >
+                GET STARTED
+              </button>
+            </a>
           </Content-Button>
         </Content-Box>
       </Main_Text_Container>
 
-      
       <div class="flex justify-center my-4">
-        <label for="currency-select" data-translate="currencySelect" class="mr-2 text-lg font-medium">Select Currency:</label>
+        <label
+          for="currency-select"
+          data-translate="currencySelect"
+          class="mr-2 text-lg font-medium"
+          >Select Currency:</label
+        >
         <select id="currency-select" class="px-3 py-2 border rounded">
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
@@ -169,7 +176,9 @@ livr.net/npm/chart.js"></script>
         </select>
       </div>
       <div class="flex justify-center my-4">
-        <label for="languageSelect" class="mr-2 text-lg font-medium">Language:</label>
+        <label for="languageSelect" class="mr-2 text-lg font-medium"
+          >Language:</label
+        >
         <select id="languageSelect" class="px-3 py-2 border rounded">
           <option value="en">English</option>
           <option value="hi">hindi</option>
@@ -178,12 +187,9 @@ livr.net/npm/chart.js"></script>
           <option value="de">Deutsch</option>
         </select>
       </div>
-      
-      
-      
-      
+
       <Expense_Tracker
-      id="expense-tracker"
+        id="expense-tracker"
         class="flex flex-col justify-center items-center w-full h-auto"
       >
         <Text-1
@@ -205,19 +211,29 @@ livr.net/npm/chart.js"></script>
             >
               <thead class="text-[#377f8e] bg-slate-100">
                 <tr class="w-full">
-                  <th class="px-4 w-[30%] border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light">
+                  <th
+                    class="px-4 w-[30%] border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light"
+                  >
                     Expense Title
                   </th>
-                  <th class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light">
+                  <th
+                    class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light"
+                  >
                     Amount
                   </th>
-                  <th class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light">
+                  <th
+                    class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light"
+                  >
                     Date
                   </th>
-                  <th class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light">
+                  <th
+                    class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light"
+                  >
                     Tags
                   </th>
-                  <th class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light">
+                  <th
+                    class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light"
+                  >
                     Edit
                   </th>
                   <th class="px-4 border-[1px] border-b-[#377f8e] font-light">
@@ -232,7 +248,7 @@ livr.net/npm/chart.js"></script>
               <span id="total-amount">0</span>
             </div>
           </div>
-          
+
           <div
             class="m-2 py-2 border-2 border-[#377f8e] w-[35%] max-lg:w-[100%] h-auto rounded-xl"
           >
@@ -246,8 +262,7 @@ livr.net/npm/chart.js"></script>
                   >
                 </td>
               </tr>
-              
-              
+
               <tr>
                 <td class="py-2 bg-slate-100 flex justify-center">
                   <label for="expense-title" class="px-3 text-1xl"
@@ -294,7 +309,9 @@ livr.net/npm/chart.js"></script>
               </tr>
               <tr>
                 <td class="py-2 bg-slate-100 flex justify-center">
-                  <label for="expense-category" class="px-3 text-1xl">Tags:</label>
+                  <label for="expense-category" class="px-3 text-1xl"
+                    >Tags:</label
+                  >
                   <input
                     type="text"
                     id="expense-category"
@@ -303,8 +320,7 @@ livr.net/npm/chart.js"></script>
                   />
                 </td>
               </tr>
-              
-              
+
               <tr>
                 <td class="flex justify-center items-center">
                   <button
@@ -346,109 +362,162 @@ livr.net/npm/chart.js"></script>
             <div id="receiptDetails"></div>
           </div>
         </section>
-        
-        
-
         <Graphs&Charts id="insight-section" class="block w-svw">
           <Text-1
             class="block w-1/3 max-sm:w-1/2 mx-auto my-[10px] text-center text-[#377f8e] rounded-xl text-[30px] transition duration-500 ease-in-out"
             style="font-family: 'Playfair Display'"
             >Insights</Text-1
           >
-          
+
           <main class="w-full flex justify-center max-lg:flex-col">
             <Bar_Graph id="bar" class="max-w-[50%]"></Bar_Graph>
             <Pie_Chart id="pie" class="max-w-[50%] right-0"></Pie_Chart>
           </main>
-  <!-- AI-Powered Summary Section -->
-  <div class="flex flex-col items-center mt-8">
-    <h3 class="text-xl font-bold text-[#377f8e]" id="ai-summary-title">AI-Powered Summary</h3>
-    <ul id="ai-summary" class="list-disc pl-10 mt-4 text-gray-700"></ul>
-  </div>
-</Graphs&Charts>
+          <!-- AI-Powered Summary Section -->
+          <div class="flex flex-col items-center mt-8">
+            <h3 class="text-xl font-bold text-[#377f8e]" id="ai-summary-title">
+              AI-Powered Summary
+            </h3>
+            <ul id="ai-summary" class="list-disc pl-10 mt-4 text-gray-700"></ul>
+          </div>
+        </Graphs&Charts>
 
         <div class="flex justify-center space-x-4 my-4">
-          <button id="export-excel" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+          <button
+            id="export-excel"
+            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+          >
             Export as Excel
           </button>
-          <button id="export-pdf" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+          <button
+            id="export-pdf"
+            class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          >
             Export as PDF
           </button>
         </div>
-        
       </Expense_Tracker>
     </content>
 
     <!-- Feedback Section -->
-    <section id="feedback-section" class="w-full min-h-[600px] p-8 bg-gradient-to-br from-[#e5edf1] to-white">
-      <h2 class="text-3xl text-center text-[#377f8e] mb-10 font-bold" style="font-family: 'Playfair Display'">Your Feedback Matters</h2>
-      
+    <section
+      id="feedback-section"
+      class="w-full min-h-[600px] p-8 bg-gradient-to-br from-[#e5edf1] to-white"
+    >
+      <h2
+        class="text-3xl text-center text-[#377f8e] mb-10 font-bold"
+        style="font-family: 'Playfair Display'"
+      >
+        Your Feedback Matters
+      </h2>
+
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
         <!-- Left side - Form -->
-        <div class="w-full md:w-1/2 bg-white rounded-2xl shadow-lg p-6 transform hover:scale-[1.02] transition-transform duration-300">
+        <div
+          class="w-full md:w-1/2 bg-white rounded-2xl shadow-lg p-6 transform hover:scale-[1.02] transition-transform duration-300"
+        >
           <form id="feedback-form" class="space-y-6">
-            <h3 class="text-xl text-[#377f8e] mb-4 font-semibold">Share Your Experience</h3>
+            <h3 class="text-xl text-[#377f8e] mb-4 font-semibold">
+              Share Your Experience
+            </h3>
             <div class="space-y-4">
-              <input type="text" id="name" placeholder="Your Name (Optional)" 
-                     class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]">
-              
-              <input type="email" id="email" placeholder="Your Email (Optional)"
-                     class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]">
+              <input
+                type="text"
+                id="name"
+                placeholder="Your Name (Optional)"
+                class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"
+              />
+
+              <input
+                type="email"
+                id="email"
+                placeholder="Your Email (Optional)"
+                class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"
+              />
 
               <div class="rating-group">
-                  <p class="mb-2">How satisfied are you with our application?</p>
-                  <div class="star-rating" data-rating="satisfaction"></div>
+                <p class="mb-2">How satisfied are you with our application?</p>
+                <div class="star-rating" data-rating="satisfaction"></div>
               </div>
 
               <div class="rating-group">
-                  <p class="mb-2">How would you rate the ease of use?</p>
-                  <div class="star-rating" data-rating="ease"></div>
+                <p class="mb-2">How would you rate the ease of use?</p>
+                <div class="star-rating" data-rating="ease"></div>
               </div>
 
               <div class="rating-group">
-                  <p class="mb-2">How would you rate our features?</p>
-                  <div class="star-rating" data-rating="features"></div>
+                <p class="mb-2">How would you rate our features?</p>
+                <div class="star-rating" data-rating="features"></div>
               </div>
 
               <div class="space-y-2">
-                  <p class="mb-2">Have you faced any issues?</p>
-                  <div class="space-x-4">
-                      <label class="inline-flex items-center">
-                          <input type="radio" name="issues" value="yes" class="form-radio text-[#377f8e]">
-                          <span class="ml-2">Yes</span>
-                      </label>
-                      <label class="inline-flex items-center">
-                          <input type="radio" name="issues" value="no" class="form-radio text-[#377f8e]">
-                          <span class="ml-2">No</span>
-                      </label>
-                  </div>
+                <p class="mb-2">Have you faced any issues?</p>
+                <div class="space-x-4">
+                  <label class="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="issues"
+                      value="yes"
+                      class="form-radio text-[#377f8e]"
+                    />
+                    <span class="ml-2">Yes</span>
+                  </label>
+                  <label class="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="issues"
+                      value="no"
+                      class="form-radio text-[#377f8e]"
+                    />
+                    <span class="ml-2">No</span>
+                  </label>
+                </div>
               </div>
 
               <div id="issues-box" class="hidden">
-                  <textarea id="issues-detail" rows="3" placeholder="Please describe the issues you faced"
-                          class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"></textarea>
+                <textarea
+                  id="issues-detail"
+                  rows="3"
+                  placeholder="Please describe the issues you faced"
+                  class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"
+                ></textarea>
               </div>
 
               <div>
-                  <textarea id="suggestions" rows="3" placeholder="Any suggestions to improve our application?"
-                          class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"></textarea>
+                <textarea
+                  id="suggestions"
+                  rows="3"
+                  placeholder="Any suggestions to improve our application?"
+                  class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"
+                ></textarea>
               </div>
-          </div>
+            </div>
 
-          <button type="submit" 
-                  class="w-full py-2 px-4 bg-[#377f8e] text-white rounded-lg hover:bg-[#1f3c42] transition-colors">
+            <button
+              type="submit"
+              class="w-full py-2 px-4 bg-[#377f8e] text-white rounded-lg hover:bg-[#1f3c42] transition-colors"
+            >
               Submit Feedback
-          </button>
-      </form>
+            </button>
+          </form>
         </div>
 
         <!-- Right side - Engagement Content -->
-        <div class="w-full md:w-1/2 flex flex-col justify-center items-center space-y-8 p-6">
+        <div
+          id="contact-us"
+          class="w-full md:w-1/2 flex flex-col justify-center items-center space-y-8 p-6"
+        >
           <div class="text-center space-y-6">
             <i class="fas fa-comments text-6xl text-[#377f8e]"></i>
-            <h3 class="text-2xl font-semibold text-[#377f8e]" style="font-family: 'Playfair Display'">Help Us Improve</h3>
+            <h3
+              class="text-2xl font-semibold text-[#377f8e]"
+              style="font-family: 'Playfair Display'"
+            >
+              Help Us Improve
+            </h3>
             <p class="text-lg text-gray-600 max-w-md">
-              Your feedback helps us create a better experience for everyone. Share your thoughts and be part of our journey to excellence!
+              Your feedback helps us create a better experience for everyone.
+              Share your thoughts and be part of our journey to excellence!
             </p>
           </div>
 
