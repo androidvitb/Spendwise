@@ -70,6 +70,7 @@ html {
   scroll-behavior: smooth;
 }
 
+
 /* Enhanced Star Rating Styles */
 .star-rating {
     display: flex;
@@ -272,4 +273,81 @@ html {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table th, table td {
+  padding: 10px 15px;
+  text-align: center;
+}
+
+table th {
+  background-color: rgb(55 127 142 / var(--tw-bg-opacity, 1));
+  color: white;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Form Styling */
+form {
+  background: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+form input, form button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form button {
+  background-color: rgb(55 127 142 / var(--tw-bg-opacity, 1));
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #4548a0;
+}
+input:checked~.dot {
+  transform: translateX(100%);
+  /* background-color: #132b50; */
+}
+/* Total Section */
+.total {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  text-align: right;
+  font-weight: bold;
+
 }

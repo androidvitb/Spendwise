@@ -16,14 +16,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
-
-
-
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="input.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   </head>
   <body class="m-0 p-0 overflow-x-hidden">
@@ -103,7 +100,7 @@
   
           <button
             id="dark-mode-toggle"
-            class="px-4 py-2 bg-[#377f8e] text-white rounded-lg hover:bg-[#1f3c42] transition"
+            class=" mx-auto my-[10px] min-w-[130px] min-h-[45px] hover:bg-[#377f8e] hover:text-white text-[#377f8e] border border-[#377f8e] text-base font-normal"
           >
             Dark Mode
           </button>
@@ -160,7 +157,7 @@
 
       
       <div class="flex justify-center my-4">
-        <label for="currency-select" class="mr-2 text-lg font-medium">Select Currency:</label>
+        <label for="currency-select" data-translate="currencySelect" class="mr-2 text-lg font-medium">Select Currency:</label>
         <select id="currency-select" class="px-3 py-2 border rounded">
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
@@ -168,6 +165,19 @@
           <option value="GBP">GBP</option>
         </select>
       </div>
+      <div class="flex justify-center my-4">
+        <label for="languageSelect" class="mr-2 text-lg font-medium">Language:</label>
+        <select id="languageSelect" class="px-3 py-2 border rounded">
+          <option value="en">English</option>
+          <option value="hi">hindi</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+        </select>
+      </div>
+      
+      
+      
       
       <Expense_Tracker
       id="expense-tracker"
@@ -202,7 +212,7 @@
                     Date
                   </th>
                   <th class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light">
-                    Category
+                    Tags
                   </th>
                   <th class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light">
                     Edit
@@ -216,9 +226,10 @@
             </table>
             <div class="p-[10px] text-right">
               <strong>Total:</strong>
-              $<span id="total-amount">0</span>
+              <span id="total-amount">0</span>
             </div>
           </div>
+          
           <div
             class="m-2 py-2 border-2 border-[#377f8e] w-[35%] max-lg:w-[100%] h-auto rounded-xl"
           >
@@ -232,6 +243,8 @@
                   >
                 </td>
               </tr>
+              
+              
               <tr>
                 <td class="py-2 bg-slate-100 flex justify-center">
                   <label for="expense-title" class="px-3 text-1xl"
@@ -278,16 +291,17 @@
               </tr>
               <tr>
                 <td class="py-2 bg-slate-100 flex justify-center">
-                  <label for="expense-category" class="px-3 text-1xl"
-                    >Category:
-                  </label>
-                  <select id="expense-category">
-                    <option value="personal">Personal</option>
-                    <option value="business">Business</option>
-                    <option value="others">Others</option>
-                  </select>
+                  <label for="expense-category" class="px-3 text-1xl">Tags:</label>
+                  <input
+                    type="text"
+                    id="expense-category"
+                    class="px-3 bg-transparent border-[1px] rounded-xl border-gray-600"
+                    placeholder="Enter category (e.g., Travel, Food)"
+                  />
                 </td>
               </tr>
+              
+              
               <tr>
                 <td class="flex justify-center items-center">
                   <button
@@ -314,8 +328,13 @@
             <Bar_Graph id="bar" class="max-w-[50%]"></Bar_Graph>
             <Pie_Chart id="pie" class="max-w-[50%] right-0"></Pie_Chart>
           </main>
-        </Graphs&Charts>
-        
+  <!-- AI-Powered Summary Section -->
+  <div class="flex flex-col items-center mt-8">
+    <h3 class="text-xl font-bold text-[#377f8e]" id="ai-summary-title">AI-Powered Summary</h3>
+    <ul id="ai-summary" class="list-disc pl-10 mt-4 text-gray-700"></ul>
+  </div>
+</Graphs&Charts>
+
         <div class="flex justify-center space-x-4 my-4">
           <button id="export-excel" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
             Export as Excel

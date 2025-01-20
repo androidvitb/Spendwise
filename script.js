@@ -191,6 +191,9 @@ function renderExpenses() {
 
   const convertedTotalAmount = convertCurrency(totalAmount, currentCurrency);
   totalAmountCell.textContent = `${currentCurrency} ${convertedTotalAmount}`;
+
+  // Generate Insights
+  generateAISummary();
 }
 
 
@@ -402,3 +405,115 @@ darkModeToggle.addEventListener('click', (event) => {
     darkModeToggle.textContent = 'Dark Mode';
   }
 });
+
+function generateAISummary() {
+  const insights = [];
+
+  // Calculate category totals and convert them to the current currency
+  const categoryTotals = expenses.reduce((totals, expense) => {
+    const convertedAmount = parseFloat(convertCurrency(expense.amount, currentCurrency));
+    totals[expense.category] = (totals[expense.category] || 0) + convertedAmount;
+    return totals;
+  }, {});
+
+  // Example AI Insights
+  const highestCategory = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1])[0];
+  if (highestCategory) {
+    insights.push(`You spend the most on "${highestCategory[0]}" with a total of ${currentCurrency} ${highestCategory[1].toFixed(2)}.`);
+  }
+
+  const totalSpent = Object.values(categoryTotals).reduce((sum, value) => sum + value, 0);
+  if (totalSpent > 1000) { // Adjust threshold as needed
+    insights.push(`Your total spending this month is high (${currentCurrency} ${totalSpent.toFixed(2)}). Consider optimizing your budget.`);
+  } else {
+    insights.push(`Your total spending this month is within a healthy range (${currentCurrency} ${totalSpent.toFixed(2)}). Keep it up!`);
+  }
+
+  // Add suggestions
+  insights.push("Tip: Review your subscriptions to identify unnecessary expenses.");
+
+  // Populate the AI Summary section
+  const aiSummary = document.getElementById("ai-summary");
+  aiSummary.innerHTML = insights.map((insight) => `<li>${insight}</li>`).join("");
+}
+
+
+// Custom Categories
+
+
+const languageSelect = document.getElementById("languageSelect");
+const translations = {
+  en: {
+    summaryTitle: "AI Summary",
+    tip: "Tip: Review your subscriptions to identify unnecessary expenses.",
+    mostSpent: "You spend the most on",
+    totalSpentHigh: "Your total spending this month is high.",
+    totalSpentLow: "Your total spending this month is within a healthy range.",
+  },
+  hi: {
+    summaryTitle: "AI सारांश",
+    tip: "युक्ति: अनावश्यक खर्चों की पहचान करने के लिए अपनी सदस्यताओं की समीक्षा करें।",
+    mostSpent: "आप सबसे ज्यादा खर्च करते हैं",
+    totalSpentHigh: "इस माह आपका कुल खर्च अधिक है।",
+    totalSpentLow: "इस महीने आपका कुल खर्च स्वस्थ सीमा के भीतर है।",
+  },
+  es: {
+    summaryTitle: "Resumen de IA",
+    tip: "Consejo: Revisa tus suscripciones para identificar gastos innecesarios.",
+    mostSpent: "Gastas más en",
+    totalSpentHigh: "Tus gastos totales este mes son altos.",
+    totalSpentLow: "Tus gastos totales este mes están dentro de un rango saludable.",
+  },
+  fr: {
+    summaryTitle: "Résumé de l'IA",
+    tip: "Conseil : Révisez vos abonnements pour identifier les dépenses inutiles.",
+    mostSpent: "Vous dépensez le plus sur",
+    totalSpentHigh: "Vos dépenses totales ce mois-ci sont élevées.",
+    totalSpentLow: "Vos dépenses totales ce mois-ci sont dans une fourchette saine.",
+  },
+  de: {
+    summaryTitle: "KI-Zusammenfassung",
+    tip: "Tipp: Überprüfen Sie Ihre Abonnements, um unnötige Ausgaben zu identifizieren.",
+    mostSpent: "Sie geben am meisten aus für",
+    totalSpentHigh: "Ihre Gesamtausgaben in diesem Monat sind hoch.",
+    totalSpentLow: "Ihre Gesamtausgaben in diesem Monat liegen im gesunden Bereich.",
+  },
+};
+
+languageSelect.addEventListener("change", () => {
+  const selectedLanguage = languageSelect.value;
+
+  // Update AI Summary
+  const translation = translations[selectedLanguage];
+  document.getElementById("ai-summary-title").textContent = translation.summaryTitle;
+
+  generateAISummaryWithLanguage(translation);
+});
+
+function generateAISummaryWithLanguage(translation) {
+  const insights = [];
+
+  const categoryTotals = expenses.reduce((totals, expense) => {
+    const convertedAmount = parseFloat(convertCurrency(expense.amount, currentCurrency));
+    totals[expense.category] = (totals[expense.category] || 0) + convertedAmount;
+    return totals;
+  }, {});
+
+  const highestCategory = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1])[0];
+  if (highestCategory) {
+    insights.push(`${translation.mostSpent} "${highestCategory[0]}" with a total of ${currentCurrency} ${highestCategory[1].toFixed(2)}.`);
+  }
+
+  const totalSpent = Object.values(categoryTotals).reduce((sum, value) => sum + value, 0);
+  if (totalSpent > 1000) {
+    insights.push(`${translation.totalSpentHigh} (${currentCurrency} ${totalSpent.toFixed(2)}).`);
+  } else {
+    insights.push(`${translation.totalSpentLow} (${currentCurrency} ${totalSpent.toFixed(2)}).`);
+  }
+
+  insights.push(translation.tip);
+
+  const aiSummary = document.getElementById("ai-summary");
+  aiSummary.innerHTML = insights.map((insight) => `<li>${insight}</li>`).join("");
+}
+
