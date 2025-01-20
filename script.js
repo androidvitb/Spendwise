@@ -15,6 +15,23 @@ const expensesTableBody = document.getElementById("tableBody");
 const currencySelect = document.getElementById("currency-select");
 let currentCurrency = "USD";
 
+// Add this at the top of your script.js
+const firebaseConfig = {
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const firestoreDB = firebase.firestore();
+
+// Make Firestore available globally
+window.firestoreDB = firestoreDB;
+
 // Example exchange rates (for demonstration purposes only)
 const exchangeRates = {
   USD: 1,
