@@ -500,3 +500,108 @@ function generateAISummaryWithLanguage(translation) {
   aiSummary.innerHTML = insights.map((insight) => `<li>${insight}</li>`).join("");
 }
 
+//OCR screp reading logic
+document.getElementById("receiptUpload").addEventListener("change", async function (event) {
+  const file = event.target.files[0];
+  if (!file) {
+    alert("Please select a file!");
+    return;
+  }
+
+  // Show the loading text
+  document.getElementById("loading").style.display = "block";
+
+  // Use Tesseract.js to perform OCR
+  const reader = new FileReader();
+  reader.onload = async function () {
+    const imageData = reader.result;
+
+    try {
+      const { data: { text } } = await Tesseract.recognize(imageData, "eng", {
+        logger: (info) => console.log(info), // Logs OCR progress
+      });
+
+      console.log("OCR Text:", text);
+
+      // Hide loading text
+      document.getElementById("loading").style.display = "none";
+
+      // Process extracted text
+      const extractedData = processReceiptText(text);
+
+      // Display the result
+      displayExtractedData(extractedData);
+    } catch (error) {
+      console.error("OCR failed: ", error);
+      alert("Failed to process the image. Please try again.");
+      document.getElementById("loading").style.display = "none";
+    }
+  };
+  reader.readAsDataURL(file);
+});
+
+
+// Function to process the raw OCR text
+function processReceiptText(rawText) {
+  const lines = rawText.split("\n");
+  const processedData = {
+    terminal: "",
+    date: "",
+    time: "",
+    items: [],
+    total: "",
+    payment: "",
+    change: "",
+  };
+
+  lines.forEach((line) => {
+    if (line.toLowerCase().includes("terminal")) {
+      processedData.terminal = line;
+    } else if (line.match(/\d{2}-\d{2}-\d{4}/)) {
+      processedData.date = line.match(/\d{2}-\d{2}-\d{4}/)[0];
+    } else if (line.match(/\d{1,2}:\d{2}\s?(AM|PM)?/i)) {
+      processedData.time = line.match(/\d{1,2}:\d{2}\s?(AM|PM)?/i)[0];
+    } else if (line.toLowerCase().includes("total")) {
+      processedData.total = line;
+    } else if (line.toLowerCase().includes("change")) {
+      processedData.change = line;
+    } else if (line.toLowerCase().includes("cash") || line.toLowerCase().includes("card")) {
+      processedData.payment = line;
+    } else if (line.match(/x\s.+\$\d+(\.\d{2})?/i)) {
+      const itemMatch = line.match(/x\s(.+)\s\$(\d+(\.\d{2})?)/i);
+      if (itemMatch) {
+        processedData.items.push({ name: itemMatch[1].trim(), price: `$${itemMatch[2]}` });
+      }
+    }
+  });
+
+  return processedData;
+}
+
+// Function to display the extracted data
+function displayExtractedData(data) {
+  const receiptHTML = `
+    <div class="mb-4">
+      <p class="font-medium text-gray-700"><span class="font-semibold text-teal-700">Terminal:</span> ${data.terminal || "N/A"}</p>
+      <p class="font-medium text-gray-700"><span class="font-semibold text-teal-700">Date:</span> ${data.date || "N/A"}</p>
+      <p class="font-medium text-gray-700"><span class="font-semibold text-teal-700">Time:</span> ${data.time || "N/A"}</p>
+    </div>
+    <div class="mb-4">
+      <p class="font-semibold text-teal-700 mb-2">Items:</p>
+      <ul class="list-disc pl-5">
+        ${data.items
+          .map((item) => `<li class="text-gray-700">1x ${item.name} - ${item.price}</li>`)
+          .join("")}
+      </ul>
+    </div>
+    <div>
+      <p class="font-medium text-gray-700"><span class="font-semibold text-teal-700">Total:</span> ${data.total || "N/A"}</p>
+      <p class="font-medium text-gray-700"><span class="font-semibold text-teal-700">Payment:</span> ${data.payment || "N/A"}</p>
+      <p class="font-medium text-gray-700"><span class="font-semibold text-teal-700">Change:</span> ${data.change || "N/A"}</p>
+    </div>
+  `;
+
+  const outputDiv = document.getElementById("output");
+  outputDiv.style.display = "block";
+  document.getElementById("receiptDetails").innerHTML = receiptHTML;
+}

@@ -20,7 +20,10 @@
     <link rel="stylesheet" href="input.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsde
+livr.net/npm/chart.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.0.0-beta.2/dist/tesseract.min.js"></script>
 
   </head>
   <body class="m-0 p-0 overflow-x-hidden">
@@ -315,6 +318,25 @@
             </table>
           </div>
         </Main_Tracker>
+        <section class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+          <h1 class="text-2xl font-semibold text-center text-teal-600 mb-4">Upload Your Receipt</h1>
+          <div class="flex justify-center mb-6">
+            <input 
+              type="file" 
+              id="receiptUpload" 
+              accept="image/*" 
+              class="px-4 py-2 text-sm border border-gray-300 rounded-md cursor-pointer hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            />
+          </div>
+          <div id="loading" class="text-center text-teal-600 font-medium" style="display: none;">
+            Processing image... Please wait.
+          </div>
+          <div id="output" class="bg-gray-50 p-4 rounded-lg shadow-md" style="display: none;">
+            <h2 class="text-xl font-semibold text-teal-700 mb-4 text-center">Extracted Receipt Information</h2>
+            <div id="receiptDetails"></div>
+          </div>
+        </section>
+        
         
 
         <Graphs&Charts id="insight-section" class="block w-svw">
