@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpendWiser - Gamified Money Management</title>
+    <script src="reward.js"></script>
+    <!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: x-large;
+        }
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 0.5rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .feature {
+            margin-bottom: 2rem;
+        }
+        .feature h2 {
+            color: #4CAF50;
+            font-weight: 700;
+            font-size: x-large;
+        }
+        .rewards {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .reward-card {
+            background: #e3fcef;
+            padding: 1rem;
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            position: relative;
+        }
+        .reward-card button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        .reward-card button:hover {
+            background-color: #45a049;
+        }
+        .add-expense {
+            margin-top: 2rem;
+        }
+        .add-expense input, .add-expense button {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #333;
+            color: white;
+            text-decoration: solid;
+            text-transform: uppercase;
+        }
+
+        .hidden {
+        display: none;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SpendWiser</h1>
+        <p>Gamified Money Management and Rewards System</p>
+    </header>
+    <nav>
+        <a href="#rewards">Rewards</a>
+        <a href="#score">Money Management Score</a>
+        <a href="#analytics">Spending Analytics</a>
+        <a href="#tips">Savings Tips</a>
+    </nav>
+    <div class="container">
+        <section id="rewards" class="feature" >
+            <h2>Rewards System</h2>
+            <p>Earn points or coupons for every spend and additional rewards for maintaining a good money management score.</p>
+            <div class="rewards">
+                <div class="reward-card">
+                    <h3>10% Cashback</h3>
+                    <p>On spends above ₹1000</p>
+                    <button class="claim-reward-btn">Claim Reward</button>
+                </div>
+                <div class="reward-card">
+                    <h3>Bonus Points</h3>
+                    <p>Get 500 points for maintaining a score of 80+</p>
+                    <button class="claim-reward-btn">Claim Reward</button>
+                </div>
+                <div class="reward-card">
+                    <h3>Gift Cards</h3>
+                    <p>Redeem points for exclusive discounts</p>
+                    <button class="claim-reward-btn">Claim Reward</button>
+                </div>
+            </div>
+            
+            <!-- Math Problem Section -->
+  <div id="math-problem-section" class="hidden text-center mt-4">
+    <p id="math-problem" class="text-xl font-bold mb-2">
+      <!-- The math problem will be displayed here -->
+    </p>
+    <input
+      type="number"
+      id="math-answer"
+      class="px-3 py-2 border-[1px] rounded-xl border-gray-600"
+      placeholder="Enter your answer"
+    />
+    <button id="submit-answer"
+    class="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-transform transform hover:scale-105 active:scale-95"
+    >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-5 w-5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M5 13l4 4L19 7"
+      />
+    </svg>
+      Submit
+    </button>
+  </div>
+
+  <!-- Success Message Section -->
+<div id="reward-section" class="hidden text-center mt-4">
+    <p class="text-xl font-bold">Congratulations! 🎉</p>
+    <p class="text-lg">Here is your 10-digit unique code:</p>
+    <p id="unique-code" class="text-2xl font-mono bg-gray-200 px-4 py-2 mt-2 rounded-md">
+      <!-- Unique code will appear here -->
+    </p>
+  </div>
+  
+  <!-- Error Message -->
+  <p id="error-message" class="hidden text-red-600 text-center mt-4">
+    Incorrect answer. Try again!
+  </p>
+  
+  
+
+</div>
+        </section>
+        <section id="score" class="feature">
+            <h2>Money Management Score</h2>
+            <p>Your score reflects how well you manage your budget. Higher scores unlock better rewards!</p>
+            <p><strong>Current Score:</strong> <span style="color: #4CAF50; font-weight: bold;">85</span></p>
+        </section>
+        <section id="analytics" class="feature">
+            <h2>Spending Analytics</h2>
+            <p>Track your spending habits with detailed analytics and charts to improve your financial health.</p>
+            <p><em>Chart integration coming soon!</em></p>
+        </section>
+        
+        <section id="tips" class="feature">
+            <h2>Savings Tips</h2>
+            <p>Optimize your finances with personalized tips:</p>
+            <ul>
+                <li>Create a monthly budget and stick to it.</li>
+                <li>Avoid impulse purchases by waiting 24 hours.</li>
+                <li>Use rewards to save on everyday expenses.</li>
+            </ul>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2025 SpendWiser. All rights reserved.</p>
+    </footer>
+    <script>
+        function claimReward(reward) {
+            alert(` ${reward}!`);
+        }
+
+        function addExpense(event) {
+            event.preventDefault();
+            const name = document.getElementById('expense-name').value;
+            const amount = document.getElementById('expense-amount').value;
+
+            if (name && amount) {
+                alert(`Expense added: ${name} - ₹${amount}`);
+                document.getElementById('expense-name').value = '';
+                document.getElementById('expense-amount').value = '';
+            }
+        }
+// Function to generate a math problem
+function generateMathProblem() {
+    const num1 = Math.floor(Math.random() * 50) + 1;
+    const num2 = Math.floor(Math.random() * 50) + 1;
+    const operation = Math.random() > 0.5 ? "+" : "-";
+    const question = `${num1} ${operation} ${num2}`;
+    const answer = operation === "+" ? num1 + num2 : num1 - num2;
+
+    return { question, answer };
+}
+
+        function generateUniqueCode() {
+            return Math.random().toString().slice(2, 12);
+        }
+
+// DOM Elements
+const mathProblemSection = document.getElementById("math-problem-section");
+const mathProblemElement = document.getElementById("math-problem");
+const mathAnswerInput = document.getElementById("math-answer");
+const submitAnswerButton = document.getElementById("submit-answer");
+const rewardSection = document.getElementById("reward-section");
+const errorMessage = document.getElementById("error-message");
+const uniqueCodeElement = document.getElementById("unique-code");
+
+let currentMathProblem = null;
+
+// Attach event listeners to all claim reward buttons
+const claimRewardButtons = document.querySelectorAll(".claim-reward-btn");
+claimRewardButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        // Generate a new math problem
+        currentMathProblem = generateMathProblem();
+        mathProblemElement.textContent = `Solve: ${currentMathProblem.question}`;
+
+        // Show the math problem section and hide the reward/error sections
+        mathProblemSection.classList.remove("hidden");
+        rewardSection.classList.add("hidden");
+        errorMessage.classList.add("hidden");
+        mathAnswerInput.value = ""; // Clear the input field
+    });
+});
+
+// Handle answer submission
+submitAnswerButton.addEventListener("click", () => {
+    const userAnswer = parseInt(mathAnswerInput.value, 10);
+    if (userAnswer === currentMathProblem.answer) {
+        // Correct answer: Show the reward
+        mathProblemSection.classList.add("hidden");
+        rewardSection.classList.remove("hidden");
+        errorMessage.classList.add("hidden");
+        uniqueCodeElement.textContent = generateUniqueCode();
+    } else {
+        // Incorrect answer: Show error message
+        errorMessage.classList.remove("hidden");
+        mathAnswerInput.value = ""; // Clear the input field
+    }
+});
+
+
+    </script>
+</body>
+</html>
