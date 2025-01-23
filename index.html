@@ -367,6 +367,36 @@
             <div id="receiptDetails"></div>
           </div>
         </section>
+        <!-- Budget Setup Section -->
+        <section id="budget-section" class="w-full p-6 bg-gray-100">
+          <h2 class="text-2xl font-bold text-[#377f8e] mb-4">Budget Setup</h2>
+          <div class="flex flex-wrap justify-center gap-4">
+            <div class="w-full md:w-1/2 bg-white p-4 rounded-lg shadow-md">
+              <h3 class="text-lg font-semibold mb-3">Set Category Budgets</h3>
+              <div class="space-y-3" id="budget-categories">
+                <div class="flex items-center space-x-3">
+                  <select id="budget-category-select" class="border p-2 rounded w-1/2">
+                    <option value="">Select Category</option>
+                    <option value="Food">Food</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Utilities">Utilities</option>
+                  </select>
+                  <input type="number" id="budget-amount" placeholder="Budget Amount" class="border p-2 rounded w-1/3">
+                  <button id="add-budget" class="bg-[#377f8e] text-white px-4 py-2 rounded hover:bg-[#2d6c77]">
+                    Add Budget
+                  </button>
+                </div>
+              </div>
+              <div id="budget-list" class="mt-4 space-y-2"></div>
+            </div>
+            <div class="w-full md:w-1/2 bg-white p-4 rounded-lg shadow-md">
+              <h3 class="text-lg font-semibold mb-3">Budget Insights</h3>
+              <div id="budget-insights" class="space-y-2"></div>
+            </div>
+          </div>
+        </section>
         <Graphs&Charts id="insight-section" class="block w-svw">
           <Text-1
             class="block w-1/3 max-sm:w-1/2 mx-auto my-[10px] text-center text-[#377f8e] rounded-xl text-[30px] transition duration-500 ease-in-out"
