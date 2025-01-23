@@ -438,6 +438,99 @@ function generateAISummary() {
   aiSummary.innerHTML = insights.map((insight) => `<li>${insight}</li>`).join("");
 }
 
+// Budget Management Functions
+const budgetCategories = JSON.parse(localStorage.getItem('budgetCategories')) || {};
+
+function addBudgetCategory() {
+  const categorySelect = document.getElementById('budget-category-select');
+  const budgetAmountInput = document.getElementById('budget-amount');
+  const budgetList = document.getElementById('budget-list');
+
+  const category = categorySelect.value;
+  const amount = parseFloat(budgetAmountInput.value);
+
+  if (!category || isNaN(amount) || amount <= 0) {
+    alert('Please select a category and enter a valid budget amount.');
+    return;
+  }
+
+  // Add or update budget
+  budgetCategories[category] = amount;
+
+  // Save to localStorage
+  localStorage.setItem('budgetCategories', JSON.stringify(budgetCategories));
+
+  // Render budget list
+  renderBudgetList();
+
+  // Clear inputs
+  categorySelect.value = '';
+  budgetAmountInput.value = '';
+}
+
+function renderBudgetList() {
+  const budgetList = document.getElementById('budget-list');
+  const budgetInsights = document.getElementById('budget-insights');
+
+  // Clear previous content
+  budgetList.innerHTML = '';
+  budgetInsights.innerHTML = '';
+
+  // Calculate category totals
+  const categoryTotals = expenses.reduce((totals, expense) => {
+    totals[expense.category] = (totals[expense.category] || 0) + expense.amount;
+    return totals;
+  }, {});
+
+  // Render budget list and insights
+  Object.entries(budgetCategories).forEach(([category, budget]) => {
+    const currentSpending = categoryTotals[category] || 0;
+    const percentSpent = (currentSpending / budget) * 100;
+
+    // Budget list item
+    const listItem = document.createElement('div');
+    listItem.classList.add('flex', 'justify-between', 'items-center', 'p-2', 'bg-gray-50', 'rounded');
+    listItem.innerHTML = `
+      <span>${category}</span>
+      <div class="flex items-center space-x-2">
+        <span>$${currentSpending.toFixed(2)} / $${budget.toFixed(2)}</span>
+        <div class="w-24 bg-gray-200 rounded-full h-2.5">
+          <div 
+            class="h-2.5 rounded-full ${percentSpent > 100 ? 'bg-red-500' :
+        percentSpent > 80 ? 'bg-yellow-500' : 'bg-green-500'
+      }" 
+            style="width: ${Math.min(percentSpent, 100)}%"
+          ></div>
+        </div>
+        <span>${percentSpent.toFixed(1)}%</span>
+      </div>
+    `;
+    budgetList.appendChild(listItem);
+
+    // Budget insights
+    if (percentSpent > 100) {
+      const insightItem = document.createElement('div');
+      insightItem.classList.add('text-red-600', 'font-medium');
+      insightItem.textContent = `⚠️ You've exceeded your ${category} budget by ${(percentSpent - 100).toFixed(1)}%`;
+      budgetInsights.appendChild(insightItem);
+    } else if (percentSpent > 80) {
+      const insightItem = document.createElement('div');
+      insightItem.classList.add('text-yellow-600', 'font-medium');
+      insightItem.textContent = `⚠️ You're approaching your ${category} budget (${percentSpent.toFixed(1)}%)`;
+      budgetInsights.appendChild(insightItem);
+    }
+  });
+}
+
+// Event Listeners for Budget Management
+document.getElementById('add-budget').addEventListener('click', addBudgetCategory);
+
+// Modify existing renderExpenses function to include budget rendering
+const originalRenderExpenses = renderExpenses;
+renderExpenses = function () {
+  originalRenderExpenses.apply(this);
+  renderBudgetList();
+};
 
 // Custom Categories
 
