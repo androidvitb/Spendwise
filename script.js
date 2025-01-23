@@ -669,3 +669,106 @@ document.getElementById("addToExpenses").addEventListener("click", () => {
 
   alert("Expense added successfully!");
 });
+
+
+// Game Logic
+// Initialize variables
+let budget = 1000;
+let score = 0;
+let level = 1;
+let savingsGoal = 200;
+
+// Random events
+const events = [
+  { message: "Unexpected medical bill: -$100", impact: -100 },
+  { message: "Car repair needed: -$150", impact: -150 },
+  { message: "Won a lottery: +$200", impact: 200 },
+  { message: "Got a work bonus: +$100", impact: 100 },
+  { message: "Buy insurance for $50?", impact: -50, decision: true },
+];
+
+// Update progress bar
+function updateProgressBar() {
+  const progress = Math.min((score / savingsGoal) * 100, 100);
+  document.getElementById("progress").style.width = progress + "%";
+}
+
+// Allocate Budget
+document.getElementById("allocate-btn").addEventListener("click", () => {
+  const housing = parseInt(document.getElementById("housing").value) || 0;
+  const groceries = parseInt(document.getElementById("groceries").value) || 0;
+  const entertainment = parseInt(document.getElementById("entertainment").value) || 0;
+  const savings = parseInt(document.getElementById("savings").value) || 0;
+
+  const totalAllocated = housing + groceries + entertainment + savings;
+
+  if (totalAllocated > budget) {
+    alert("You have exceeded your budget! Adjust your allocations.");
+  } else {
+    budget -= totalAllocated;
+    score += savings;
+    document.getElementById("budget").textContent = `Remaining Budget: $${budget}`;
+    triggerEvent();
+    updateProgressBar();
+    checkWinCondition();
+  }
+});
+
+// Trigger Random Event
+function triggerEvent() {
+  const randomEvent = events[Math.floor(Math.random() * events.length)];
+
+  if (randomEvent.decision) {
+    const decision = confirm(randomEvent.message);
+    if (decision) budget += randomEvent.impact;
+  } else {
+    budget += randomEvent.impact;
+    document.getElementById("events").textContent = randomEvent.message;
+  }
+
+  document.getElementById("budget").textContent = `Remaining Budget: $${budget}`;
+}
+
+// Check Win/Loss Conditions
+function checkWinCondition() {
+  if (budget <= 0) {
+    alert(`Game Over! Final Score: ${score}`);
+    resetGame();
+  } else if (score >= savingsGoal) {
+    level++;
+    savingsGoal += 100;
+    budget = 1000 - level * 50;
+    alert(`Level Up! Welcome to Level ${level}`);
+    document.getElementById("level").textContent = level;
+    document.getElementById("goal").textContent = savingsGoal;
+    resetInputs();
+  }
+}
+
+// Reset Inputs
+function resetInputs() {
+  document.querySelectorAll("input").forEach((input) => (input.value = ""));
+}
+
+// Reset Game
+function resetGame() {
+  budget = 1000;
+  score = 0;
+  level = 1;
+  savingsGoal = 200;
+  document.getElementById("budget").textContent = `Starting Budget: $${budget}`;
+  document.getElementById("score").textContent = "";
+  document.getElementById("level").textContent = level;
+  document.getElementById("goal").textContent = savingsGoal;
+  document.getElementById("progress").style.width = "0%";
+}
+
+// Leaderboard
+function updateLeaderboard() {
+  const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+  leaderboard.push(score);
+  leaderboard.sort((a, b) => b - a);
+  localStorage.setItem("leaderboard", JSON.stringify(leaderboard.slice(0, 5)));
+  const list = document.getElementById("leaderboard-list");
+  list.innerHTML = leaderboard.map((s) => `<li>Score: ${s}</li>`).join("");
+}
