@@ -388,22 +388,23 @@ scrollButton.onclick = () => {
   });
 };
 
-// Select the button
+// Select the toggle switch
 const darkModeToggle = document.getElementById('dark-mode-toggle');
 
-// Add an event listener to the button for dark mode toggle
-darkModeToggle.addEventListener('click', (event) => {
-  // Prevent event bubbling
-  event.stopPropagation();
+// Check if dark mode is already enabled
+if (localStorage.getItem('dark-mode') === 'enabled') {
+  document.body.classList.add('dark');
+  darkModeToggle.checked = true;
+}
 
-  // Toggle the 'dark' class on the body
-  document.body.classList.toggle('dark');
-
-  // Change the button text based on the current mode
-  if (document.body.classList.contains('dark')) {
-    darkModeToggle.textContent = 'Light Mode';
+// Add an event listener to the toggle switch for dark mode toggle
+darkModeToggle.addEventListener('change', (event) => {
+  if (event.target.checked) {
+    document.body.classList.add('dark');
+    localStorage.setItem('dark-mode', 'enabled');
   } else {
-    darkModeToggle.textContent = 'Dark Mode';
+    document.body.classList.remove('dark');
+    localStorage.setItem('dark-mode', 'disabled');
   }
 });
 
