@@ -452,3 +452,11 @@ button {
 button:hover {
     background-color: #176b;
 }
+
+.copyright{
+    margin-top: 1rem;
+}
+
+.footer-logo{
+    margin-bottom: -4rem;
+}
