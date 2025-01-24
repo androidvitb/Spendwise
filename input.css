@@ -36,42 +36,76 @@
 #scrollButton:active {
     transform: scale(0.9);  
 }
-/* for dark mode button  */
+
+/* Dark mode styles */
 body.dark {
     background-color: #121212;
     color: #e0e0e0;
-  }
-  
-  body.dark header {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
-  }
-  
-  body.dark main {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
-  }
-  
-  body.dark footer {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
-  }
-  
-  body.dark button {
-    background-color: #377f8e;
-    color: white;
-  }
-  
-  body.dark button:hover {
-    background-color: #1f3c42;
-  }
-
-html {
-  scroll-behavior: smooth;
 }
 
+body.dark header,
+body.dark footer,
+body.dark main,
+body.dark .rating-group,
+body.dark form,
+body.dark .container,
+body.dark .category,
+body.dark .flex,
+body.dark .flex-col,
+body.dark .bg-white,
+body.dark .bg-gray-100,
+body.dark .bg-gray-200,
+body.dark .bg-gray-300,
+body.dark .bg-gray-50,
+body.dark .shadow-md,
+body.dark input,
+body.dark select,
+body.dark textarea,
+body.dark .w-full,
+body.dark .text-center,
+body.dark .list-disc {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
 
-/* Enhanced Star Rating Styles */
+body.dark button {
+    background-color: #377f8e;
+    color: white;
+}
+
+body.dark button:hover {
+    background-color: #1f3c42;
+}
+
+/* Additional elements for dark mode */
+body.dark table th,
+body.dark table td {
+    background-color: #2a2a2a;
+}
+
+body.dark .star.active,
+body.dark .star {
+    color: #e0e0e0;
+}
+
+body.dark .star.active {
+    text-shadow: 0 0 10px rgba(224, 224, 224, 0.5);
+}
+
+body.dark .rating-group {
+    background: rgba(224, 224, 224, 0.05);
+}
+
+body.dark .feedback-card {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark .feedback-card:hover {
+    box-shadow: 0 10px 20px rgba(224, 224, 224, 0.2);
+}
+
+/* Star Rating Styles */
 .star-rating {
     display: flex;
     gap: 0.75rem;
@@ -112,7 +146,6 @@ html {
     text-shadow: 0 0 10px rgba(55, 127, 142, 0.5);
 }
 
-/* Star hover effects */
 .star-rating:hover .star:not(:hover):not(.active) {
     color: #e4e4e4;
     transform: scale(0.95);
@@ -124,7 +157,6 @@ html {
     opacity: 0.7;
 }
 
-/* Star click animation */
 .star.active {
     animation: starPop 0.3s ease-out;
 }
@@ -237,7 +269,6 @@ html {
     outline: none;
 }
 
-/* Animate form elements on hover */
 #feedback-form input:hover,
 #feedback-form textarea:hover,
 #feedback-form .star-rating:hover {
@@ -245,7 +276,6 @@ html {
     transition: transform 0.2s ease;
 }
 
-/* Card hover effects */
 .feedback-card {
     transition: all 0.3s ease;
 }
@@ -255,7 +285,6 @@ html {
     box-shadow: 0 10px 20px rgba(55, 127, 142, 0.2);
 }
 
-/* Required field styling */
 .required-error .star-rating {
     border: 2px solid #ff4444;
     animation: shake 0.5s ease-in-out;
@@ -274,143 +303,152 @@ html {
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
 }
+
+/* Toggle switch */
+#dark-mode-toggle:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #377f8e;
+}
+
+#dark-mode-toggle:checked ~ .block {
+  background-color: #1f3c42;
+}
+
 /* Table Styling */
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 table th, table td {
-  padding: 10px 15px;
-  text-align: center;
+    padding: 10px 15px;
+    text-align: center;
 }
 
 table th {
-  background-color: rgb(55 127 142 / var(--tw-bg-opacity, 1));
-  color: white;
+    background-color: rgb(55 127 142 / var(--tw-bg-opacity, 1));
+    color: white;
 }
 
 table tr:nth-child(even) {
-  background-color: #f9f9f9;
+    background-color: #f9f9f9;
 }
 
 table tr:nth-child(odd) {
-  background-color: #ffffff;
+    background-color: #ffffff;
 }
 
 table tr:hover {
-  background-color: #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 /* Form Styling */
 form {
-  background: #f4f4f4;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 form label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 form input, form button {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 form button {
-  background-color: rgb(55 127 142 / var(--tw-bg-opacity, 1));
-  color: white;
-  border: none;
-  cursor: pointer;
+    background-color: rgb(55 127 142 / var(--tw-bg-opacity, 1));
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 form button:hover {
-  background-color: #4548a0;
+    background-color: #4548a0;
 }
+
 input:checked~.dot {
-  transform: translateX(100%);
-  /* background-color: #132b50; */
+    transform: translateX(100%);
 }
-/* Total Section */
+
 .total {
-  font-size: 1.2rem;
-  margin-top: 10px;
-  text-align: right;
-  font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 10px;
+    text-align: right;
+    font-weight: bold;
 }
-
-
 
 .container {
-  background: #ffffff;
-  color: #333;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  max-width: 400px;
-  width: 100%;
+    background: #ffffff;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
 }
 
 h1 {
-  color: #2193b0;
+    color: #2193b0;
 }
 
 #progress-bar {
-  width: 100%;
-  background: #ddd;
-  border-radius: 20px;
-  margin: 10px 0;
-  height: 20px;
-  overflow: hidden;
-  position: relative;
+    width: 100%;
+    background: #ddd;
+    border-radius: 20px;
+    margin: 10px 0;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
 }
 
 #progress {
-  height: 100%;
-  width: 0%;
-  background: #4CAF50;
-  transition: width 0.5s ease-in-out;
+    height: 100%;
+    width: 0%;
+    background: #4CAF50;
+    transition: width 0.5s ease-in-out;
 }
 
 .categories {
-  margin: 20px 0;
+    margin: 20px 0;
 }
 
 .category {
-  margin: 10px 0;
+    margin: 10px 0;
 }
 
 input {
-  width: 80px;
-  padding: 5px;
-  margin-left: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    width: 80px;
+    padding: 5px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button {
-  background-color: #2193b0;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
+    background-color: #2193b0;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 button:hover {
-  background-color: #176b
+    background-color: #176b;
 }
