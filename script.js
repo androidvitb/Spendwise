@@ -14,7 +14,12 @@ const totalAmountCell = document.getElementById("total-amount");
 const expensesTableBody = document.getElementById("tableBody");
 const currencySelect = document.getElementById("currency-select");
 let currentCurrency = "USD";
-
+let filters = {
+  searchTerm: '',
+  category: '',
+  startDate: null,
+  endDate: null
+};
 // Add this at the top of your script.js
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -42,6 +47,18 @@ const exchangeRates = {
 
 function convertCurrency(amount, toCurrency) {
   return (amount * exchangeRates[toCurrency]).toFixed(2);
+}
+
+function filterExpenses(expenses) {
+  return expenses.filter(expense => {
+    const matchesSearch = expense.title.toLowerCase().includes(filters.searchTerm.toLowerCase()) ||
+      expense.category.toLowerCase().includes(filters.searchTerm.toLowerCase());
+    const matchesCategory = !filters.category || expense.category === filters.category;
+    const expenseDate = new Date(expense.date);
+    const matchesDate = (!filters.startDate || expenseDate >= filters.startDate) &&
+      (!filters.endDate || expenseDate <= filters.endDate);
+    return matchesSearch && matchesCategory && matchesDate;
+  });
 }
 
 currencySelect.addEventListener("change", () => {
@@ -103,7 +120,9 @@ function renderExpenses() {
   expensesTableBody.innerHTML = "";
   totalAmount = 0;
 
-  expenses.forEach((expense, index) => {
+  const filteredExpenses = filterExpenses(expenses);
+
+  filteredExpenses.forEach((expense, index) => {
     const newRow = expensesTableBody.insertRow();
 
     const titleCell = newRow.insertCell();
@@ -196,6 +215,26 @@ function renderExpenses() {
   // Generate Insights
   generateAISummary();
 }
+
+document.getElementById('search-input').addEventListener('input', (e) => {
+  filters.searchTerm = e.target.value;
+  renderExpenses();
+});
+
+document.getElementById('category-filter').addEventListener('change', (e) => {
+  filters.category = e.target.value;
+  renderExpenses();
+});
+
+document.getElementById('start-date').addEventListener('change', (e) => {
+  filters.startDate = new Date(e.target.value);
+  renderExpenses();
+});
+
+document.getElementById('end-date').addEventListener('change', (e) => {
+  filters.endDate = new Date(e.target.value);
+  renderExpenses();
+});
 
 
 
