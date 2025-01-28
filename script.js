@@ -905,3 +905,19 @@ function updateLeaderboard() {
   const list = document.getElementById("leaderboard-list");
   list.innerHTML = leaderboard.map((s) => `<li>Score: ${s}</li>`).join("");
 }
+
+// Smooth Scrolling for Internal Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener("click", function (event) {
+    event.preventDefault(); 
+    const targetID = this.getAttribute("href"); 
+    const targetElement = document.querySelector(targetID);
+
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop - 50, 
+        behavior: "smooth" 
+      });
+    }
+  });
+});
