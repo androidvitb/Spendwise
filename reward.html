@@ -101,6 +101,104 @@
         .hidden {
         display: none;
     }
+        .reward-card button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.reward-card button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+
+.reward-card {
+    background: #e3fcef;
+    padding: 1rem;
+    border: 1px solid #4CAF50;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 250px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reward-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+nav a:hover {
+    color: #4CAF50; 
+    transform: translateY(-2px); 
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: x-large;
+    animation: fadeIn 1s ease-in-out; 
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#submit-answer {
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+#submit-answer:hover {
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+#reward-section {
+    animation: slideIn 0.5s ease-in-out; 
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#error-message {
+    transition: opacity 0.3s ease;
+}
+
+#error-message:hover {
+    opacity: 0.8; 
+}
     </style>
 </head>
 <body>
