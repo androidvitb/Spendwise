@@ -45,6 +45,34 @@ SpendWise is a budgeting and expense tracking web application. It helps users ma
   http://localhost:5173
 ```
 
+---
+
+## 📂 Project Structure
+```
+Spendwise/
+├── Images/
+│   ├── SpendWise2.png
+│   └── main-bg.png
+│   └── SpendWise.png
+├── index.html
+├── about.html
+├── dashboard.html
+├── reward.html
+├── input.css
+├── dashboard.css
+|── script.js
+|── dashboard.js
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── postcss.config.js
+├── tailwind.config.js
+├── README.md
+├── Firebase_Setup.md
+```
+
+---
+
 ## 🧑‍💻 Contributors
 We welcome contributions! Feel free to fork the repo and submit a pull request.
 

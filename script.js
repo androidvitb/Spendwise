@@ -1,3 +1,6 @@
+// Add base URL configuration
+const BASE_URL = window.location.origin;
+
 // Mobile menu toggle
 const mobileMenuButton = document.getElementById('mobile-menu-button');
 const mobileMenu = document.getElementById('mobile-menu');
@@ -83,13 +86,13 @@ document.querySelectorAll('.faq-button').forEach(button => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetId = this.getAttribute('href').slice(1);
+        const target = document.getElementById(targetId);
         if (target) {
             target.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
             });
-            // Close mobile menu if open
             mobileMenu.classList.add('hidden');
         }
     });
@@ -104,4 +107,89 @@ if (contactForm) {
         alert('Thank you for your message! We will get back to you soon.');
         contactForm.reset();
     });
-}
+};
+
+// Enhanced error handling for resources
+document.addEventListener('error', function(e) {
+    if (e.target.tagName === 'IMG' || e.target.tagName === 'SCRIPT') {
+        console.error('Resource failed to load:', e.target.src);
+        // Optionally retry loading or show fallback
+    }
+}, true);
+
+// Update anchor links to use absolute paths
+document.querySelectorAll('a').forEach(anchor => {
+    if (anchor.href.startsWith('/')) {
+        anchor.href = window.location.origin + anchor.href;
+    }
+});
+
+// Add path handling utilities
+const fixPath = (path) => {
+    if (path.startsWith('/')) {
+        return `.${path}`;
+    }
+    return path;
+};
+
+// Replace the DOMContentLoaded event handler with improved asset handling
+document.addEventListener('DOMContentLoaded', () => {
+    // Fix all image sources
+    document.querySelectorAll('img').forEach(img => {
+        if (img.src) {
+            const originalSrc = img.getAttribute('src');
+            img.src = fixPath(originalSrc);
+        }
+    });
+
+    // Fix all link hrefs
+    document.querySelectorAll('a').forEach(anchor => {
+        if (anchor.href && !anchor.href.startsWith('#') && !anchor.href.startsWith('http')) {
+            const originalHref = anchor.getAttribute('href');
+            anchor.href = fixPath(originalHref);
+        }
+    });
+
+    // Fix all stylesheet links
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        if (link.href) {
+            const originalHref = link.getAttribute('href');
+            link.href = fixPath(originalHref);
+        }
+    });
+});
+
+// Update the existing error handling
+window.addEventListener('error', function(e) {
+    if (e.target.tagName === 'IMG') {
+        console.error('Image failed to load:', e.target.src);
+        // Try loading with adjusted path
+        const newSrc = fixPath(e.target.getAttribute('src'));
+        if (newSrc !== e.target.src) {
+            e.target.src = newSrc;
+        }
+    }
+}, true);
+
+// Update path handling for assets and links
+document.addEventListener('DOMContentLoaded', () => {
+    // Fix resource loading
+    document.querySelectorAll('img, script, link').forEach(element => {
+        if (element.src && element.src.startsWith('/')) {
+            element.src = '.' + element.src;
+        }
+        if (element.href && element.href.startsWith('/')) {
+            element.href = '.' + element.href;
+        }
+    });
+
+    // Enhanced error handling
+    document.addEventListener('error', function(e) {
+        if (e.target.tagName === 'IMG' || e.target.tagName === 'SCRIPT') {
+            console.error('Resource failed to load:', e.target.src);
+            if (e.target.dataset.fallback) {
+                e.target.src = e.target.dataset.fallback;
+            }
+        }
+    }, true);
+});
