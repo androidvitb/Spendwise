@@ -1,6 +1,229 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+    --primary: #377f8e;
+    --primary-dark: #1f3c42;
+    --secondary: #2c6571;
+    --accent: #4CAF50;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-600: #4b5563;
+}
+
+/* Hero section styles */
+.hero-gradient {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+/* Feature card styles */
+.feature-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(55, 127, 142, 0.15);
+}
+
+/* FAQ styles */
+.faq-button i {
+    transition: transform 0.3s ease;
+}
+
+.faq-button.active i {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Form styles */
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(55, 127, 142, 0.2);
+}
+
+/* Button styles */
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2c6571;
+    transform: scale(1.05);
+}
+
+/* Social media icons */
+.social-icon {
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Newsletter input */
+.newsletter-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+.newsletter-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* Utility classes */
+.hidden {
+    display: none;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #121212;
+        --text-color: #e0e0e0;
+    }
+
+    body.dark {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+    }
+
+    .dark .bg-white {
+        background-color: #1e1e1e;
+    }
+
+    .dark .text-gray-600 {
+        color: #9ca3af;
+    }
+}
+
+/* Enhanced Dark Mode Styles */
+[data-theme="dark"] {
+    --bg-primary: #1a1f2c;
+    --bg-secondary: #242b38;
+    --bg-tertiary: #2d3544;
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --border-color: #374151;
+}
+
+[data-theme="dark"] body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-gray-50 {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .contact-card,
+[data-theme="dark"] form {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus {
+    border-color: #377f8e;
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .text-gray-600,
+[data-theme="dark"] .text-gray-700,
+[data-theme="dark"] .text-gray-800 {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .shadow-md,
+[data-theme="dark"] .shadow-lg,
+[data-theme="dark"] .shadow-xl {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .contact-card {
+    background-color: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .contact-card:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .bg-gradient-to-b {
+    background-image: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
+}
+
+/* Enhanced form styles */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9ca3af;
+}
+
+[data-theme="dark"] .form-group input::placeholder,
+[data-theme="dark"] .form-group textarea::placeholder {
+    color: #4b5563;
+}
+
+/* Enhanced transition effects */
+.contact-card {
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+}
+
+/* New gradient background for dark mode sections */
+[data-theme="dark"] #contact {
+    background: linear-gradient(to bottom, var(--bg-secondary), var(--bg-primary));
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        text-align: center;
+    }
+    
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
 
 #scrollButton {
     position: fixed;
@@ -409,7 +632,7 @@ form button {
 }
 
 form button:hover {
-    background-color: #4548a0;
+    background-color: #2c6571;
 }
 
 input:checked~.dot {
@@ -482,7 +705,7 @@ button {
 }
 
 button:hover {
-    background-color: #176b;
+    background-color: #2c6571;
 }
 
 .copyright{
@@ -491,4 +714,281 @@ button:hover {
 
 .footer-logo{
     margin-bottom: -4rem;
+}
+
+/* Theme transition */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* New animations */
+.fade-in-left {
+    animation: fadeInLeft 1s ease-out;
+}
+
+.fade-in-right {
+    animation: fadeInRight 1s ease-out;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Enhanced FAQ styles */
+.faq-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.faq-button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(45deg, transparent 0%, rgba(55, 127, 142, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.faq-button:hover::after {
+    opacity: 1;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.faq-answer.show {
+    max-height: 500px;
+}
+
+/* Theme toggle button styles */
+#theme-toggle {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+#theme-toggle:hover {
+    background-color: rgba(55, 127, 142, 0.1);
+}
+
+/* Dark theme styles */
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0aec0;
+}
+
+[data-theme="dark"] body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .bg-white {
+    background-color: #2d3748;
+}
+
+[data-theme="dark"] .text-gray-600 {
+    color: var(--text-secondary);
+}
+
+/* Base transitions */
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Form styling */
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    background-color: white;
+    color: #1f3c42;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #377f8e;
+    box-shadow: 0 0 0 2px rgba(55, 127, 142, 0.2);
+}
+
+.form-group label {
+    background-color: white;
+    color: #4b5563;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label {
+    transform: translateY(-1.5rem) scale(0.85);
+    background-color: white;
+    padding: 0 0.4rem;
+    color: var(--primary);
+}
+
+/* Contact cards */
+.contact-card {
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Social icons in footer */
+.social-icon-footer {
+    @apply h-10 w-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200;
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .bg-white {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group textarea,
+[data-theme="dark"] .form-group select {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-group label {
+    color: var(--text-secondary);
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group textarea:focus,
+[data-theme="dark"] .form-group select:focus {
+    border-color: #377f8e;
+    box-shadow: 0 0 0 2px rgba(55, 127, 142, 0.2);
+}
+
+[data-theme="dark"] .contact-card {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+}
+
+/* Fix navigation hover states */
+nav a:hover {
+    color: #2c6571 !important;
+}
+
+/* Fix button hover states */
+.bg-gradient-to-r:hover {
+    background-image: linear-gradient(to right, #2c6571, #1f3c42);
+}
+
+/* Fix form field visibility in light mode */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    background-color: #ffffff;
+    border: 2px solid #e2e8f0;
+    color: #1f2937;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9ca3af;
+}
+
+.form-group label {
+    color: #4b5563;
+    background-color: #ffffff;
+    padding: 0 4px;
+}
+
+/* Updated footer styles */
+footer a {
+    position: relative;
+}
+
+footer a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #ffffff;
+    transition: width 0.3s ease;
+}
+
+footer a:hover::after {
+    width: 100%;
+}
+
+footer .social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+footer .social-links a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Dark mode form field adjustments */
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group textarea,
+[data-theme="dark"] .form-group select {
+    background-color: #1e1e1e;
+    border-color: #374151;
+    color: #e5e7eb;
+}
+
+[data-theme="dark"] .form-group label {
+    background-color: #1e1e1e;
+    color: #9ca3af;
+}
+
+/* Fix placeholder text contrast */
+.form-group input:placeholder-shown,
+.form-group textarea:placeholder-shown {
+    color: #6b7280;
 }
