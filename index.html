@@ -1,677 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SpendWise: Expense-Tracker</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpendWise - Smart Expense Tracking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="input.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.0.0-beta.2/dist/tesseract.min.js"></script>
-    
-  </head>
-  <body class="m-0 p-0 overflow-x-hidden">
-    <!-- Header -->
-    <header
-      class="bg-white text-[#7fb0ba] py-[14px] min-h-[50px] flex justify-center items-center"
-    >
-      <header-content class="flex w-[1150px] items-center">
-        <logo-container
-          class="flex items-center w-[145px] h-[52px] max-w-[535px] px-[15px]">
-          <img src="Images/SpendWise2.png" class="max-w-7xl0" alt="logo">
-        </logo-container>
-            
-        <div class="w-[70%] lg:w-0"></div>
-        <navigator
-          class="flex w-[75%] overflow-hidden max-lg:hidden max-lg:fixed max-lg:z-10 max-lg:top-0 max-lg:right-0 max-lg:w-[300px] max-lg:h-full max-lg:bg-white"
-          id="Navigator"
-        >
-          <ul
-            class="max-lg:py-20 max-lg:px-5 flex max-lg:block list-none"
-            id="ul"
-          >
-            <li class="p-2">
-              <a href="#home" style="font-weight: 600; color: #96c2db">Home</a>
-            </li>
-            <li class="p-2">
-              <a
-                href="reward.html"
-                class="text-[#377f8e] hover:bg-[#b1d9e3] no-underline text-base font-normal transition-colors"
-                >Rewards</a
-              >
-            </li>
-            <li class="p-2">
-              <a
-                href="#expense-tracker"
-                class="text-[#377f8e] hover:bg-[#b1d9e3] no-underline text-base font-normal"
-                >Expenses</a
-              >
-            </li>
-            <li class="p-2">
-              <a
-                href="#insight-section"
-                class="text-[#377f8e] hover:bg-[#b1d9e3] no-underline text-base font-normal"
-                >Graphs</a
-              >
-            </li>
-            <li class="p-2">
-              <a
-                href="/about.html"
-                class="text-[#377f8e] hover:bg-[#b1d9e3] no-underline text-base font-normal"
-                >About Us</a
-              >
-          </ul>
-        </navigator>
-        <div
-          class="hidden z-10 mx-[20px] max-lg:block max-lg:static max-lg:right-0 max-lg:top-[25px]"
-          id="hamburger"
-          onclick="hamburgers()"
-        >
-          <div
-            id="bar1"
-            class="w-[25px] h-[4px] rounded-full bg-[#377f8e] my-[4px] transition duration-300"
-          ></div>
-          <div
-            id="bar2"
-            class="w-[25px] h-[4px] rounded-full bg-[#377f8e] my-[4px] transition duration-300"
-          ></div>
-          <div
-            id="bar3"
-            class="w-[25px] h-[4px] rounded-full bg-[#377f8e] my-[4px] transition duration-300"
-          ></div>
-        </div>
-        <div class="flex space-x-4">
-          <a href="#contact-us">
-          </a>
-          <div class="flex space-x-4">
-            <a href="#contact-us">
-              <button class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-white hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal">Contact Us</button>
-            </a>
-            <label for="dark-mode-toggle" class="flex items-center cursor-pointer">
-              <div class="relative">
-                <input id="dark-mode-toggle" type="checkbox" class="sr-only" />
-                <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
-                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
-              </div>
-            </label>
-          </div>
-        </div>
-      </header-content>
-    </header>
-
-    <!-- Content -->
-
-    <content>
-      <Content-Box
-          class="block p-2 absolute right-[50px] w-[700px] h-[420px] text-center bg-[#e5edf1] max-[760px]:static max-[760px]:block max-[760px]:mx-auto max-[760px]:w-[88%] max-[760px]:h-auto max-[760px]:pb-[60px]"
-        >
-          <Content-Heading
-            class="block pt-[40px] italic text-[50px] max-sm:text-[35px] opacity-65 text-black transition duration-500 ease-in-out"
-            style="font-family: 'Playfair Display'"
-          >
-            <h1>SpendWise - Your personal expense tracker</h1>
-          </Content-Heading>
-          <Content-Paragraph
-            class="block px-[40px] py-[10px] text-[18px] font-light text-gray-600 transition duration-500 ease-in-out"
-          >
-            <p>
-              Track expenses, organize finances, and achieve your goals
-              effortlessly with SpendWise. Manage budgets and spending trends
-              with ease!
-            </p>
-          </Content-Paragraph>
-          <Content-Button>
-            <a href="#expense-tracker">
-              <button
-                class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-transparent hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal"
-              >
-                GET STARTED
-              </button>
-            </a>
-          </Content-Button>
-        </Content-Box>
-      <Content_Image
-        class="flex justify-center overflow-hidden w-[63.897%] h-[640px] transition duration-500 ease-in-out"
-      >
-        <img
-          src="Images/main-bg.png"
-          class="object-cover object-center w-full h-full"
-          alt="#"
-        />
-      </Content_Image>
-
-      
-
-      <!--scroll button-->
-      <button id="scrollButton" title="Go to top">
-        <i class="fa-solid fa-arrow-up fa-xl"></i>
-      </button>
-        
-
-      <div class="flex justify-center my-4">
-        <label
-          for="currency-select"
-          data-translate="currencySelect"
-          class="mr-2 text-lg font-medium"
-          >Select Currency:</label
-        >
-        <select id="currency-select" class="px-3 py-2 border rounded">
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="INR">INR</option>
-          <option value="GBP">GBP</option>
-        </select>
-      </div>
-      <div class="flex justify-center my-4">
-        <label for="languageSelect" class="mr-2 text-lg font-medium"
-          >Language:</label
-        >
-        <select id="languageSelect" class="px-3 py-2 border rounded">
-          <option value="en">English</option>
-          <option value="hi">hindi</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
-          <option value="de">Deutsch</option>
-        </select>
-      </div>
-
-      <Expense_Tracker
-        id="expense-tracker"
-        class="flex flex-col justify-center items-center w-full h-auto"
-      >
-        <Text-1
-          class="block w-1/3 max-sm:w-1/2 mx-auto my-[10px] text-center bg-[#377f8e] rounded-xl text-white text-[30px] transition duration-500 ease-in-out"
-          style="font-family: 'Playfair Display'"
-          >Expenses List</Text-1
-        >
-
-        <!-- Main Tracker that contains all the required fields as said in the task along with some extra fields like category. -->
-
-        <Main_Tracker
-          class="flex max-lg:flex-col px-4 py-2 items-center w-[98%] h-full border-2"
-        >
-          <div
-            class="border-[1px] border-[#377f8e] w-[65%] max-lg:w-[100%] rounded-xl overflow-hidden"
-          >
-            <table
-              class="text-2xl max-sm:text-lg font-thin w-full h-[85%] transition-all duration-300"
-            >
-              <thead class="text-[#377f8e] bg-slate-100">
-                <tr class="w-full">
-                  <th
-                    class="px-4 w-[30%] border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light"
-                  >
-                    Expense Title
-                  </th>
-                  <th
-                    class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light"
-                  >
-                    Amount
-                  </th>
-                  <th
-                    class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light"
-                  >
-                    Date
-                  </th>
-                  <th
-                    class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light"
-                  >
-                    Tags
-                  </th>
-                  <th
-                    class="px-4 border-[1px] border-r-[#377f8e] border-b-[#377f8e] font-light"
-                  >
-                    Edit
-                  </th>
-                  <th class="px-4 border-[1px] border-b-[#377f8e] font-light">
-                    Delete
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="tableBody"></tbody>
-            </table>
-            <div class="p-[10px] text-right">
-              <strong>Total:</strong>
-              <span id="total-amount">0</span>
-            </div>
-          </div>
-
-          <div
-            class="m-2 py-2 border-2 border-[#377f8e] w-[35%] max-lg:w-[100%] h-auto rounded-xl"
-          >
-            <table class="w-full">
-              <tr>
-                <td>
-                  <Text-1
-                    class="block m-2 text-center text-2xl underline"
-                    style="font-family: Playfair Display"
-                    >Add An Expense</Text-1
-                  >
-                </td>
-              </tr>
-
-              <tr>
-                <td class="py-2 bg-slate-100 flex justify-center">
-                  <label for="expense-title" class="px-3 text-1xl"
-                    >Expense Title:
-                  </label>
-                  <input
-                    type="text"
-                    id="expense-title"
-                    class="px-3 bg-transparent border-[1px] rounded-xl border-gray-600"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td class="py-2 flex justify-center">
-                  <label for="expense-amount" class="px-3 text-1xl"
-                    >Amount:
-                  </label>
-                  <input
-                    type="number"
-                    id="expense-amount"
-                    class="px-3 bg-transparent border-[1px] rounded-xl border-gray-600"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td class="py-2 bg-slate-100 flex justify-center">
-                  <label for="expense-date" class="px-3 text-1xl">Date: </label>
-                  <input
-                    type="date"
-                    id="expense-date"
-                    class="px-3 bg-transparent border-[1px] rounded-xl border-gray-600"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td class="py-2 flex justify-center">
-                  <label for="expense-time" class="px-3 text-1xl">Time: </label>
-                  <input
-                    type="time"
-                    id="expense-time"
-                    class="px-3 bg-transparent border-[1px] rounded-xl border-gray-600"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td class="py-2 bg-slate-100 flex justify-center">
-                  <label for="expense-category" class="px-3 text-1xl"
-                    >Tags:</label
-                  >
-                  <input
-                    type="text"
-                    id="expense-category"
-                    class="px-3 bg-transparent border-[1px] rounded-xl border-gray-600"
-                    placeholder="Enter category (e.g., Travel, Food)"
-                  />
-                </td>
-              </tr>
-
-              <tr>
-                <td class="flex justify-center items-center">
-                  <button
-                    id="add"
-                    class="mx-auto my-[10px] min-w-[130px] min-h-[45px] bg-[#377f8e] hover:bg-transparent hover:text-[#377f8e] hover:border hover:border-[#377f8e] text-white text-base font-normal"
-                  >
-                    Add Expense
-                  </button>
-                  <div class="flex flex-wrap gap-4 justify-center my-6">
-                    <!-- Search Input -->
-                    <div class="relative">
-                      <input type="text" id="search-input" placeholder="Search expenses..."
-                        class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#377f8e] focus:outline-none">
-                      <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+    <link rel="stylesheet" href="input.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <img src="Images/SpendWise2.png" class="h-20 w-auto" alt="SpendWise">
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-[#377f8e] hover:text-[#1f3c42]">Home</a>
+                    <a href="#about" class="text-[#377f8e] hover:text-[#1f3c42]">About</a>
+                    <a href="#features" class="text-[#377f8e] hover:text-[#1f3c42]">Features</a>
+                    <a href="#faq" class="text-[#377f8e] hover:text-[#1f3c42]">FAQ</a>
+                    <a href="#contact" class="text-[#377f8e] hover:text-[#1f3c42]">Contact</a>
+                    <div class="flex items-center space-x-4">
+                        <button id="theme-toggle" class="p-2 rounded-lg text-gray-500 hover:text-gray-600 focus:outline-none">
+                            <i class="fas fa-sun text-xl" id="theme-toggle-light-icon"></i>
+                            <i class="fas fa-moon text-xl hidden" id="theme-toggle-dark-icon"></i>
+                        </button>
+                        <a href="/dashboard.html" class="bg-gradient-to-r from-[#377f8e] to-[#2c6571] text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all duration-300">
+                            Dashboard
+                        </a>
                     </div>
-                  
-                    <!-- Category Filter -->
-                    <select id="category-filter"
-                      class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#377f8e] focus:outline-none">
-                      <option value="">All Categories</option>
-                      <option value="Food">Food</option>
-                      <option value="Transportation">Transportation</option>
-                      <option value="Entertainment">Entertainment</option>
-                    </select>
-                  
-                    <!-- Date Range Filter -->
-                    <input type="date" id="start-date"
-                      class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#377f8e] focus:outline-none">
-                    <input type="date" id="end-date"
-                      class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#377f8e] focus:outline-none">
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </Main_Tracker>
-        <section class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-          <h1 class="text-2xl font-semibold text-center text-teal-600 mb-4">Upload Your Receipt</h1>
-          <div class="flex justify-center mb-6">
-            <input 
-          type="file" 
-          id="receiptUpload" 
-          accept="image/*" 
-          class="px-4 py-2 text-sm border border-gray-300 rounded-md cursor-pointer 
-          hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-teal-500" 
-          style="width: 14rem; display: block;" 
-          />
-          </div>
-          <div id="loading" class="text-center text-teal-600 font-medium" style="display: none;">
-            Processing image... Please wait.
-          </div>
-          <div id="receiptDetails" class="bg-slate-100 p-4 rounded-xl mt-4">
-            <!-- Dynamically filled receipt data -->
-          </div>
-          <button
-            id="addToExpenses"
-            class="mt-4 bg-[#377f8e] text-white py-2 px-4 rounded-xl hover:bg-[#2d6c77] transition duration-300 ease-in-out"
-          >
-            Add to Expenses
-          </button>
-          
-          <div id="output" class="bg-gray-50 p-4 rounded-lg shadow-md" style="display: none;">
-            <h2 class="text-xl font-semibold text-teal-700 mb-4 text-center">Extracted Receipt Information</h2>
-            <div id="receiptDetails"></div>
-          </div>
-        </section>
-        <!-- Budget Setup Section -->
-        <section id="budget-section" class="w-full p-6 bg-gray-100">
-          <h2 class="text-2xl font-bold text-[#377f8e] mb-4">Budget Setup</h2>
-          <div class="flex flex-wrap justify-center gap-4">
-            <div class="w-full md:w-1/2 bg-white p-4 rounded-lg shadow-md">
-              <h3 class="text-lg font-semibold mb-3">Set Category Budgets</h3>
-              <div class="space-y-3" id="budget-categories">
-                <div class="flex items-center space-x-3">
-                  <select id="budget-category-select" class="border p-2 rounded w-1/2">
-                    <option value="">Select Category</option>
-                    <option value="Food">Food</option>
-                    <option value="Transportation">Transportation</option>
-                    <option value="Entertainment">Entertainment</option>
-                    <option value="Shopping">Shopping</option>
-                    <option value="Utilities">Utilities</option>
-                  </select>
-                  <input type="number" id="budget-amount" placeholder="Budget Amount" class="border p-2 rounded w-1/3">
-                  <button id="add-budget" class="bg-[#377f8e] text-white px-4 py-2 rounded hover:bg-[#2d6c77]">
-                    Add Budget
-                  </button>
                 </div>
-              </div>
-              <div id="budget-list" class="mt-4 space-y-2"></div>
-            </div>
-            <div class="w-full md:w-1/2 bg-white p-4 rounded-lg shadow-md">
-              <h3 class="text-lg font-semibold mb-3">Budget Insights</h3>
-              <div id="budget-insights" class="space-y-2"></div>
-            </div>
-          </div>
-        </section>
-        <Graphs&Charts id="insight-section" class="block w-svw">
-          <Text-1
-            class="block w-1/3 max-sm:w-1/2 mx-auto my-[10px] text-center text-[#377f8e] rounded-xl text-[30px] transition duration-500 ease-in-out"
-            style="font-family: 'Playfair Display'"
-            >Insights</Text-1
-          >
-
-          <main class="w-full flex justify-center max-lg:flex-col">
-            <Bar_Graph id="bar" class="max-w-[50%]"></Bar_Graph>
-            <Pie_Chart id="pie" class="max-w-[50%] right-0"></Pie_Chart>
-          </main>
-          <!-- AI-Powered Summary Section -->
-          <div class="flex flex-col items-center mt-8">
-            <h3 class="text-xl font-bold text-[#377f8e]" id="ai-summary-title">
-              AI-Powered Summary
-            </h3>
-            <ul id="ai-summary" class="list-disc pl-10 mt-4 text-gray-700"></ul>
-          </div>
-        </Graphs&Charts>
-
-        <div class="flex justify-center space-x-4 my-4">
-          <button
-            id="export-excel"
-            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-          >
-            Export as Excel
-          </button>
-          <button
-            id="export-pdf"
-            class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-          >
-            Export as PDF
-          </button>
-        </div>
-      </Expense_Tracker>
-    </content>
-
-   <!-- Finance game section -->
-<section class="bg-gray-100 py-10">
-  <div class="container mx-auto max-w-4xl bg-white p-6 rounded-lg shadow-md">
-    <h1 class="text-3xl font-bold text-green-600 text-center mb-6">Budget Master</h1>
-    <div class="flex justify-between items-center mb-6">
-      <div id="level-info" class="text-lg font-medium text-gray-700">
-        Level: <span id="level" class="font-bold text-green-500">1</span>
-      </div>
-      <div id="goal-info" class="text-lg font-medium text-gray-700">
-        Savings Goal: $<span id="goal" class="font-bold text-green-500">200</span>
-      </div>
-    </div>
-    <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
-      <div id="progress" class="bg-green-500 h-4 rounded-full" style="width: 0%;"></div>
-    </div>
-    <p id="budget" class="text-center text-lg font-medium text-gray-700 mb-6">
-      Starting Budget: $1000
-    </p>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-      <div class="category flex flex-col">
-        <label for="housing" class="text-gray-700 font-medium mb-2">Housing:</label>
-        <input type="number" id="housing" placeholder="$0" 
-          class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none">
-      </div>
-      <div class="category flex flex-col">
-        <label for="groceries" class="text-gray-700 font-medium mb-2">Groceries:</label>
-        <input type="number" id="groceries" placeholder="$0" 
-          class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none">
-      </div>
-      <div class="category flex flex-col">
-        <label for="entertainment" class="text-gray-700 font-medium mb-2">Entertainment:</label>
-        <input type="number" id="entertainment" placeholder="$0" 
-          class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none">
-      </div>
-      <div class="category flex flex-col">
-        <label for="savings" class="text-gray-700 font-medium mb-2">Savings:</label>
-        <input type="number" id="savings" placeholder="$0" 
-          class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none">
-      </div>
-    </div>
-    <button id="allocate-btn" 
-      class="w-full bg-green-500 text-white py-3 rounded-lg font-bold text-lg hover:bg-green-600 transition duration-200">
-      Allocate Budget
-    </button>
-    <div id="events" class="mt-6 text-center text-gray-700"></div>
-    <p id="score" class="mt-4 text-lg font-bold text-green-600 text-center"></p>
-  </div>
-</section>
-
-
-    <!-- Feedback Section -->
-    <section
-      id="feedback-section"
-      class="w-full min-h-[600px] p-8 bg-gradient-to-br from-[#e5edf1] to-white"
-    >
-      <h2
-        class="text-3xl text-center text-[#377f8e] mb-10 font-bold"
-        style="font-family: 'Playfair Display'"
-      >
-        Your Feedback Matters
-      </h2>
-
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
-        <!-- Left side - Form -->
-        <div
-          class="w-full md:w-1/2 bg-white rounded-2xl shadow-lg p-6 transform hover:scale-[1.02] transition-transform duration-300"
-        >
-          <form id="feedback-form" class="space-y-6">
-            <h3 class="text-xl text-[#377f8e] mb-4 font-semibold">
-              Share Your Experience
-            </h3>
-            <div class="space-y-4">
-              <input
-                type="text"
-                id="name"
-                placeholder="Your Name (Optional)"
-                class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"
-              />
-
-              <input
-                type="email"
-                id="email"
-                placeholder="Your Email (Optional)"
-                class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"
-              />
-
-              <div class="rating-group">
-                <p class="mb-2">How satisfied are you with our application?</p>
-                <div class="star-rating" data-rating="satisfaction"></div>
-              </div>
-
-              <div class="rating-group">
-                <p class="mb-2">How would you rate the ease of use?</p>
-                <div class="star-rating" data-rating="ease"></div>
-              </div>
-
-              <div class="rating-group">
-                <p class="mb-2">How would you rate our features?</p>
-                <div class="star-rating" data-rating="features"></div>
-              </div>
-
-              <div class="space-y-2">
-                <p class="mb-2">Have you faced any issues?</p>
-                <div class="space-x-4">
-                  <label class="inline-flex items-center">
-                    <input
-                      type="radio"
-                      name="issues"
-                      value="yes"
-                      class="form-radio text-[#377f8e]"
-                    />
-                    <span class="ml-2">Yes</span>
-                  </label>
-                  <label class="inline-flex items-center">
-                    <input
-                      type="radio"
-                      name="issues"
-                      value="no"
-                      class="form-radio text-[#377f8e]"
-                    />
-                    <span class="ml-2">No</span>
-                  </label>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-[#377f8e]">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
                 </div>
-              </div>
-
-              <div id="issues-box" class="hidden">
-                <textarea
-                  id="issues-detail"
-                  rows="3"
-                  placeholder="Please describe the issues you faced"
-                  class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"
-                ></textarea>
-              </div>
-
-              <div>
-                <textarea
-                  id="suggestions"
-                  rows="3"
-                  placeholder="Any suggestions to improve our application?"
-                  class="w-full p-2 border border-[#377f8e] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#377f8e]"
-                ></textarea>
-              </div>
             </div>
-
-            <button
-              type="submit"
-              class="w-full py-2 px-4 bg-[#377f8e] text-white rounded-lg hover:bg-[#1f3c42] transition-colors"
-            >
-              Submit Feedback
-            </button>
-          </form>
         </div>
+    </nav>
 
-        <!-- Right side - Engagement Content -->
-        <div
-          id="contact-us"
-          class="w-full md:w-1/2 flex flex-col justify-center items-center space-y-8 p-6"
-        >
-          <div class="text-center space-y-6">
-            <i class="fas fa-comments text-6xl text-[#377f8e]"></i>
-            <h3
-              class="text-2xl font-semibold text-[#377f8e]"
-              style="font-family: 'Playfair Display'"
-            >
-              Help Us Improve
-            </h3>
-            <p class="text-lg text-gray-600 max-w-md">
-              Your feedback helps us create a better experience for everyone.
-              Share your thoughts and be part of our journey to excellence!
-            </p>
-          </div>
-
-          <div class="grid grid-cols-2 gap-6 mt-8 w-full max-w-md">
-            <div class="text-center p-4 bg-white rounded-lg shadow-md">
-              <i class="fas fa-star text-2xl text-[#377f8e] mb-2"></i>
-              <p class="text-gray-600">Rate our features</p>
-            </div>
-            <div class="text-center p-4 bg-white rounded-lg shadow-md">
-              <i class="fas fa-lightbulb text-2xl text-[#377f8e] mb-2"></i>
-              <p class="text-gray-600">Share your ideas</p>
-            </div>
-            <div class="text-center p-4 bg-white rounded-lg shadow-md">
-              <i class="fas fa-bug text-2xl text-[#377f8e] mb-2"></i>
-              <p class="text-gray-600">Report issues</p>
-            </div>
-          </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden fixed w-full bg-white z-40 top-16 shadow-md">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            <a href="#home" class="block px-3 py-2 text-[#377f8e]">Home</a>
+            <a href="#about" class="block px-3 py-2 text-[#377f8e]">About</a>
+            <a href="#features" class="block px-3 py-2 text-[#377f8e]">Features</a>
+            <a href="#faq" class="block px-3 py-2 text-[#377f8e]">FAQ</a>
+            <a href="#contact" class="block px-3 py-2 text-[#377f8e]">Contact</a>
+            <a href="/dashboard.html" class="block px-3 py-2 bg-[#377f8e] text-white rounded-lg text-center">
+                Dashboard
+            </a>
         </div>
-      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-28 pb-16 px-4 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+        <div class="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center">
+            <div class="md:w-1/2 text-center md:text-left fade-in-left">
+                <h1 class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-[#377f8e] to-[#2c6571] bg-clip-text text-transparent mb-6">
+                    Master Your Money with SpendWise
+                </h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    Track expenses, set budgets, and achieve your financial goals with our smart expense tracking solution.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="/dashboard.html" class="bg-[#377f8e] text-white px-8 py-3 rounded-lg text-lg hover:bg-[#1f3c42] text-center">
+                        Get Started
+                    </a>
+                    <a href="#features" class="border-2 border-[#377f8e] text-[#377f8e] px-8 py-3 rounded-lg text-lg hover:bg-[#377f8e] hover:text-white text-center">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 mb-8 md:mb-0 fade-in-right p-4">
+                <img src="Images/main-bg.png" alt="Expense Tracking" class="w-full h-auto rounded-2xl shadow-2xl hover:transform hover:scale-105 transition-transform duration-500">
+            </div>
+        </div>
     </section>
 
-    <footer class="block relative w-full h-[120px] bg-slate-100">
-      <Text
-        class="block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center"
-      >
-      <logo-container
-      class="footer-logo flex items-center w-[120px] h-[43.03px] max-w-[535px] px-[15px]">
-      <img src="Images/SpendWise2.png" class="max-w-7xl0" alt="logo">
-    </logo-container>
-        <p class="copyright text-[15px] text-[#377f8e]">© <script>document.write(new Date().getFullYear());</script> SpendWise. All rights reserved.</p>
-        <a
-          href="https://github.com/androidvitb/Spendwise"
-          target="_blank"
-          class="hover:underline text-[15px] text-[#377f8e]"
-        >
-        Visit us on GitHub
-            </a>
-      </Text>
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-[#377f8e] mb-12">
+                Why Choose SpendWise?
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <i class="fas fa-chart-line text-4xl text-[#377f8e] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">Smart Tracking</h3>
+                    <p class="text-gray-600">Automatically categorize and track your expenses with our intelligent system.</p>
+                </div>
+                <div class="text-center p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <i class="fas fa-piggy-bank text-4xl text-[#377f8e] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">Budget Planning</h3>
+                    <p class="text-gray-600">Set and manage budgets easily with our intuitive planning tools.</p>
+                </div>
+                <div class="text-center p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <i class="fas fa-lightbulb text-4xl text-[#377f8e] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">Smart Insights</h3>
+                    <p class="text-gray-600">Get personalized insights and recommendations to improve your spending habits.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-[#377f8e] mb-12">
+                Powerful Features
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-receipt text-3xl text-[#377f8e]"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Receipt Scanner</h3>
+                        <p class="text-gray-600">Upload receipts and let our OCR technology automatically extract expense details.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-chart-pie text-3xl text-[#377f8e]"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Visual Analytics</h3>
+                        <p class="text-gray-600">View your spending patterns through interactive charts and graphs.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-bell text-3xl text-[#377f8e]"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Budget Alerts</h3>
+                        <p class="text-gray-600">Get notified when you're approaching your budget limits.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-gamepad text-3xl text-[#377f8e]"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Budget Game</h3>
+                        <p class="text-gray-600">Learn budgeting through our interactive game simulation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 bg-gradient-to-b from-gray-50 to-white">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-[#377f8e] mb-12">
+                Frequently Asked Questions
+            </h2>
+            <div class="space-y-4">
+                <div class="border rounded-lg hover:shadow-md transition-shadow">
+                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none">
+                        <span class="text-lg font-medium text-gray-800">How do I get started with SpendWise?</span>
+                        <i class="fas fa-chevron-down transform transition-transform text-[#377f8e]"></i>
+                    </button>
+                    <div class="faq-answer hidden p-4 bg-gray-50">
+                        <p class="text-gray-600">Getting started is easy! Simply click the "Get Started" button, create your account, and you can begin tracking your expenses right away. Our intuitive dashboard will guide you through the process.</p>
+                    </div>
+                </div>
+
+                <div class="border rounded-lg hover:shadow-md transition-shadow">
+                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none">
+                        <span class="text-lg font-medium text-gray-800">Is my financial data secure?</span>
+                        <i class="fas fa-chevron-down transform transition-transform text-[#377f8e]"></i>
+                    </button>
+                    <div class="faq-answer hidden p-4 bg-gray-50">
+                        <p class="text-gray-600">Yes! We use bank-level encryption to protect your data. Your security is our top priority, and we never share your personal information with third parties.</p>
+                    </div>
+                </div>
+
+                <div class="border rounded-lg hover:shadow-md transition-shadow">
+                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none">
+                        <span class="text-lg font-medium text-gray-800">Can I export my expense reports?</span>
+                        <i class="fas fa-chevron-down transform transition-transform text-[#377f8e]"></i>
+                    </button>
+                    <div class="faq-answer hidden p-4 bg-gray-50">
+                        <p class="text-gray-600">Yes! You can export your expense reports in multiple formats including PDF and Excel. This makes it easy to share with your accountant or keep for your records.</p>
+                    </div>
+                </div>
+
+                <div class="border rounded-lg hover:shadow-md transition-shadow">
+                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none">
+                        <span class="text-lg font-medium text-gray-800">Is there a mobile app available?</span>
+                        <i class="fas fa-chevron-down transform transition-transform text-[#377f8e]"></i>
+                    </button>
+                    <div class="faq-answer hidden p-4 bg-gray-50">
+                        <p class="text-gray-600">Currently, SpendWise is available as a responsive web application that works great on all devices. We're working on native mobile apps that will be available soon!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-b from-white to-gray-50">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-[#377f8e] to-[#2c6571] bg-clip-text text-transparent mb-12">
+                Let's Connect
+            </h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow border border-gray-100">
+                    <form class="space-y-6">
+                        <div class="form-group relative">
+                            <input type="text" id="name" required
+                                class="peer w-full px-4 py-3 rounded-lg border-2 border-gray-200 placeholder-transparent focus:border-[#377f8e] focus:ring-2 focus:ring-[#377f8e] focus:ring-opacity-30 transition-all duration-200"
+                                placeholder="Your Name">
+                            <label for="name" 
+                                class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
+                                peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-gray-400
+                                peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#377f8e]">
+                                Full Name
+                            </label>
+                        </div>
+                        <div class="form-group relative">
+                            <input type="email" id="email" required
+                                class="peer w-full px-4 py-3 rounded-lg border-2 border-gray-200 placeholder-transparent focus:border-[#377f8e] focus:ring-2 focus:ring-[#377f8e] focus:ring-opacity-30 transition-all duration-200"
+                                placeholder="Your Email">
+                            <label for="email" 
+                                class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
+                                peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-gray-400
+                                peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#377f8e]">
+                                Email Address
+                            </label>
+                        </div>
+                        <div class="form-group relative">
+                            <input type="tel" id="phone" required
+                                class="peer w-full px-4 py-3 rounded-lg border-2 border-gray-200 placeholder-transparent focus:border-[#377f8e] focus:ring-2 focus:ring-[#377f8e] focus:ring-opacity-30 transition-all duration-200"
+                                placeholder="Your Phone">
+                            <label for="phone" 
+                                class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
+                                peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-gray-400
+                                peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#377f8e]">
+                                Phone Number
+                            </label>
+                        </div>
+                        <div class="form-group relative">
+                            <select id="subject" required
+                                class="peer w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-[#377f8e] focus:ring-2 focus:ring-[#377f8e] focus:ring-opacity-30 transition-all duration-200 text-gray-600">
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="support">Technical Support</option>
+                                <option value="billing">Billing Question</option>
+                                <option value="feedback">Feedback</option>
+                            </select>
+                        </div>
+                        <div class="form-group relative">
+                            <textarea id="message" rows="4" required
+                                class="peer w-full px-4 py-3 rounded-lg border-2 border-gray-200 placeholder-transparent focus:border-[#377f8e] focus:ring-2 focus:ring-[#377f8e] focus:ring-opacity-30 transition-all duration-200"
+                                placeholder="Your Message"></textarea>
+                            <label for="message" 
+                                class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
+                                peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-gray-400
+                                peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#377f8e]">
+                                Your Message
+                            </label>
+                        </div>
+                        <button type="submit" 
+                            class="w-full bg-gradient-to-r from-[#377f8e] to-[#2c6571] text-white py-4 px-6 rounded-lg
+                            hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200
+                            focus:outline-none focus:ring-2 focus:ring-[#377f8e] focus:ring-opacity-50">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                <div class="flex flex-col justify-center space-y-8">
+                    <div class="contact-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-[#377f8e] bg-opacity-10 p-4 rounded-full">
+                                <i class="fas fa-envelope text-2xl text-[#377f8e]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Email Us</h3>
+                                <p class="text-gray-600">support@spendwise.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-[#377f8e] bg-opacity-10 p-4 rounded-full">
+                                <i class="fas fa-phone text-2xl text-[#377f8e]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Call Us</h3>
+                                <p class="text-gray-600">+1 234 567 890</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-[#377f8e] bg-opacity-10 p-4 rounded-full">
+                                <i class="fas fa-map-marker-alt text-2xl text-[#377f8e]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Visit Us</h3>
+                                <p class="text-gray-600">123 Finance Street, Money City</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simplified Footer -->
+    <footer class="bg-gradient-to-b from-[#377f8e] to-[#1f3c42] text-white py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Logo and Description -->
+                <div class="text-center md:text-left">
+                    <img src="Images/SpendWise.png" class="h-16 w-auto mx-auto md:mx-0 mb-4" alt="SpendWise">
+                    <p class="text-gray-200 text-sm">Smart financial management for a better future</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="text-center">
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="#home" class="hover:text-gray-300 transition-colors">Home</a>
+                        <a href="#features" class="hover:text-gray-300 transition-colors">Features</a>
+                        <a href="#about" class="hover:text-gray-300 transition-colors">About</a>
+                        <a href="#contact" class="hover:text-gray-300 transition-colors">Contact</a>
+                    </div>
+                </div>
+                
+                <!-- Social Links -->
+                <div class="text-center">
+                    <h3 class="text-lg font-semibold mb-4">Connect With Us</h3>
+                    <div class="flex justify-center gap-4">
+                        <a href="#" class="hover:text-gray-300 transition-colors text-2xl">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="hover:text-gray-300 transition-colors text-2xl">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="hover:text-gray-300 transition-colors text-2xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="hover:text-gray-300 transition-colors text-2xl">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-white/20 text-center">
+                <p class="text-sm text-gray-300">&copy; 2025 SpendWise. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script type="module" src="script.js"></script>
-    <script type="module" src="feedback.js"></script>
-  </body>
+    <script src="script.js"></script>
+</body>
 </html>

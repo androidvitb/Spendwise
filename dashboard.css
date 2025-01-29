@@ -1,0 +1,663 @@
+/* Dark mode styles - Updated */
+.dark {
+    background-color: #1a1a1a;
+    color: #e5e7eb;
+}
+
+.dark #sidebar {
+    background-color: #2d2d2d;
+    border-right: 1px solid #404040;
+}
+
+.dark .bg-white {
+    background-color: #2d2d2d;
+}
+
+.dark .text-gray-700 {
+    color: #e5e7eb;
+}
+
+.dark .text-gray-600 {
+    color: #d1d5db;
+}
+
+.dark .text-gray-500 {
+    color: #9ca3af;
+}
+
+.dark .bg-gray-50 {
+    background-color: #374151;
+}
+
+.dark .border {
+    border-color: #4b5563;
+}
+
+.dark .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.dark input, 
+.dark select, 
+.dark textarea {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+.dark input::placeholder {
+    color: #9ca3af;
+}
+
+.dark .hover\:bg-gray-100:hover {
+    background-color: #374151;
+}
+
+/* Mobile sidebar improvements */
+@media (max-width: 768px) {
+    #sidebar {
+        position: fixed;
+        height: 100vh;
+        z-index: 50;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    #sidebar.show {
+        transform: translateX(0);
+    }
+
+    .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 40;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .sidebar-backdrop.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+/* Dark mode chart improvements */
+.dark .chartjs-render-monitor {
+    filter: invert(0.85) hue-rotate(180deg);
+}
+
+/* Dark mode table improvements */
+.dark th {
+    background-color: #374151 !important;
+}
+
+.dark tr:hover {
+    background-color: #374151;
+}
+
+/* Dark mode modal improvements */
+.dark #budget-modal .bg-white,
+.dark #game-over-modal .bg-white {
+    background-color: #2d2d2d;
+    border: 1px solid #4b5563;
+}
+
+/* Additional dark mode improvements */
+.dark .border-dashed {
+    border-color: #4b5563;
+}
+
+.dark canvas {
+    background-color: transparent !important;
+}
+
+/* Fix for the CSS selector syntax */
+.dark .text-\[\#377f8e\] {
+    color: #5fb0c0;
+}
+
+.dark .hover\:bg-gray-100:hover {
+    background-color: #404040;
+}
+
+.dark .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+/* Active tab styles */
+.tab-link.active {
+    background-color: rgba(55, 127, 142, 0.1);
+    font-weight: 600;
+}
+
+/* Responsive sidebar */
+@media (max-width: 768px) {
+    #sidebar {
+        position: fixed;
+        height: 100vh;
+        transform: translateX(-100%);
+    }
+    
+    #sidebar.active {
+        transform: translateX(0);
+    }
+}
+
+/* Transaction list styles */
+.transaction-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.transaction-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+}
+
+/* Notification animation */
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Form styles */
+.form-input:focus {
+    outline: none;
+    border-color: #377f8e;
+    box-shadow: 0 0 0 2px rgba(55, 127, 142, 0.2);
+}
+
+/* Category icon colors */
+.category-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Dark mode additions */
+.dark .bg-gray-50 {
+    background-color: #2d2d2d;
+}
+
+.dark .border-l-4 {
+    border-left-color: #4a5568;
+}
+
+.dark .text-gray-500 {
+    color: #a0aec0;
+}
+
+/* Chart styles */
+.dark #expense-chart {
+    color: #ffffff;
+}
+
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 300px;
+    width: 100%;
+}
+
+/* Dark mode chart styles */
+.dark .chart-legend {
+    color: #ffffff;
+}
+
+/* Receipt modal styles */
+.receipt-modal {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.receipt-content {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Dark mode receipt viewer */
+.dark .receipt-modal {
+    background-color: #2d2d2d;
+    border-color: #404040;
+}
+
+.dark .receipt-content {
+    background-color: #1a1a1a;
+}
+
+/* Expense table improvements */
+.expense-row {
+    transition: background-color 0.2s ease;
+}
+
+.expense-row:hover {
+    background-color: rgba(55, 127, 142, 0.05);
+}
+
+.dark .expense-row:hover {
+    background-color: rgba(95, 176, 192, 0.1);
+}
+
+/* Chart tooltip customization */
+.chart-tooltip {
+    background: rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(4px);
+    border-radius: 4px;
+    color: white !important;
+}
+
+.dark .chart-tooltip {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: black !important;
+}
+
+/* Export button animation */
+@keyframes downloadBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+#export-csv:hover i {
+    animation: downloadBounce 0.5s ease infinite;
+}
+
+/* Add these specific expense tab styles */
+.expenses-table th {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+}
+
+.dark .expenses-table th {
+    background: #2d2d2d;
+}
+
+.category-breakdown-item {
+    transition: all 0.2s ease;
+}
+
+.category-breakdown-item:hover {
+    transform: translateX(4px);
+}
+
+/* Chart container improvements */
+.chart-wrapper {
+    position: relative;
+    min-height: 300px;
+}
+
+.empty-chart-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #6b7280;
+}
+
+/* Date range inputs */
+.date-range-inputs.show {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Chart container styles */
+#expense-chart {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+/* Ensure chart is visible in dark mode */
+.dark #expense-chart {
+    background-color: transparent;
+}
+
+.dark .chartjs-tooltip {
+    background-color: rgba(45, 45, 45, 0.9) !important;
+    color: white !important;
+}
+
+/* Export dropdown styles */
+#export-menu {
+    transform-origin: top right;
+    transition: all 0.2s ease;
+}
+
+#export-menu button {
+    transition: all 0.2s ease;
+}
+
+.dark #export-menu {
+    background-color: #2d2d2d;
+    border: 1px solid #404040;
+}
+
+.dark #export-menu button {
+    color: #fff;
+}
+
+.dark #export-menu button:hover {
+    background-color: #404040;
+}
+
+/* Export dropdown improvements */
+#export-menu {
+    transform-origin: top right;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+#export-menu:not(.hidden) {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#export-menu button {
+    width: 100%;
+    text-align: left;
+}
+
+.dark #export-menu button:hover {
+    background-color: #404040;
+}
+
+/* Budget section styles */
+.budget-progress-bar {
+    transition: width 0.3s ease;
+}
+
+#budget-modal {
+    transition: opacity 0.3s ease;
+}
+
+#budget-modal:not(.hidden) {
+    display: flex;
+}
+
+.dark #budget-modal .bg-white {
+    background-color: #2d2d2d;
+}
+
+.dark .bg-gray-50 {
+    background-color: #3d3d3d;
+}
+
+/* Budget progress bar animations */
+@keyframes progressFill {
+    from { width: 0; }
+    to { width: var(--target-width); }
+}
+
+#budget-progress .bg-red-500,
+#budget-progress .bg-yellow-500,
+#budget-progress .bg-green-500 {
+    animation: progressFill 1s ease-out forwards;
+}
+
+/* Budget progress bar improvements */
+#budget-progress .relative {
+    overflow: hidden;
+}
+
+#budget-progress .bg-red-500,
+#budget-progress .bg-yellow-500,
+#budget-progress .bg-green-500 {
+    transition: width 1s ease-out;
+    will-change: width;
+}
+
+/* Ensure progress bars are visible in dark mode */
+.dark #budget-progress .bg-gray-200 {
+    background-color: #4a5568;
+}
+
+.dark #budget-progress .text-sm {
+    color: #e2e8f0;
+}
+
+/* Replace the existing budget progress bar styles with these improved ones */
+#budget-progress .progress-bar-container {
+    background-color: #f3f4f6;
+    border-radius: 0.25rem;
+    height: 0.5rem;
+    overflow: hidden;
+    position: relative;
+}
+
+#budget-progress .progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transition: width 0.6s ease-in-out;
+    border-radius: 0.25rem;
+}
+
+.dark #budget-progress .progress-bar-container {
+    background-color: #374151;
+}
+
+/* Color styles for different states */
+.progress-bar.safe { background-color: #10B981; }
+.progress-bar.warning { background-color: #FBBF24; }
+.progress-bar.danger { background-color: #EF4444; }
+
+/* Insights tab styles */
+.recommendation {
+    transition: transform 0.2s ease;
+}
+
+.recommendation:hover {
+    transform: translateY(-2px);
+}
+
+.dark .recommendation {
+    background-color: #374151;
+}
+
+.dark #insights canvas {
+    filter: invert(0.9) hue-rotate(180deg);
+}
+
+/* Dark mode adjustments for insights */
+.dark #trends-chart,
+.dark #comparison-chart {
+    background-color: transparent;
+}
+
+.dark .recommendation p {
+    color: #D1D5DB;
+}
+
+/* Budget Game styles */
+#game-timer {
+    font-family: monospace;
+}
+
+#challenge-container {
+    min-height: 200px;
+}
+
+#game-history {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.game-history-item {
+    transition: transform 0.2s ease;
+}
+
+.game-history-item:hover {
+    transform: translateX(4px);
+}
+
+/* Dark mode adjustments for game */
+.dark #game-over-modal .bg-white {
+    background-color: #2d2d2d;
+}
+
+.dark #game-feedback {
+    color: #D1D5DB;
+}
+
+/* Game animations */
+@keyframes scoreIncrease {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.score-update {
+    animation: scoreIncrease 0.3s ease-out;
+}
+
+/* Update game over modal styles */
+#game-over-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    place-items: center;
+    z-index: 50;
+}
+
+#game-over-modal.active {
+    display: grid;
+}
+
+#game-over-modal > div {
+    width: 90%;
+    max-width: 28rem;
+    margin: auto;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Fix remaining white backgrounds in dark mode */
+.dark {
+    background-color: #1a1a1a;
+    color: #e5e7eb;
+}
+
+.dark body {
+    background-color: #1a1a1a;
+}
+
+.dark main {
+    background-color: #1a1a1a;
+}
+
+.dark header {
+    background-color: #2d2d2d;
+    border-bottom: 1px solid #404040;
+}
+
+.dark .bg-gray-50 {
+    background-color: #2d2d2d !important;
+}
+
+/* Fix dropdown backgrounds */
+.dark #currency-select,
+.dark #type,
+.dark #category,
+.dark #date-range,
+.dark #filter-category {
+    background-color: #374151;
+    color: #e5e7eb;
+    border-color: #4b5563;
+}
+
+/* Fix any remaining white spaces */
+.dark .space-y-2 > * {
+    background-color: #2d2d2d;
+}
+
+.dark .rounded-lg {
+    background-color: #2d2d2d;
+}
+
+/* Update notification colors for dark mode */
+.dark .notification {
+    background-color: #2d2d2d;
+    border: 1px solid #4b5563;
+}
+
+/* Fix modal backdrops */
+.dark .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Fix table alternating rows */
+.dark tbody tr:nth-child(even) {
+    background-color: #333333;
+}
+
+.dark tbody tr:hover {
+    background-color: #404040 !important;
+}
+
+/* Fix scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+    width: 12px;
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background-color: #4b5563;
+    border-radius: 6px;
+    border: 3px solid #2d2d2d;
+}

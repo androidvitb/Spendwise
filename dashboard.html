@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpendWise Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Load libraries first -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Chart.js before your script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="dashboard.js" defer></script>
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div id="sidebar" class="bg-white w-64 shadow-md flex flex-col transition-all duration-300">
+            <div class="p-4 border-b">
+                <img src="Images/SpendWise2.png" class="h-15" alt="SpendWise">
+            </div>
+            <nav class="flex-1 p-4">
+                <div class="space-y-2">
+                    <a href="#" data-tab="overview" class="tab-link active flex items-center space-x-3 p-3 rounded-lg text-[#377f8e] hover:bg-gray-100">
+                        <i class="fas fa-home"></i>
+                        <span>Overview</span>
+                    </a>
+                    <a href="#" data-tab="expenses" class="tab-link flex items-center space-x-3 p-3 rounded-lg text-[#377f8e] hover:bg-gray-100">
+                        <i class="fas fa-receipt"></i>
+                        <span>Expenses</span>
+                    </a>
+                    <a href="#" data-tab="budget" class="tab-link flex items-center space-x-3 p-3 rounded-lg text-[#377f8e] hover:bg-gray-100">
+                        <i class="fas fa-piggy-bank"></i>
+                        <span>Budget</span>
+                    </a>
+                    <a href="#" data-tab="insights" class="tab-link flex items-center space-x-3 p-3 rounded-lg text-[#377f8e] hover:bg-gray-100">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Insights</span>
+                    </a>
+                    <a href="#" data-tab="rewards" class="tab-link flex items-center space-x-3 p-3 rounded-lg text-[#377f8e] hover:bg-gray-100">
+                        <i class="fas fa-gift"></i>
+                        <span>Rewards</span>
+                    </a>
+                    <a href="#" data-tab="game" class="tab-link flex items-center space-x-3 p-3 rounded-lg text-[#377f8e] hover:bg-gray-100">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Budget Game</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="p-4 border-t">
+                <a href="index.html" class="flex items-center space-x-3 p-3 rounded-lg text-[#377f8e] hover:bg-gray-100">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between p-4">
+                    <button id="sidebar-toggle" class="text-[#377f8e] md:hidden">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                    <div class="flex items-center space-x-4">
+                        <select id="currency-select" class="border rounded-lg px-3 py-1">
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="INR">INR</option>
+                            <option value="GBP">GBP</option>
+                        </select>
+                        <button id="dark-mode-toggle" class="text-[#377f8e]">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="flex-1 overflow-y-auto p-4">
+                <!-- Tab Content -->
+                <div id="overview" class="tab-content active">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Total Balance Card -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Balance</h3>
+                            <p class="text-3xl font-bold text-[#377f8e]" id="total-balance">$0.00</p>
+                        </div>
+                        <!-- Monthly Income Card -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-2">Monthly Income</h3>
+                            <p class="text-3xl font-bold text-green-600" id="monthly-income">$0.00</p>
+                        </div>
+                        <!-- Monthly Expenses Card -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-2">Monthly Expenses</h3>
+                            <p class="text-3xl font-bold text-red-600" id="monthly-expenses">$0.00</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Transaction Form -->
+                    <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Add Transaction</h3>
+                        <form id="transaction-form" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="text" id="description" placeholder="Description" class="w-full p-2 border rounded" required>
+                                <input type="number" id="amount" placeholder="Amount" class="w-full p-2 border rounded" required>
+                                <input type="datetime-local" id="transaction-date" class="w-full p-2 border rounded" required>
+                                <select id="type" class="w-full p-2 border rounded" required>
+                                    <option value="income">Income</option>
+                                    <option value="expense">Expense</option>
+                                </select>
+                                <select id="category" class="w-full p-2 border rounded" required>
+                                    <option value="">Select Category</option>
+                                </select>
+                                <div class="col-span-full">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Receipt</label>
+                                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+                                        <div class="space-y-1 text-center">
+                                            <div class="flex text-sm text-gray-600">
+                                                <label for="receipt-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-[#377f8e] hover:text-[#2c6674]">
+                                                    <span>Upload a receipt</span>
+                                                    <input id="receipt-upload" type="file" class="sr-only" accept="image/*">
+                                                </label>
+                                            </div>
+                                            <p class="text-xs text-gray-500">PNG, JPG up to 10MB</p>
+                                        </div>
+                                    </div>
+                                    <div id="receipt-preview" class="mt-4 hidden">
+                                        <img id="receipt-image" class="max-h-48 mx-auto" alt="Receipt preview">
+                                        <div id="scanning-status" class="text-center mt-2 text-sm text-gray-600"></div>
+                                        <div id="extracted-data" class="mt-4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="bg-[#377f8e] text-white px-6 py-2 rounded hover:bg-[#2c6674] transition-colors">
+                                Add Transaction
+                            </button>
+                        </form>
+                    </div>
+                
+                    <!-- Recent Transactions -->
+                    <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Recent Transactions</h3>
+                        <div id="transactions-list" class="space-y-2">
+                            <!-- Transactions will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+                <div id="expenses" class="tab-content hidden">
+                    <div class="grid gap-6">
+                        <!-- Filters -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
+                                    <select id="date-range" class="w-full p-2 border rounded">
+                                        <option value="7">Last 7 days</option>
+                                        <option value="30">Last 30 days</option>
+                                        <option value="90">Last 3 months</option>
+                                        <option value="custom">Custom Range</option>
+                                    </select>
+                                </div>
+                                <div class="date-range-inputs hidden">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">From</label>
+                                    <input type="date" id="date-from" class="w-full p-2 border rounded">
+                                </div>
+                                <div class="date-range-inputs hidden">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
+                                    <input type="date" id="date-to" class="w-full p-2 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                    <select id="filter-category" class="w-full p-2 border rounded">
+                                        <option value="">All Categories</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Category Summary -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Pie Chart -->
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="text-lg font-semibold text-gray-700 mb-4">Expense by Category</h3>
+                                <canvas id="expense-chart" height="300"></canvas>
+                            </div>
+                            <!-- Category List -->
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="text-lg font-semibold text-gray-700 mb-4">Category Breakdown</h3>
+                                <div id="category-list" class="space-y-3">
+                                    <!-- Category items will be added here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Transactions Table -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold text-gray-700">Transaction History</h3>
+                                <div class="flex space-x-2">
+                                    <div class="relative">
+                                        <button id="export-button" class="px-4 py-2 bg-[#377f8e] text-white rounded hover:bg-[#2c6674]">
+                                            <i class="fas fa-download mr-2"></i>Export
+                                            <i class="fas fa-chevron-down ml-2"></i>
+                                        </button>
+                                        <div id="export-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50">
+                                            <div class="py-1">
+                                                <button data-format="csv" class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100">
+                                                    <i class="fas fa-file-csv mr-2"></i>Export as CSV
+                                                </button>
+                                                <button data-format="excel" class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100">
+                                                    <i class="fas fa-file-excel mr-2"></i>Export as Excel
+                                                </button>
+                                                <button data-format="pdf" class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100">
+                                                    <i class="fas fa-file-pdf mr-2"></i>Export as PDF
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr class="bg-gray-50">
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="expenses-table-body">
+                                        <!-- Table rows will be added here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="budget" class="tab-content hidden">
+                    <!-- Budget Header -->
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-semibold text-gray-700">Budget Management</h2>
+                            <button id="add-budget" class="bg-[#377f8e] text-white px-4 py-2 rounded hover:bg-[#2c6674]">
+                                <i class="fas fa-plus mr-2"></i>Set New Budget
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Budget Form Modal -->
+                    <div id="budget-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+                        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                            <h3 class="text-lg font-semibold mb-4">Set Category Budget</h3>
+                            <form id="budget-form" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Category</label>
+                                    <select id="budget-category" class="mt-1 block w-full p-2 border rounded" required>
+                                        <!-- Categories will be populated dynamically -->
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Amount</label>
+                                    <input type="number" id="budget-amount" class="mt-1 block w-full p-2 border rounded" required>
+                                </div>
+                                <div class="flex justify-end space-x-3">
+                                    <button type="button" id="close-budget-modal" class="px-4 py-2 border rounded text-gray-600 hover:bg-gray-50">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="px-4 py-2 bg-[#377f8e] text-white rounded hover:bg-[#2c6674]">
+                                        Save Budget
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Budget Overview -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Budget Progress -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Budget Progress</h3>
+                            <div id="budget-progress" class="space-y-4">
+                                <!-- Budget progress bars will be added here -->
+                            </div>
+                        </div>
+
+                        <!-- Budget Summary -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Budget Summary</h3>
+                            <div id="budget-summary" class="space-y-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="p-4 bg-gray-50 rounded-lg">
+                                        <div class="text-sm text-gray-500">Total Budget</div>
+                                        <div id="total-budget" class="text-xl font-semibold text-[#377f8e]">$0.00</div>
+                                    </div>
+                                    <div class="p-4 bg-gray-50 rounded-lg">
+                                        <div class="text-sm text-gray-500">Remaining</div>
+                                        <div id="remaining-budget" class="text-xl font-semibold text-green-600">$0.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="insights" class="tab-content hidden">
+                    <!-- Monthly Overview -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Spending Trends</h3>
+                            <canvas id="trends-chart" height="300"></canvas>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Income vs Expenses</h3>
+                            <canvas id="comparison-chart" height="300"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Analysis -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Top Spending Categories -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Top Spending Categories</h3>
+                            <div id="top-categories" class="space-y-4">
+                                <!-- Will be populated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Spending Patterns -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Spending Patterns</h3>
+                            <div id="spending-patterns" class="space-y-4">
+                                <div class="text-sm text-gray-600">
+                                    <h4 class="font-semibold mb-2">Highest Spending Day</h4>
+                                    <p id="highest-spending-day">Calculating...</p>
+                                </div>
+                                <div class="text-sm text-gray-600">
+                                    <h4 class="font-semibold mb-2">Average Daily Spending</h4>
+                                    <p id="average-spending">Calculating...</p>
+                                </div>
+                                <div class="text-sm text-gray-600">
+                                    <h4 class="font-semibold mb-2">Monthly Savings Rate</h4>
+                                    <p id="savings-rate">Calculating...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Smart Recommendations -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Smart Recommendations</h3>
+                            <div id="recommendations" class="space-y-4">
+                                <!-- Will be populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="game" class="tab-content hidden">
+    <!-- Game Header -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold text-gray-700">Budget Challenge Game</h2>
+            <button id="start-game" class="bg-[#377f8e] text-white px-4 py-2 rounded hover:bg-[#2c6674]">
+                <i class="fas fa-play mr-2"></i>Start New Game
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Area -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Game Status -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-semibold text-gray-700">Game Status</h3>
+                    <span id="game-timer" class="text-2xl font-bold text-[#377f8e]">30:00</span>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="text-sm text-gray-500">Budget</div>
+                        <div id="game-budget" class="text-xl font-semibold text-[#377f8e]">$1000.00</div>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="text-sm text-gray-500">Remaining</div>
+                        <div id="game-remaining" class="text-xl font-semibold text-green-600">$1000.00</div>
+                    </div>
+                </div>
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <div class="text-sm text-gray-500">Score</div>
+                    <div id="game-score" class="text-2xl font-bold text-[#377f8e]">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Challenges -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Current Challenge</h3>
+            <div id="challenge-container" class="space-y-4">
+                <div id="challenge-description" class="p-4 bg-gray-50 rounded-lg">
+                    Start the game to see your first challenge!
+                </div>
+                <div id="challenge-actions" class="hidden space-y-4">
+                    <div class="flex space-x-4">
+                        <input type="number" id="decision-amount" class="flex-1 p-2 border rounded" placeholder="Enter amount">
+                        <button id="submit-decision" class="px-4 py-2 bg-[#377f8e] text-white rounded hover:bg-[#2c6674]">
+                            Submit Decision
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game History -->
+    <div class="mt-6 bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">Decision History</h3>
+        <div id="game-history" class="space-y-2">
+            <!-- History items will be added here -->
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 class="text-lg font-semibold mb-4">Game Over!</h3>
+            <div id="game-results" class="space-y-4">
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-[#377f8e] mb-2">Final Score</div>
+                        <div id="final-score" class="text-4xl font-bold">0</div>
+                    </div>
+                </div>
+                <div id="game-feedback" class="text-center text-gray-600"></div>
+            </div>
+            <div class="mt-6 flex justify-center">
+                <button id="play-again" class="px-6 py-2 bg-[#377f8e] text-white rounded hover:bg-[#2c6674]">
+                    Play Again
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <div id="rewards" class="tab-content hidden">
+                    <!-- Rewards Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="reward-card bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold mb-2">10% Cashback</h3>
+                            <p class="text-gray-600 mb-4">On spends above $1000</p>
+                            <button class="claim-reward-btn bg-[#377f8e] text-white px-4 py-2 rounded hover:bg-[#2c6674]">
+                                Claim Reward
+                            </button>
+                        </div>
+
+                        <div class="reward-card bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold mb-2">Bonus Points</h3>
+                            <p class="text-gray-600 mb-4">500 points for 80+ score</p>
+                            <button class="claim-reward-btn bg-[#377f8e] text-white px-4 py-2 rounded hover:bg-[#2c6674]">
+                                Claim Reward
+                            </button>
+                        </div>
+
+                        <div class="reward-card bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold mb-2">Gift Cards</h3>
+                            <p class="text-gray-600 mb-4">Redeem points for discounts</p>
+                            <button class="claim-reward-btn bg-[#377f8e] text-white px-4 py-2 rounded hover:bg-[#2c6674]">
+                                Claim Reward
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Math Problem Section -->
+                    <div id="math-problem-section" class="hidden mt-6 bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold mb-4">Verify Your Claim</h3>
+                        <p id="math-problem" class="text-xl font-bold mb-4"></p>
+                        <div class="flex gap-4">
+                            <input type="number" id="math-answer" 
+                                   class="flex-1 p-2 border rounded-lg focus:outline-none focus:border-[#377f8e]" 
+                                   placeholder="Enter your answer">
+                            <button id="submit-answer" 
+                                    class="bg-[#377f8e] text-white px-6 py-2 rounded-lg hover:bg-[#2c6674]">
+                                Submit
+                            </button>
+                        </div>
+                        <p id="error-message" class="hidden text-red-600 mt-2">Incorrect answer. Try again!</p>
+                    </div>
+
+                    <!-- Reward Code Section -->
+                    <div id="reward-section" class="hidden mt-6 bg-white p-6 rounded-lg shadow-md text-center">
+                        <h3 class="text-xl font-bold mb-2">Congratulations! 🎉</h3>
+                        <p class="text-lg mb-4">Here is your reward code:</p>
+                        <p id="unique-code" class="text-2xl font-mono bg-gray-100 px-6 py-3 rounded-lg"></p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
