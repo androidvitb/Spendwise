@@ -961,8 +961,13 @@ function updateTrendsChart() {
     const ctx = document.getElementById('trends-chart')?.getContext('2d');
     if (!ctx) return;
 
+    // Destroy existing chart if it exists
+    if (window.trendsChart) {
+        window.trendsChart.destroy();
+    }
+
     const data = getLast6MonthsData();
-    new Chart(ctx, {
+    window.trendsChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: data.labels,
@@ -992,8 +997,13 @@ function updateComparisonChart() {
     const ctx = document.getElementById('comparison-chart')?.getContext('2d');
     if (!ctx) return;
 
+    // Destroy existing chart if it exists
+    if (window.comparisonChart) {
+        window.comparisonChart.destroy();
+    }
+
     const { income, expenses } = getCurrentMonthComparison();
-    new Chart(ctx, {
+    window.comparisonChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['Income', 'Expenses'],

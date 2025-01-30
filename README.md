@@ -50,18 +50,19 @@ SpendWise is a budgeting and expense tracking web application. It helps users ma
 ## 📂 Project Structure
 ```
 Spendwise/
-├── Images/
-│   ├── SpendWise2.png
-│   └── main-bg.png
-│   └── SpendWise.png
-├── index.html
-├── about.html
-├── dashboard.html
-├── reward.html
-├── input.css
-├── dashboard.css
-|── script.js
-|── dashboard.js
+├── public/
+│   ├── Images/
+│   │   ├── main-bg.png
+│   │   ├── SpendWise.png
+│   │   └── SpendWise2.png
+│   ├── about.html
+│   ├── dashboard.html
+│   ├── reward.html
+│   ├── index.html
+│   ├── input.css
+│   ├── dashboard.css
+│   ├── script.js
+│   ├── dashboard.js
 ├── .gitignore
 ├── package.json
 ├── package-lock.json
@@ -69,6 +70,9 @@ Spendwise/
 ├── tailwind.config.js
 ├── README.md
 ├── Firebase_Setup.md
+├── vercel.json
+├── index.html (root) // Contains the meta refresh tag to redirect to /index.html **(don't edit on this)**
+
 ```
 
 ---
