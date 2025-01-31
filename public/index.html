@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpendWise - Smart Expense Tracking</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./input.css">
 </head>
+
 <body class="bg-gray-50">
 
     <button id="scrollBtn" onclick="scrollToTop()">
@@ -32,17 +35,20 @@
                     <a href="#faq" class="text-[#377f8e] hover:text-[#1f3c42]">FAQ</a>
                     <a href="#contact" class="text-[#377f8e] hover:text-[#1f3c42]">Contact</a>
                     <div class="flex items-center space-x-4">
-                        <button id="theme-toggle" class="p-2 rounded-lg text-gray-500 hover:text-gray-600 focus:outline-none">
+                        <button id="theme-toggle"
+                            class="p-2 rounded-lg text-gray-500 hover:text-gray-600 focus:outline-none">
                             <i class="fas fa-sun text-xl" id="theme-toggle-light-icon"></i>
                             <i class="fas fa-moon text-xl hidden" id="theme-toggle-dark-icon"></i>
                         </button>
-                        <a href="./dashboard.html" class="bg-gradient-to-r from-[#377f8e] to-[#2c6571] text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all duration-300">
+                        <a href="./dashboard.html"
+                            class="bg-gradient-to-r from-[#377f8e] to-[#2c6571] text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all duration-300">
                             Dashboard
                         </a>
                     </div>
                 </div>
                 <div class="md:hidden flex items-center space-x-2">
-                    <button id="mobile-theme-toggle" class="p-2 rounded-lg text-gray-500 hover:text-gray-600 focus:outline-none">
+                    <button id="mobile-theme-toggle"
+                        class="p-2 rounded-lg text-gray-500 hover:text-gray-600 focus:outline-none">
                         <i class="fas fa-sun text-xl" id="mobile-theme-toggle-light-icon"></i>
                         <i class="fas fa-moon text-xl hidden" id="mobile-theme-toggle-dark-icon"></i>
                     </button>
@@ -57,12 +63,18 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden fixed w-full bg-white z-40 top-16 shadow-md">
         <div class="px-2 pt-2 pb-3 space-y-1">
-            <a href="#home" class="block px-3 py-2 text-[#377f8e] hover:bg-gray-50 rounded-lg transition-colors duration-200">Home</a>
-            <a href="#about" class="block px-3 py-2 text-[#377f8e] hover:bg-gray-50 rounded-lg transition-colors duration-200">About</a>
-            <a href="#features" class="block px-3 py-2 text-[#377f8e] hover:bg-gray-50 rounded-lg transition-colors duration-200">Features</a>
-            <a href="#faq" class="block px-3 py-2 text-[#377f8e] hover:bg-gray-50 rounded-lg transition-colors duration-200">FAQ</a>
-            <a href="#contact" class="block px-3 py-2 text-[#377f8e] hover:bg-gray-50 rounded-lg transition-colors duration-200">Contact</a>
-            <a href="./dashboard.html" class="block px-3 py-2 bg-[#377f8e] text-white rounded-lg text-center hover:bg-[#2c6571] transition-colors duration-200">
+            <a href="#home"
+                class="block px-3 py-2 text-[#377f8e] hover:bg-gray-50 rounded-lg transition-colors duration-200">Home</a>
+            <a href="#about"
+                class="block px-3 py-2 text-[#377f8e] hover:bg-gray-50 rounded-lg transition-colors duration-200">About</a>
+            <a href="#features"
+                class="block px-3 py-2 text-[#377f8e] hover:bg-gray-50 rounded-lg transition-colors duration-200">Features</a>
+            <a href="#faq"
+                class="block px-3 py-2 text-[#377f8e] hover:bg-gray-50 rounded-lg transition-colors duration-200">FAQ</a>
+            <a href="#contact"
+                class="block px-3 py-2 text-[#377f8e] hover:bg-gray-50 rounded-lg transition-colors duration-200">Contact</a>
+            <a href="./dashboard.html"
+                class="block px-3 py-2 bg-[#377f8e] text-white rounded-lg text-center hover:bg-[#2c6571] transition-colors duration-200">
                 Dashboard
             </a>
         </div>
@@ -72,23 +84,28 @@
     <section id="home" class="pt-28 pb-16 px-4 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
         <div class="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center">
             <div class="md:w-1/2 text-center md:text-left fade-in-left">
-                <h1 class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-[#377f8e] to-[#2c6571] bg-clip-text text-transparent mb-6">
+                <h1
+                    class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-[#377f8e] to-[#2c6571] bg-clip-text text-transparent mb-6">
                     Master Your Money with SpendWise
                 </h1>
                 <p class="text-xl text-gray-600 mb-8">
-                    Track expenses, set budgets, and achieve your financial goals with our smart expense tracking solution.
+                    Track expenses, set budgets, and achieve your financial goals with our smart expense tracking
+                    solution.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a href="./dashboard.html" class="bg-[#377f8e] text-white px-8 py-3 rounded-lg text-lg hover:bg-[#1f3c42] text-center">
+                    <a href="./dashboard.html"
+                        class="bg-[#377f8e] text-white px-8 py-3 rounded-lg text-lg hover:bg-[#1f3c42] text-center">
                         Get Started
                     </a>
-                    <a href="#features" class="border-2 border-[#377f8e] text-[#377f8e] px-8 py-3 rounded-lg text-lg hover:bg-[#377f8e] hover:text-white text-center">
+                    <a href="#features"
+                        class="border-2 border-[#377f8e] text-[#377f8e] px-8 py-3 rounded-lg text-lg hover:bg-[#377f8e] hover:text-white text-center">
                         Learn More
                     </a>
                 </div>
             </div>
             <div class="md:w-1/2 mb-8 md:mb-0 fade-in-right p-4">
-                <img src="./Images/main-bg.png" alt="Expense Tracking" class="w-full h-auto rounded-2xl shadow-2xl hover:transform hover:scale-105 transition-transform duration-500">
+                <img src="./Images/main-bg.png" alt="Expense Tracking"
+                    class="w-full h-auto rounded-2xl shadow-2xl hover:transform hover:scale-105 transition-transform duration-500">
             </div>
         </div>
     </section>
@@ -103,7 +120,8 @@
                 <div class="text-center p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
                     <i class="fas fa-chart-line text-4xl text-[#377f8e] mb-4"></i>
                     <h3 class="text-xl font-semibold mb-3">Smart Tracking</h3>
-                    <p class="text-gray-600">Automatically categorize and track your expenses with our intelligent system.</p>
+                    <p class="text-gray-600">Automatically categorize and track your expenses with our intelligent
+                        system.</p>
                 </div>
                 <div class="text-center p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
                     <i class="fas fa-piggy-bank text-4xl text-[#377f8e] mb-4"></i>
@@ -113,7 +131,8 @@
                 <div class="text-center p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
                     <i class="fas fa-lightbulb text-4xl text-[#377f8e] mb-4"></i>
                     <h3 class="text-xl font-semibold mb-3">Smart Insights</h3>
-                    <p class="text-gray-600">Get personalized insights and recommendations to improve your spending habits.</p>
+                    <p class="text-gray-600">Get personalized insights and recommendations to improve your spending
+                        habits.</p>
                 </div>
             </div>
         </div>
@@ -132,7 +151,8 @@
                     </div>
                     <div>
                         <h3 class="text-xl font-semibold mb-2">Receipt Scanner</h3>
-                        <p class="text-gray-600">Upload receipts and let our OCR technology automatically extract expense details.</p>
+                        <p class="text-gray-600">Upload receipts and let our OCR technology automatically extract
+                            expense details.</p>
                     </div>
                 </div>
                 <div class="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow">
@@ -174,63 +194,81 @@
             </h2>
             <div class="space-y-4">
                 <div class="border rounded-lg hover:shadow-md transition-shadow">
-                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none">
+                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none"
+                        data-target="#answer1">
                         <span class="text-lg font-medium text-gray-800">How do I get started with SpendWise?</span>
                         <i class="fas fa-chevron-down transform transition-transform text-[#377f8e]"></i>
                     </button>
-                    <div class="faq-answer hidden p-4 bg-gray-50">
-                        <p class="text-gray-600">Getting started is easy! Simply click the "Get Started" button, create your account, and you can begin tracking your expenses right away. Our intuitive dashboard will guide you through the process.</p>
+                    <div id="answer1" class="faq-answer-10 hidden p-4 bg-gray-50">
+                        <p class="text-gray-600">Getting started is easy! Simply click the "Get Started" button, create
+                            your account, and you can begin tracking your expenses right away. Our intuitive dashboard
+                            will guide you through the process.</p>
                     </div>
                 </div>
-
                 <div class="border rounded-lg hover:shadow-md transition-shadow">
-                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none">
-                        <span class="text-lg font-medium text-gray-800">Is my financial data secure?</span>
+                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none"
+                        data-target="#answer2">
+                        <span class="text-lg font-medium text-gray-800">Is my data secure with SpendWise?</span>
                         <i class="fas fa-chevron-down transform transition-transform text-[#377f8e]"></i>
                     </button>
-                    <div class="faq-answer hidden p-4 bg-gray-50">
-                        <p class="text-gray-600">Yes! We use bank-level encryption to protect your data. Your security is our top priority, and we never share your personal information with third parties.</p>
+                    <div id="answer2" class="faq-answer-10 hidden p-4 bg-gray-50">
+                        <p class="text-gray-600">Yes, your data is secure with SpendWise. We use industry-standard
+                            encryption to protect your information and ensure your privacy.</p>
                     </div>
                 </div>
-
                 <div class="border rounded-lg hover:shadow-md transition-shadow">
-                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none">
-                        <span class="text-lg font-medium text-gray-800">Can I export my expense reports?</span>
+                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none"
+                        data-target="#answer3">
+                        <span class="text-lg font-medium text-gray-800">Can I link my bank accounts to SpendWise?</span>
                         <i class="fas fa-chevron-down transform transition-transform text-[#377f8e]"></i>
                     </button>
-                    <div class="faq-answer hidden p-4 bg-gray-50">
-                        <p class="text-gray-600">Yes! You can export your expense reports in multiple formats including PDF and Excel. This makes it easy to share with your accountant or keep for your records.</p>
+                    <div id="answer3" class="faq-answer-10 hidden p-4 bg-gray-50">
+                        <p class="text-gray-600">Yes, you can link your bank accounts to SpendWise. This allows you to
+                            automatically import transactions and keep track of your spending effortlessly.</p>
                     </div>
                 </div>
-
                 <div class="border rounded-lg hover:shadow-md transition-shadow">
-                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none">
-                        <span class="text-lg font-medium text-gray-800">Is there a mobile app available?</span>
+                    <button class="faq-button w-full flex justify-between items-center p-4 focus:outline-none"
+                        data-target="#answer4">
+                        <span class="text-lg font-medium text-gray-800">How do I set a budget in SpendWise?</span>
                         <i class="fas fa-chevron-down transform transition-transform text-[#377f8e]"></i>
                     </button>
-                    <div class="faq-answer hidden p-4 bg-gray-50">
-                        <p class="text-gray-600">Currently, SpendWise is available as a responsive web application that works great on all devices. We're working on native mobile apps that will be available soon!</p>
+                    <div id="answer4" class="faq-answer-10 hidden p-4 bg-gray-50">
+                        <p class="text-gray-600">To set a budget in SpendWise, go to the "Budgets" section, click "Add
+                            Budget", and enter your budget details. You can set budgets for different categories and
+                            track your progress.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <script>
+        document.querySelectorAll('.faq-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = document.querySelector(button.getAttribute('data-target'));
+                answer.classList.toggle('hidden');
+                button.querySelector('i').classList.toggle('rotate-180');
+            });
+        });
+    </script>
+
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-gradient-to-b from-white to-gray-50">
         <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-[#377f8e] to-[#2c6571] bg-clip-text text-transparent mb-12">
+            <h2
+                class="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-[#377f8e] to-[#2c6571] bg-clip-text text-transparent mb-12">
                 Let's Connect
             </h2>
             <div class="grid md:grid-cols-2 gap-12">
-                <div class="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow border border-gray-100">
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow border border-gray-100">
                     <form class="space-y-6">
                         <div class="form-group relative">
                             <input type="text" id="name" required
                                 class="peer w-full px-4 py-3 rounded-lg border-2 border-gray-200 placeholder-transparent focus:border-[#377f8e] focus:ring-2 focus:ring-[#377f8e] focus:ring-opacity-30 transition-all duration-200"
                                 placeholder="Your Name">
-                            <label for="name" 
-                                class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
+                            <label for="name" class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
                                 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-gray-400
                                 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#377f8e]">
                                 Full Name
@@ -240,8 +278,7 @@
                             <input type="email" id="email" required
                                 class="peer w-full px-4 py-3 rounded-lg border-2 border-gray-200 placeholder-transparent focus:border-[#377f8e] focus:ring-2 focus:ring-[#377f8e] focus:ring-opacity-30 transition-all duration-200"
                                 placeholder="Your Email">
-                            <label for="email" 
-                                class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
+                            <label for="email" class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
                                 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-gray-400
                                 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#377f8e]">
                                 Email Address
@@ -251,8 +288,7 @@
                             <input type="tel" id="phone" required
                                 class="peer w-full px-4 py-3 rounded-lg border-2 border-gray-200 placeholder-transparent focus:border-[#377f8e] focus:ring-2 focus:ring-[#377f8e] focus:ring-opacity-30 transition-all duration-200"
                                 placeholder="Your Phone">
-                            <label for="phone" 
-                                class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
+                            <label for="phone" class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
                                 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-gray-400
                                 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#377f8e]">
                                 Phone Number
@@ -272,15 +308,13 @@
                             <textarea id="message" rows="4" required
                                 class="peer w-full px-4 py-3 rounded-lg border-2 border-gray-200 placeholder-transparent focus:border-[#377f8e] focus:ring-2 focus:ring-[#377f8e] focus:ring-opacity-30 transition-all duration-200"
                                 placeholder="Your Message"></textarea>
-                            <label for="message" 
-                                class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
+                            <label for="message" class="absolute left-4 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all 
                                 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-gray-400
                                 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#377f8e]">
                                 Your Message
                             </label>
                         </div>
-                        <button type="submit" 
-                            class="w-full bg-gradient-to-r from-[#377f8e] to-[#2c6571] text-white py-4 px-6 rounded-lg
+                        <button type="submit" class="w-full bg-gradient-to-r from-[#377f8e] to-[#2c6571] text-white py-4 px-6 rounded-lg
                             hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200
                             focus:outline-none focus:ring-2 focus:ring-[#377f8e] focus:ring-opacity-50">
                             Send Message
@@ -288,7 +322,8 @@
                     </form>
                 </div>
                 <div class="flex flex-col justify-center space-y-8">
-                    <div class="contact-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
+                    <div
+                        class="contact-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
                         <div class="flex items-center space-x-4">
                             <div class="bg-[#377f8e] bg-opacity-10 p-4 rounded-full">
                                 <i class="fas fa-envelope text-2xl text-[#377f8e]"></i>
@@ -299,7 +334,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="contact-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
+                    <div
+                        class="contact-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
                         <div class="flex items-center space-x-4">
                             <div class="bg-[#377f8e] bg-opacity-10 p-4 rounded-full">
                                 <i class="fas fa-phone text-2xl text-[#377f8e]"></i>
@@ -310,7 +346,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="contact-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
+                    <div
+                        class="contact-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
                         <div class="flex items-center space-x-4">
                             <div class="bg-[#377f8e] bg-opacity-10 p-4 rounded-full">
                                 <i class="fas fa-map-marker-alt text-2xl text-[#377f8e]"></i>
@@ -335,7 +372,7 @@
                     <img src="./Images/SpendWise.png" class="h-16 w-auto mx-auto md:mx-0 mb-4" alt="SpendWise">
                     <p class="text-gray-200 text-sm">Smart financial management for a better future</p>
                 </div>
-                
+
                 <!-- Quick Links -->
                 <div class="text-center">
                     <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
@@ -346,7 +383,7 @@
                         <a href="#contact" class="hover:text-gray-300 transition-colors">Contact</a>
                     </div>
                 </div>
-                
+
                 <!-- Social Links -->
                 <div class="text-center">
                     <h3 class="text-lg font-semibold mb-4">Connect With Us</h3>
@@ -366,7 +403,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="mt-8 pt-8 border-t border-white/20 text-center">
                 <p class="text-sm text-gray-300">&copy; 2025 SpendWise. All rights reserved.</p>
             </div>
@@ -392,4 +429,5 @@
       </script>
       
 </body>
+
 </html>
