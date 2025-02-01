@@ -1,3 +1,12 @@
+       // Get the user id from sessionStorage (or however you pass data)
+       const userId = sessionStorage.getItem('userId') || 'Unknown User';
+       document.getElementById('user-id-display').textContent = 'User: ' + userId;
+       
+       // Logout functionality: clear session and redirect to login
+       document.getElementById('logout-btn').addEventListener('click', () => {
+         sessionStorage.removeItem('userId');
+         window.location.href = '/auth/login.html';
+       });
 // Global variables and utilities
 window.categories = {
     income: [
