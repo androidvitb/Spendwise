@@ -169,6 +169,22 @@
     }
 }
 
+.hidden {
+    display: none;
+}
+
+.faq-answer {
+    max-height: 0;
+    /* Initially collapsed */
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.faq-answer.show {
+    max-height: 200px;
+    /* Adjust based on content height */
+}
+
 /* Form styles */
 .form-input:focus {
     outline: none;

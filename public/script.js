@@ -9,23 +9,24 @@ mobileMenuButton.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
 });
 
-// FAQ accordion
 const faqButtons = document.querySelectorAll('.faq-button');
-
 faqButtons.forEach(button => {
     button.addEventListener('click', () => {
-        const answer = button.nextElementSibling;
-        const icon = button.querySelector('i');
-        
-        answer.classList.toggle('hidden');
+        const answer = button.nextElementSibling; // Get the answer div
+        const icon = button.querySelector('i');   // Get the icon inside the button
+
+        answer.classList.toggle('show');
+
+        // Toggle the 'rotate-180' class on the icon
         icon.classList.toggle('rotate-180');
-        
-        // Close other open FAQs
+
+        // Close all other FAQs
         faqButtons.forEach(otherButton => {
-            if (otherButton !== button) {
+            if (otherButton !== button) { // Skip the current FAQ
                 const otherAnswer = otherButton.nextElementSibling;
                 const otherIcon = otherButton.querySelector('i');
-                
+
+                // Add 'hidden' to other answers and remove 'rotate-180' from their icons
                 otherAnswer.classList.add('hidden');
                 otherIcon.classList.remove('rotate-180');
             }
