@@ -1,4 +1,29 @@
 /* Dark mode styles - Updated */
+
+.header {
+background-color: #1976d2;
+color: white;
+padding: 1rem 2rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.header .user-info {
+font-size: 1rem;
+}
+.logout-btn {
+background: transparent;
+border: none;
+color: white;
+font-size: 1.2rem;
+cursor: pointer;
+}
+.logout-btn:hover {
+color: #ccc;
+}
+.content {
+padding: 2rem;
+}
 .dark {
     background-color: #1a1a1a;
     color: #e5e7eb;

@@ -309,6 +309,13 @@ header {
         <p>&copy; 2025 SpendWiser. All rights reserved.</p>
     </footer>
     <script>
+        import { auth } from './js/firebase.js';
+
+auth.onAuthStateChanged(user => {
+  if (!user) {
+    window.location.href = '/auth/login.html';
+  }
+});
         function claimReward(reward) {
             alert(` ${reward}!`);
         }

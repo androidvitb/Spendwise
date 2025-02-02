@@ -18,8 +18,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body class="bg-gray-50">
+    <header class="header">
+        <div class="user-info" id="user-id-display">
+          <!-- User ID will be inserted here -->
+        </div>
+        <button class="logout-btn" id="logout-btn" title="logout">
+          <span class="material-icons">logout</span>
+        </button>
+      </header>
     <div class="flex h-screen">
         <!-- Sidebar -->
         <div id="sidebar" class="bg-white w-64 shadow-md flex flex-col transition-all duration-300">
@@ -504,5 +514,6 @@
         </div>
     </div>
     <script src="/dashboard.js"></script>
+
 </body>
 </html>

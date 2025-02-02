@@ -1,5 +1,2 @@
-node_modules
+/node_modules/
 .env
-pr.md
-index_old.html
-script_old.js
