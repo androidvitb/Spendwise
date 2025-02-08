@@ -1,17 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Redirecting...</title>
-    <script type="module">
-        import { checkAuth } from 'src/js/protectedRoute.js';
-        
-        checkAuth(false).then(user => {
-            if(user) window.location.href = '/dashboard.html';
-            else window.location.href = 'src/auth/login.html';
-        });
-    </script>
+    <meta http-equiv="refresh" content="0; url=/index.html">
 </head>
-<body>
-    <p>Redirecting...</p>
-</body>
 </html>
