@@ -57,12 +57,22 @@ Spendwise/
 │   │   └── SpendWise2.png
 │   ├── about.html
 │   ├── dashboard.html
-│   ├── reward.html
 │   ├── index.html
 │   ├── input.css
 │   ├── dashboard.css
 │   ├── script.js
 │   ├── dashboard.js
+├── src/
+│   ├── auth/
+│   │   ├── login.html
+│   │   ├── signup.html
+│   ├── js/
+│   │   ├── auth.js
+│   │   ├── authHandlers.js
+│   │   ├── dashboard.js
+│   │   ├── firebase.js
+│   │   ├── protectedRoute.js
+│   │   ├── script.js
 ├── .gitignore
 ├── package.json
 ├── package-lock.json
