@@ -8,7 +8,7 @@ SpendWise is a budgeting and expense tracking web application designed to help u
 
 ## 📌 Repository Information
 #### - **Beginner-Friendly Project**
-#### - **Repository Under:** AcWoC'25
+#### - **Repository Under:** AcWoC'26
 #### - **Club:** Android Club, VIT Bhopal University
 
 ## 🚀 Features
