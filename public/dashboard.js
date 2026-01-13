@@ -4,172 +4,172 @@ document.getElementById('user-id-display').textContent = 'User: ' + userId;
 
 // Logout functionality: clear session and redirect to login
 document.getElementById('logout-btn').addEventListener('click', () => {
-  sessionStorage.removeItem('userId');
-  window.location.href = '/auth/login.html';
+    sessionStorage.removeItem('userId');
+    window.location.href = '/auth/login.html';
 });
 // Global variables and utilities
 window.categories = {
 income: [
- { name: 'Salary', icon: 'fa-money-bill-wave', color: 'emerald' },
- { name: 'Investment', icon: 'fa-chart-line', color: 'blue' },
- { name: 'Freelance', icon: 'fa-laptop', color: 'purple' },
- { name: 'Other', icon: 'fa-plus', color: 'gray' }
-],
-expense: [
- { name: 'Food', icon: 'fa-utensils', color: 'orange' },
- { name: 'Transport', icon: 'fa-car', color: 'indigo' },
- { name: 'Utilities', icon: 'fa-bolt', color: 'yellow' },
- { name: 'Entertainment', icon: 'fa-film', color: 'pink' },
- { name: 'Shopping', icon: 'fa-shopping-bag', color: 'red' }
-]
-};
+    { name: 'Salary', icon: 'fa-money-bill-wave', color: 'emerald' },
+    { name: 'Investment', icon: 'fa-chart-line', color: 'blue' },
+    { name: 'Freelance', icon: 'fa-laptop', color: 'purple' },
+    { name: 'Other', icon: 'fa-plus', color: 'gray' }
+    ],
+    expense: [
+    { name: 'Food', icon: 'fa-utensils', color: 'orange' },
+    { name: 'Transport', icon: 'fa-car', color: 'indigo' },
+    { name: 'Utilities', icon: 'fa-bolt', color: 'yellow' },
+    { name: 'Entertainment', icon: 'fa-film', color: 'pink' },
+    { name: 'Shopping', icon: 'fa-shopping-bag', color: 'red' }
+    ]
+    };
 
-// Global state
-window.transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-window.expenseChart = null;
-window.budgets = JSON.parse(localStorage.getItem('budgets')) || {};
+    // Global state
+    window.transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    window.expenseChart = null;
+    window.budgets = JSON.parse(localStorage.getItem('budgets')) || {};
 
-// Constants
-const currencySymbols = {
-'USD': '$',
-'EUR': '€',
-'INR': '₹',
-'GBP': '£'
-};
+    // Constants
+    const currencySymbols = {
+    'USD': '$',
+    'EUR': '€',
+    'INR': '₹',
+    'GBP': '£'
+    };
 
-// Utility Functions
-function getCurrencySymbol(currency = null) {
-const selectedCurrency = currency || localStorage.getItem('selectedCurrency') || 'USD';
-return currencySymbols[selectedCurrency];
-}
+    // Utility Functions
+    function getCurrencySymbol(currency = null) {
+    const selectedCurrency = currency || localStorage.getItem('selectedCurrency') || 'USD';
+    return currencySymbols[selectedCurrency];
+    }
 
-function getColorForCategory(color) {
-const colorMap = {
- 'red': '#ef4444',
- 'orange': '#f97316',
- 'yellow': '#eab308',
- 'green': '#22c55e',
- 'blue': '#3b82f6',
- 'indigo': '#6366f1',
- 'purple': '#a855f7',
- 'pink': '#ec4899',
- 'emerald': '#10b981',
- 'gray': '#6b7280'
-};
-return colorMap[color] || '#6b7280';
-}
+    function getColorForCategory(color) {
+    const colorMap = {
+    'red': '#ef4444',
+    'orange': '#f97316',
+    'yellow': '#eab308',
+    'green': '#22c55e',
+    'blue': '#3b82f6',
+    'indigo': '#6366f1',
+    'purple': '#a855f7',
+    'pink': '#ec4899',
+    'emerald': '#10b981',
+    'gray': '#6b7280'
+    };
+    return colorMap[color] || '#6b7280';
+    }
 
-// Notification System
-const notificationSystem = {
-container: null,
-queue: [],
-activeNotifications: new Set(),
-maxNotifications: 3,
-timeouts: new Map(),
+    // Notification System
+    const notificationSystem = {
+    container: null,
+    queue: [],
+    activeNotifications: new Set(),
+    maxNotifications: 3,
+    timeouts: new Map(),
 
-init() {
- // Create container if it doesn't exist
- if (!this.container) {
-     this.container = document.createElement('div');
-     this.container.className = 'fixed bottom-4 right-4 z-50 flex flex-col gap-2';
-     document.body.appendChild(this.container);
- }
-},
+    init() {
+    // Create container if it doesn't exist
+    if (!this.container) {
+        this.container = document.createElement('div');
+        this.container.className = 'fixed bottom-4 right-4 z-50 flex flex-col gap-2';
+        document.body.appendChild(this.container);
+    }
+    },
 
-show(message, type = 'success', duration = 3000) {
- // Prevent duplicate notifications
- const notificationKey = `${message}-${type}`;
- if (this.activeNotifications.has(notificationKey)) {
-     return;
- }
+    show(message, type = 'success', duration = 3000) {
+    // Prevent duplicate notifications
+    const notificationKey = `${message}-${type}`;
+    if (this.activeNotifications.has(notificationKey)) {
+        return;
+    }
 
- this.init();
- this.queue.push({ message, type, key: notificationKey });
- this.processQueue();
-},
+    this.init();
+    this.queue.push({ message, type, key: notificationKey });
+    this.processQueue();
+    },
 
-processQueue() {
- if (this.container.children.length >= this.maxNotifications) {
-     return;
- }
+    processQueue() {
+    if (this.container.children.length >= this.maxNotifications) {
+        return;
+    }
 
- const next = this.queue.shift();
- if (!next) return;
+    const next = this.queue.shift();
+    if (!next) return;
 
- this.createNotification(next.message, next.type, next.key);
-},
+    this.createNotification(next.message, next.type, next.key);
+    },
 
-createNotification(message, type, key) {
- const notification = document.createElement('div');
- notification.className = `
-     notification notification-enter
-     transform px-4 py-2 rounded-lg shadow-lg 
-     min-w-[200px] max-w-[300px] mb-2
-     flex items-center justify-between
-     ${this.getTypeStyles(type)}
- `;
- notification.innerHTML = `
-     <span class="mr-2">${message}</span>
-     <button class="text-sm opacity-75 hover:opacity-100 transition-opacity">×</button>
- `;
+    createNotification(message, type, key) {
+    const notification = document.createElement('div');
+    notification.className = `
+        notification notification-enter
+        transform px-4 py-2 rounded-lg shadow-lg 
+        min-w-[200px] max-w-[300px] mb-2
+        flex items-center justify-between
+        ${this.getTypeStyles(type)}
+    `;
+    notification.innerHTML = `
+        <span class="mr-2">${message}</span>
+        <button class="text-sm opacity-75 hover:opacity-100 transition-opacity">×</button>
+    `;
 
- // Add to active notifications
- this.activeNotifications.add(key);
- 
+    // Add to active notifications
+    this.activeNotifications.add(key);
+    
  // Handle close button
- const closeBtn = notification.querySelector('button');
- closeBtn.addEventListener('click', () => this.remove(notification, key));
+const closeBtn = notification.querySelector('button');
+closeBtn.addEventListener('click', () => this.remove(notification, key));
 
  // Add to container
- this.container.appendChild(notification);
+this.container.appendChild(notification);
 
  // Set timeout for auto-removal
- const timeoutId = setTimeout(() => {
-     this.remove(notification, key);
- }, 3000);
+const timeoutId = setTimeout(() => {
+    this.remove(notification, key);
+}, 3000);
 
- this.timeouts.set(notification, timeoutId);
+    this.timeouts.set(notification, timeoutId);
 
- // Handle animation end
- notification.addEventListener('animationend', (e) => {
-     if (e.animationName === 'slideInRight') {
-         notification.classList.remove('notification-enter');
-     }
- });
-},
+    // Handle animation end
+    notification.addEventListener('animationend', (e) => {
+        if (e.animationName === 'slideInRight') {
+            notification.classList.remove('notification-enter');
+        }
+    });
+    },
 
 remove(notification, key) {
  // Clear timeout
- const timeoutId = this.timeouts.get(notification);
- if (timeoutId) {
-     clearTimeout(timeoutId);
-     this.timeouts.delete(notification);
- }
+    const timeoutId = this.timeouts.get(notification);
+    if (timeoutId) {
+        clearTimeout(timeoutId);
+        this.timeouts.delete(notification);
+    }
 
  // Add exit animation
- notification.classList.add('notification-exit');
- 
- // Remove after animation
- notification.addEventListener('animationend', () => {
-     if (notification.classList.contains('notification-exit')) {
-         notification?.remove();
-         this.activeNotifications.delete(key);
-         this.processQueue(); // Process next in queue
-     }
- }, { once: true });
+    notification.classList.add('notification-exit');
+    
+    // Remove after animation
+    notification.addEventListener('animationend', () => {
+        if (notification.classList.contains('notification-exit')) {
+            notification?.remove();
+            this.activeNotifications.delete(key);
+            this.processQueue(); // Process next in queue
+        }
+    }, { once: true });
 },
 
 getTypeStyles(type) {
- switch (type) {
-     case 'success':
-         return 'bg-green-500 text-white';
-     case 'error':
-         return 'bg-red-500 text-white';
-     case 'warning':
-         return 'bg-yellow-500 text-white';
-     default:
-         return 'bg-blue-500 text-white';
- }
+    switch (type) {
+        case 'success':
+            return 'bg-green-500 text-white';
+        case 'error':
+            return 'bg-red-500 text-white';
+        case 'warning':
+            return 'bg-yellow-500 text-white';
+        default:
+            return 'bg-blue-500 text-white';
+    }
 }
 };
 
@@ -185,7 +185,6 @@ initializeTabSystem();
 initializeSidebar();
 initializeCurrencySystem();
 initializeTransactionSystem();
-initializeDarkMode();
 setupEventListeners();
 updateTransactionsList();
 updateBalances();
@@ -202,16 +201,16 @@ const category = window.categories[formData.type].find(c => c.name === formData.
 const transactionDate = formData.date ? new Date(formData.date) : new Date();
 
 return {
- id: Date.now(),
- description: formData.description,
- amount: parseFloat(formData.amount),
- type: formData.type,
- category: formData.category,
- categoryIcon: category.icon,
- categoryColor: category.color,
- date: transactionDate.toISOString(),
- createdAt: new Date().toISOString(),
- receipt: null
+    id: Date.now(),
+    description: formData.description,
+    amount: parseFloat(formData.amount),
+    type: formData.type,
+    category: formData.category,
+    categoryIcon: category.icon,
+    categoryColor: category.color,
+    date: transactionDate.toISOString(),
+    createdAt: new Date().toISOString(),
+    receipt: null
 };
 }
 
@@ -220,16 +219,16 @@ const transactionsList = document.getElementById('transactions-list');
 const recentTransactions = window.transactions.slice(0, 5);
 
 if (recentTransactions.length === 0) {
- transactionsList.innerHTML = `
-     <div class="text-center text-gray-500 py-4">
-         No transactions yet. Add your first transaction above!
-     </div>`;
- return;
+    transactionsList.innerHTML = `
+        <div class="text-center text-gray-500 py-4">
+            No transactions yet. Add your first transaction above!
+        </div>`;
+    return;
 }
 
 transactionsList.innerHTML = recentTransactions.map(transaction => {
- const date = new Date(transaction.date);
- return generateTransactionHTML(transaction, date);
+    const date = new Date(transaction.date);
+    return generateTransactionHTML(transaction, date);
 }).join('');
 }
 
@@ -239,134 +238,134 @@ const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-
 const symbol = getCurrencySymbol();
 
 return `
- <div class="flex justify-between items-center p-3 bg-gray-50 rounded hover:bg-gray-100 
-             transition-colors duration-200 ${transaction.type === 'income' ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'}">
-     <div class="flex items-center space-x-3">
-         <div class="w-10 h-10 rounded-full bg-${transaction.categoryColor}-100 flex items-center justify-center">
-             <i class="fas ${transaction.categoryIcon} text-${transaction.categoryColor}-500"></i>
-         </div>
-         <div>
-             <h4 class="font-semibold">${transaction.description}</h4>
-             <div class="flex items-center space-x-2 text-sm text-gray-500">
-                 <span>${transaction.category}</span>
-                 <span>•</span>
-                 <span>${formattedDate}</span>
-                 <span>•</span>
-                 <span>${formattedTime}</span>
-             </div>
-         </div>
-     </div>
-     <div class="flex items-center space-x-2">
-         <span class="font-semibold ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}">
-             ${symbol}${transaction.amount.toFixed(2)}
-         </span>
-         <div class="flex space-x-2">
-             ${generateReceiptButton(transaction)}
-             <button onclick="deleteTransaction(${transaction.id})" class="text-gray-400 hover:text-red-500">
-                 <i class="fas fa-trash-alt"></i>
-             </button>
-         </div>
-     </div>
- </div>
-`;
-}
+    <div class="flex justify-between items-center p-3 bg-gray-50 rounded hover:bg-gray-100 
+                transition-colors duration-200 ${transaction.type === 'income' ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'}">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-full bg-${transaction.categoryColor}-100 flex items-center justify-center">
+                <i class="fas ${transaction.categoryIcon} text-${transaction.categoryColor}-500"></i>
+            </div>
+            <div>
+                <h4 class="font-semibold">${transaction.description}</h4>
+                <div class="flex items-center space-x-2 text-sm text-gray-500">
+                    <span>${transaction.category}</span>
+                    <span>•</span>
+                    <span>${formattedDate}</span>
+                    <span>•</span>
+                    <span>${formattedTime}</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <span class="font-semibold ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}">
+                ${symbol}${transaction.amount.toFixed(2)}
+            </span>
+            <div class="flex space-x-2">
+                ${generateReceiptButton(transaction)}
+                <button onclick="deleteTransaction(${transaction.id})" class="text-gray-400 hover:text-red-500">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    `;
+    }
 
-function generateReceiptButton(transaction) {
-if (transaction.receipt) {
- return `
-     <button onclick="viewReceipt(${transaction.id})" class="text-blue-500 hover:text-blue-700">
-         <i class="fas fa-file-alt"></i>
-     </button>`;
-}
-return `
- <label class="cursor-pointer text-gray-400 hover:text-gray-600">
-     <i class="fas fa-upload"></i>
-     <input type="file" class="hidden" accept="image/*,.pdf" 
-            onchange="handleReceiptUpload(event, ${transaction.id})">
- </label>`;
-}
+    function generateReceiptButton(transaction) {
+    if (transaction.receipt) {
+    return `
+        <button onclick="viewReceipt(${transaction.id})" class="text-blue-500 hover:text-blue-700">
+            <i class="fas fa-file-alt"></i>
+        </button>`;
+    }
+    return `
+    <label class="cursor-pointer text-gray-400 hover:text-gray-600">
+        <i class="fas fa-upload"></i>
+        <input type="file" class="hidden" accept="image/*,.pdf" 
+                onchange="handleReceiptUpload(event, ${transaction.id})">
+    </label>`;
+    }
 
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-initializeTabSystem();
-initializeSidebar();
-initializeCurrencySystem();
-initializeTransactionSystem();
-initializeDarkMode();
-setupEventListeners();
-updateTransactionsList();
-updateBalances();
-initializeRewardsSystem();
-makeTableResponsive();
-window.addEventListener('resize', debounce(updateChartDimensions, 250));
-updateChartDimensions();
-initializeMobileOptimizations();
-});
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+    initializeTabSystem();
+    initializeSidebar();
+    initializeCurrencySystem();
+    initializeTransactionSystem();
+    initializeDarkMode();
+    setupEventListeners();
+    updateTransactionsList();
+    updateBalances();
+    initializeRewardsSystem();
+    makeTableResponsive();
+    window.addEventListener('resize', debounce(updateChartDimensions, 250));
+    updateChartDimensions();
+    initializeMobileOptimizations();
+    });
 
-// Make functions globally available
-window.showNotification = showNotification;
-window.handleReceiptUpload = handleReceiptUpload;
-window.viewReceipt = viewReceipt;
-window.deleteTransaction = deleteTransaction;
-window.transactions = transactions;
-window.categories = categories;
-window.currencySymbols = currencySymbols;
-window.initializeExpensesTab = initializeExpensesTab;
-window.initializeInsightsTab = initializeInsightsTab;
-window.initializeGameTab = initializeGameTab;
-window.updateExpenseChart = updateExpenseChart;
-window.handleBudgetSubmit = handleBudgetSubmit;
+    // Make functions globally available
+    window.showNotification = showNotification;
+    window.handleReceiptUpload = handleReceiptUpload;
+    window.viewReceipt = viewReceipt;
+    window.deleteTransaction = deleteTransaction;
+    window.transactions = transactions;
+    window.categories = categories;
+    window.currencySymbols = currencySymbols;
+    window.initializeExpensesTab = initializeExpensesTab;
+    window.initializeInsightsTab = initializeInsightsTab;
+    window.initializeGameTab = initializeGameTab;
+    window.updateExpenseChart = updateExpenseChart;
+    window.handleBudgetSubmit = handleBudgetSubmit;
 
-// Receipt Handling System
-async function handleReceiptUpload(event, transactionId) {
-const file = event.target.files[0];
-if (!file || file.size > 10 * 1024 * 1024 || !file.type.startsWith('image/')) {
- showNotification('Please upload a valid image file under 10MB', 'error');
- return;
-}
+    // Receipt Handling System
+    async function handleReceiptUpload(event, transactionId) {
+    const file = event.target.files[0];
+    if (!file || file.size > 10 * 1024 * 1024 || !file.type.startsWith('image/')) {
+    showNotification('Please upload a valid image file under 10MB', 'error');
+    return;
+    }
 
-try {
- const reader = new FileReader();
- reader.onload = async (e) => {
-     const transaction = window.transactions.find(t => t.id === transactionId);
-     if (transaction) {
-         transaction.receipt = {
-             name: file.name,
-             data: e.target.result,
-             type: file.type
-         };
-         localStorage.setItem('transactions', JSON.stringify(window.transactions));
-         showNotification('Receipt uploaded successfully');
-         updateTransactionsList();
-     }
- };
- reader.readAsDataURL(file);
-} catch (error) {
- console.error('Receipt upload error:', error);
- showNotification('Error uploading receipt', 'error');
+    try {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+        const transaction = window.transactions.find(t => t.id === transactionId);
+        if (transaction) {
+            transaction.receipt = {
+                name: file.name,
+                data: e.target.result,
+                type: file.type
+            };
+            localStorage.setItem('transactions', JSON.stringify(window.transactions));
+            showNotification('Receipt uploaded successfully');
+            updateTransactionsList();
+        }
+    };
+    reader.readAsDataURL(file);
+    } catch (error) {
+    console.error('Receipt upload error:', error);
+    showNotification('Error uploading receipt', 'error');
 }
 }
 
 function viewReceipt(transactionId) {
 const transaction = window.transactions.find(t => t.id === transactionId);
 if (transaction?.receipt) {
- const modal = document.createElement('div');
- modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
- modal.innerHTML = `
-     <div class="bg-white rounded-lg p-6 max-w-2xl w-full mx-4">
-         <div class="flex justify-between items-center mb-4">
-             <h3 class="text-lg font-semibold">Receipt</h3>
-             <button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
-                 <i class="fas fa-times"></i>
-             </button>
-         </div>
-         <div class="receipt-content">
-             <img src="${transaction.receipt.data}" alt="Receipt" class="max-w-full h-auto">
-         </div>
-         <div class="mt-4 text-sm text-gray-500">${transaction.receipt.name}</div>
-     </div>
- `;
- document.body.appendChild(modal);
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    modal.innerHTML = `
+        <div class="bg-white rounded-lg p-6 max-w-2xl w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Receipt</h3>
+                <button class="text-gray-500 hover:text-gray-700" onclick="this.closest('.fixed').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="receipt-content">
+                <img src="${transaction.receipt.data}" alt="Receipt" class="max-w-full h-auto">
+            </div>
+            <div class="mt-4 text-sm text-gray-500">${transaction.receipt.name}</div>
+        </div>
+    `;
+    document.body.appendChild(modal);
 }
 }
 
@@ -375,38 +374,38 @@ function populateFormWithData(data) {
 if (!data) return;
 
 const elements = {
- amount: document.getElementById('amount'),
- description: document.getElementById('description'),
- date: document.getElementById('transaction-date')
+    amount: document.getElementById('amount'),
+    description: document.getElementById('description'),
+    date: document.getElementById('transaction-date')
 };
 
 if (data.amount && elements.amount) {
- elements.amount.value = data.amount.toFixed(2);
+    elements.amount.value = data.amount.toFixed(2);
 }
 if (data.description && elements.description) {
- elements.description.value = data.description;
+    elements.description.value = data.description;
 }
 if (data.date && elements.date) {
- elements.date.value = data.date;
+    elements.date.value = data.date;
 }
 }
 
 // Enhanced receipt text parsing
 function parseReceiptText(text) {
 const data = {
- amount: null,
- date: null,
- description: ''
+    amount: null,
+    date: null,
+    description: ''
 };
 
 // Extract amount - look for currency symbols and decimal numbers
 const amountRegex = /(?:[$€£₹]\s*)?(\d+(?:\.\d{2})?)/;
 const amountMatch = text.match(amountRegex);
 if (amountMatch) {
- const possibleAmount = parseFloat(amountMatch[1]);
- if (!isNaN(possibleAmount)) {
-     data.amount = possibleAmount;
- }
+    const possibleAmount = parseFloat(amountMatch[1]);
+    if (!isNaN(possibleAmount)) {
+        data.amount = possibleAmount;
+    }
 }
 
 // Extract date - support multiple formats
@@ -417,27 +416,27 @@ const dateRegexes = [
 ];
 
 for (const regex of dateRegexes) {
- const dateMatch = text.match(regex);
- if (dateMatch) {
-     const parsedDate = new Date(dateMatch[0]);
-     if (!isNaN(parsedDate)) {
-         data.date = parsedDate.toISOString().split('T')[0];
-         break;
-     }
- }
+    const dateMatch = text.match(regex);
+    if (dateMatch) {
+        const parsedDate = new Date(dateMatch[0]);
+        if (!isNaN(parsedDate)) {
+            data.date = parsedDate.toISOString().split('T')[0];
+            break;
+        }
+    }
 }
 
 // Extract description - usually the first non-date, non-amount line
 const lines = text.split('\n')
- .map(line => line.trim())
- .filter(line => line.length > 0);
+    .map(line => line.trim())
+    .filter(line => line.length > 0);
 
 for (const line of lines) {
  // Skip lines that are just amounts or dates
- if (!line.match(amountRegex) && !dateRegexes.some(re => line.match(re))) {
-     data.description = line.substring(0, 50);
-     break;
- }
+    if (!line.match(amountRegex) && !dateRegexes.some(re => line.match(re))) {
+        data.description = line.substring(0, 50);
+        break;
+    }
 }
 
 return Object.values(data).some(value => value) ? data : null;
@@ -452,35 +451,35 @@ const extractedData = document.getElementById('extracted-data');
 
 try {
  // Show preview
- preview.classList.remove('hidden');
- image.src = URL.createObjectURL(file);
- status.textContent = 'Initializing scanner...';
- 
- // Perform OCR
- const result = await Tesseract.recognize(file, 'eng', {
-     logger: m => {
-         if (m.status === 'recognizing text') {
+    preview.classList.remove('hidden');
+    image.src = URL.createObjectURL(file);
+    status.textContent = 'Initializing scanner...';
+    
+    // Perform OCR
+    const result = await Tesseract.recognize(file, 'eng', {
+        logger: m => {
+        if (m.status === 'recognizing text') {
              status.textContent = `Scanning: ${Math.round(m.progress * 100)}%`;
-         }
-     }
- });
+        }
+    }
+});
 
  // Parse extracted text
- const data = parseReceiptText(result.data.text);
- 
- if (data) {
-     status.textContent = 'Receipt scanned successfully!';
-     status.className = 'text-green-600';
-     displayExtractedData(data);
-     populateFormWithData(data);
- } else {
-     status.textContent = 'Could not extract data. Please fill in manually.';
-     status.className = 'text-yellow-600';
- }
-} catch (error) {
- console.error('Receipt scanning error:', error);
- status.textContent = 'Error scanning receipt. Please try again or enter manually.';
- status.className = 'text-red-600';
+    const data = parseReceiptText(result.data.text);
+    
+    if (data) {
+        status.textContent = 'Receipt scanned successfully!';
+        status.className = 'text-green-600';
+        displayExtractedData(data);
+        populateFormWithData(data);
+    } else {
+        status.textContent = 'Could not extract data. Please fill in manually.';
+        status.className = 'text-yellow-600';
+    }
+    } catch (error) {
+    console.error('Receipt scanning error:', error);
+    status.textContent = 'Error scanning receipt. Please try again or enter manually.';
+    status.className = 'text-red-600';
 }
 }
 
@@ -493,29 +492,29 @@ const symbol = getCurrencySymbol();
 const formattedDate = data.date ? new Date(data.date).toLocaleDateString() : '';
 
 extractedDataDiv.innerHTML = `
- <div class="space-y-2 p-4 bg-gray-50 rounded-lg">
-     <h4 class="font-semibold text-gray-700">Extracted Information:</h4>
-     <div class="grid gap-2 text-sm">
-         ${data.amount ? `
-             <div class="flex justify-between">
-                 <span class="text-gray-600">Amount:</span>
-                 <span class="font-medium">${symbol}${data.amount.toFixed(2)}</span>
-             </div>
-         ` : ''}
-         ${data.date ? `
-             <div class="flex justify-between">
-                 <span class="text-gray-600">Date:</span>
-                 <span class="font-medium">${formattedDate}</span>
-             </div>
-         ` : ''}
-         ${data.description ? `
-             <div class="flex justify-between">
-                 <span class="text-gray-600">Description:</span>
-                 <span class="font-medium">${data.description}</span>
-             </div>
-         ` : ''}
-     </div>
- </div>
+    <div class="space-y-2 p-4 bg-gray-50 rounded-lg">
+        <h4 class="font-semibold text-gray-700">Extracted Information:</h4>
+        <div class="grid gap-2 text-sm">
+            ${data.amount ? `
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Amount:</span>
+                    <span class="font-medium">${symbol}${data.amount.toFixed(2)}</span>
+                </div>
+            ` : ''}
+            ${data.date ? `
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Date:</span>
+                    <span class="font-medium">${formattedDate}</span>
+                </div>
+            ` : ''}
+            ${data.description ? `
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Description:</span>
+                    <span class="font-medium">${data.description}</span>
+                </div>
+            ` : ''}
+        </div>
+    </div>
 `;
 }
 
@@ -525,13 +524,13 @@ const file = e.target.files[0];
 if (!file) return;
 
 if (!file.type.startsWith('image/')) {
- showNotification('Please upload an image file', 'error');
- return;
+    showNotification('Please upload an image file', 'error');
+    return;
 }
 
 if (file.size > 10 * 1024 * 1024) {
- showNotification('File size should be less than 10MB', 'error');
- return;
+    showNotification('File size should be less than 10MB', 'error');
+    return;
 }
 
 await processReceipt(file);
@@ -549,115 +548,115 @@ document.body.appendChild(backdrop);
 
 // Toggle sidebar
 sidebarToggle?.addEventListener('click', () => {
- sidebar?.classList.toggle('show');
- backdrop.classList.toggle('show');
+    sidebar?.classList.toggle('show');
+    backdrop.classList.toggle('show');
 });
 
 // Close sidebar when clicking backdrop
 backdrop.addEventListener('click', () => {
- sidebar?.classList.remove('show');
- backdrop.classList.remove('show');
+    sidebar?.classList.remove('show');
+    backdrop.classList.remove('show');
 });
 
 // Close sidebar when clicking a link (mobile)
 const sidebarLinks = sidebar?.querySelectorAll('a');
 sidebarLinks?.forEach(link => {
- link.addEventListener('click', () => {
-     if (window.innerWidth <= 768) {
-         sidebar?.classList.remove('show');
-         backdrop.classList.remove('show');
-     }
- });
-});
+    link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+            sidebar?.classList.remove('show');
+            backdrop.classList.remove('show');
+        }
+    });
+    });
 
 // Close sidebar on window resize if open
 window.addEventListener('resize', () => {
- if (window.innerWidth > 768) {
-     sidebar?.classList.remove('show');
-     backdrop.classList.remove('show');
- }
+    if (window.innerWidth > 768) {
+        sidebar?.classList.remove('show');
+        backdrop.classList.remove('show');
+    }
 });
 }
 
 function initializeTabSystem() {
 const tabs = {
- overview: document.getElementById('overview'),
- expenses: document.getElementById('expenses'),
- budget: document.getElementById('budget'),
- insights: document.getElementById('insights'),
- rewards: document.getElementById('rewards'),
- game: document.getElementById('game')
+    overview: document.getElementById('overview'),
+    expenses: document.getElementById('expenses'),
+    budget: document.getElementById('budget'),
+    insights: document.getElementById('insights'),
+    rewards: document.getElementById('rewards'),
+    game: document.getElementById('game')
 };
 
 function showTab(tabId) {
  // Hide all tabs
- Object.values(tabs).forEach(tab => {
-     if (tab) tab.classList.add('hidden');
- });
+    Object.values(tabs).forEach(tab => {
+        if (tab) tab.classList.add('hidden');
+    });
 
  // Show selected tab
- const selectedTab = tabs[tabId];
- if (selectedTab) {
-     selectedTab.classList.remove('hidden');
-     
-     // Initialize specific tab content
-     switch(tabId) {
-         case 'expenses':
-             if (typeof initializeExpensesTab === 'function') initializeExpensesTab();
-             break;
-         case 'budget':
-             if (typeof initializeBudgetTab === 'function') initializeBudgetTab();
-             break;
-         case 'insights':
-             if (typeof initializeInsightsTab === 'function') initializeInsightsTab();
-             break;
-         case 'game':
-             if (typeof initializeGameTab === 'function') initializeGameTab();
-             break;
-         case 'rewards':
-             if (typeof initializeRewardsSystem === 'function') initializeRewardsSystem();
-             break;
-     }
- }
+    const selectedTab = tabs[tabId];
+    if (selectedTab) {
+        selectedTab.classList.remove('hidden');
+        
+        // Initialize specific tab content
+        switch(tabId) {
+            case 'expenses':
+                if (typeof initializeExpensesTab === 'function') initializeExpensesTab();
+                break;
+            case 'budget':
+                if (typeof initializeBudgetTab === 'function') initializeBudgetTab();
+                break;
+            case 'insights':
+                if (typeof initializeInsightsTab === 'function') initializeInsightsTab();
+                break;
+            case 'game':
+                if (typeof initializeGameTab === 'function') initializeGameTab();
+                break;
+            case 'rewards':
+                if (typeof initializeRewardsSystem === 'function') initializeRewardsSystem();
+                break;
+        }
+    }
 }
 
 // Add click handlers to tab links
 document.querySelectorAll('.tab-link').forEach(link => {
- link.addEventListener('click', (e) => {
-     e.preventDefault();
-     
-     // Remove active state from all tabs
-     document.querySelectorAll('.tab-link').forEach(tab => {
-         tab.classList.remove('active', 'bg-gray-100');
-         tab.classList.add('text-gray-600');
-     });
-     
-     // Add active state to clicked tab
-     link.classList.add('active', 'bg-gray-100');
-     link.classList.remove('text-gray-600');
-     
-     // Show corresponding tab content
-     const tabId = link.getAttribute('data-tab');
-     showTab(tabId);
- });
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Remove active state from all tabs
+        document.querySelectorAll('.tab-link').forEach(tab => {
+            tab.classList.remove('active', 'bg-gray-100');
+            tab.classList.add('text-gray-600');
+        });
+        
+        // Add active state to clicked tab
+        link.classList.add('active', 'bg-gray-100');
+        link.classList.remove('text-gray-600');
+        
+        // Show corresponding tab content
+        const tabId = link.getAttribute('data-tab');
+        showTab(tabId);
+    });
 });
 
 // Show initial tab
 const activeTab = document.querySelector('.tab-link.active');
 if (activeTab) {
- const initialTabId = activeTab.getAttribute('data-tab');
- showTab(initialTabId);
+    const initialTabId = activeTab.getAttribute('data-tab');
+    showTab(initialTabId);
 }
 }
 
 function initializeCurrencySystem() {
 const currencySelect = document.getElementById('currency-select');
 if (currencySelect) {
- currencySelect.value = localStorage.getItem('selectedCurrency') || 'USD';
- currencySelect.addEventListener('change', () => {
-     localStorage.setItem('selectedCurrency', currencySelect.value);
-     updateCurrencyDisplay();
- });
+    currencySelect.value = localStorage.getItem('selectedCurrency') || 'USD';
+    currencySelect.addEventListener('change', () => {
+        localStorage.setItem('selectedCurrency', currencySelect.value);
+        updateCurrencyDisplay();
+    });
 }
 updateCurrencyDisplay();
 }
@@ -666,12 +665,12 @@ function updateCurrencyDisplay() {
 const symbol = getCurrencySymbol();
 
 document.querySelectorAll('[data-amount]').forEach(element => {
- const amount = parseFloat(element.dataset.amount);
- element.textContent = `${symbol}${amount.toFixed(2)}`;
+    const amount = parseFloat(element.dataset.amount);
+    element.textContent = `${symbol}${amount.toFixed(2)}`;
 });
 
 if (window.expenseChart) {
- updateExpenseChart();
+    updateExpenseChart();
 }
 }
 
@@ -682,17 +681,17 @@ const transactionForm = document.getElementById('transaction-form');
 
 // Category options update
 typeSelect?.addEventListener('change', () => {
- const type = typeSelect.value;
- if (categorySelect) {
-     categorySelect.innerHTML = '<option value="">Select Category</option>';
-     window.categories[type].forEach(cat => {
-         categorySelect.innerHTML += `
-             <option value="${cat.name}" data-icon="${cat.icon}" data-color="${cat.color}">
-                 ${cat.name}
-             </option>
-         `;
-     });
- }
+    const type = typeSelect.value;
+    if (categorySelect) {
+        categorySelect.innerHTML = '<option value="">Select Category</option>';
+        window.categories[type].forEach(cat => {
+            categorySelect.innerHTML += `
+                <option value="${cat.name}" data-icon="${cat.icon}" data-color="${cat.color}">
+                    ${cat.name}
+                </option>
+            `;
+        });
+    }
 });
 
 // Form submission
@@ -708,16 +707,16 @@ setDefaultDateTime();
 function handleTransactionSubmit(e) {
 e.preventDefault();
 const formData = {
- description: document.getElementById('description').value,
- amount: parseFloat(document.getElementById('amount').value),
- type: document.getElementById('type').value,
- category: document.getElementById('category').value,
- date: document.getElementById('transaction-date').value
+    description: document.getElementById('description').value,
+    amount: parseFloat(document.getElementById('amount').value),
+    type: document.getElementById('type').value,
+    category: document.getElementById('category').value,
+    date: document.getElementById('transaction-date').value
 };
 
 if (!formData.description || !formData.amount || !formData.category || !formData.date) {
- showNotification('Please fill in all fields', 'error');
- return;
+    showNotification('Please fill in all fields', 'error');
+    return;
 }
 
 checkBudgetLimits(formData);
@@ -738,29 +737,29 @@ showNotification('Transaction added successfully');
 // Add responsive form reset
 if (window.innerWidth <= 768) {
  // Scroll to top of transactions list on mobile
- document.getElementById('transactions-list')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('transactions-list')?.scrollIntoView({ behavior: 'smooth' });
 }
 }
 
 function getCategoryTotals() {
 const currentDate = new Date();
 return window.transactions
- .filter(t => {
-     const date = new Date(t.date);
-     return t.type === 'expense' && 
-            date.getMonth() === currentDate.getMonth() && 
-            date.getFullYear() === currentDate.getFullYear();
- })
- .reduce((acc, t) => {
-     acc[t.category] = (acc[t.category] || 0) + t.amount;
-     return acc;
- }, {});
-}
+    .filter(t => {
+        const date = new Date(t.date);
+        return t.type === 'expense' && 
+                date.getMonth() === currentDate.getMonth() && 
+                date.getFullYear() === currentDate.getFullYear();
+    })
+    .reduce((acc, t) => {
+        acc[t.category] = (acc[t.category] || 0) + t.amount;
+        return acc;
+    }, {});
+    }
 
 function populateBudgetCategories(select) {
 select.innerHTML = '<option value="">Select Category</option>';
 window.categories.expense.forEach(cat => {
- select.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
+    select.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
 });
 }
 
@@ -768,7 +767,7 @@ function setupBudgetEventListeners(addBtn, modal, closeBtn, form) {
 addBtn?.addEventListener('click', () => modal?.classList.remove('hidden'));
 closeBtn?.addEventListener('click', () => modal?.classList.add('hidden'));
 modal?.addEventListener('click', e => {
- if (e.target === modal) modal.classList.add('hidden');
+    if (e.target === modal) modal.classList.add('hidden');
 });
 form?.addEventListener('submit', handleBudgetSubmit);
 }
@@ -779,11 +778,11 @@ const category = document.getElementById('budget-category').value;
 const amount = parseFloat(document.getElementById('budget-amount').value);
 
 if (category && amount) {
- window.budgets[category] = amount;
- localStorage.setItem('budgets', JSON.stringify(window.budgets));
- document.getElementById('budget-modal').classList.add('hidden');
- updateBudgetDisplay();
- showNotification('Budget updated successfully');
+    window.budgets[category] = amount;
+    localStorage.setItem('budgets', JSON.stringify(window.budgets));
+    document.getElementById('budget-modal').classList.add('hidden');
+    updateBudgetDisplay();
+    showNotification('Budget updated successfully');
 }
 }
 
@@ -802,8 +801,8 @@ updateBudgetSummary(totalBudgetElement, remainingBudgetElement, totalBudget, tot
 function calculateBudgetProgress() {
 const currentDate = new Date();
 const monthlyTransactions = window.transactions.filter(t => {
- const date = new Date(t.date);
- return t.type === 'expense' && 
+    const date = new Date(t.date);
+    return t.type === 'expense' && 
         date.getMonth() === currentDate.getMonth() && 
         date.getFullYear() === currentDate.getFullYear();
 });
@@ -813,12 +812,12 @@ let totalSpent = 0;
 const budgetProgress = [];
 
 Object.entries(window.budgets).forEach(([category, budget]) => {
- totalBudget += budget;
- const spent = monthlyTransactions
-     .filter(t => t.category === category)
-     .reduce((sum, t) => sum + t.amount, 0);
- totalSpent += spent;
- budgetProgress.push({ category, budget, spent });
+    totalBudget += budget;
+    const spent = monthlyTransactions
+        .filter(t => t.category === category)
+        .reduce((sum, t) => sum + t.amount, 0);
+    totalSpent += spent;
+    budgetProgress.push({ category, budget, spent });
 });
 
 return { totalBudget, totalSpent, budgetProgress };
@@ -828,19 +827,19 @@ function displayBudgetProgress(container, progress) {
 const symbol = getCurrencySymbol();
 container.innerHTML = progress.map(({ category, budget, spent }) => {
  const percentage = (spent / budget) * 100;
- const status = percentage > 90 ? 'danger' : percentage > 70 ? 'warning' : 'safe';
- 
- return `
-     <div class="mb-4">
-         <div class="flex justify-between text-sm mb-1">
-             <span>${category}</span>
-             <span>${symbol}${spent.toFixed(2)} / ${symbol}${budget.toFixed(2)}</span>
-         </div>
-         <div class="progress-bar-container">
-             <div class="progress-bar ${status}" style="width: ${Math.min(percentage, 100)}%"></div>
-         </div>
-     </div>
- `;
+    const status = percentage > 90 ? 'danger' : percentage > 70 ? 'warning' : 'safe';
+    
+    return `
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-1">
+                <span>${category}</span>
+                <span>${symbol}${spent.toFixed(2)} / ${symbol}${budget.toFixed(2)}</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar ${status}" style="width: ${Math.min(percentage, 100)}%"></div>
+            </div>
+        </div>
+    `;
 }).join('');
 }
 
@@ -867,76 +866,76 @@ updateRecommendations();
 // Game System
 function initializeGameTab() {
 const game = {
- isActive: false,
- budget: 1000,
- remaining: 1000,
- score: 0,
- timeRemaining: 1800,
- timer: null,
- currentChallenge: null,
- history: [],
- challenges: [
-     {
-         description: "Unexpected car repair needed. How much will you spend?",
-         minAmount: 200,
-         maxAmount: 800,
-         idealPercentage: 0.3
-     },
-     {
-         description: "Monthly grocery shopping. How much will you allocate?",
-         minAmount: 100,
-         maxAmount: 500,
-         idealPercentage: 0.2
-     },
-     {
-         description: "Emergency medical expense. How much do you set aside?",
-         minAmount: 150,
-         maxAmount: 600,
-         idealPercentage: 0.25
-     },
-     {
-         description: "Phone bill and internet services due. How much to pay?",
-         minAmount: 50,
-         maxAmount: 200,
-         idealPercentage: 0.08
-     },
-     {
-         description: "Planning a weekend trip. What's your budget?",
-         minAmount: 100,
-         maxAmount: 400,
-         idealPercentage: 0.15
-     },
-     {
-         description: "Home maintenance repairs needed. How much to spend?",
-         minAmount: 150,
-         maxAmount: 700,
-         idealPercentage: 0.28
-     },
-     {
-         description: "New work clothes needed. Set your shopping budget:",
-         minAmount: 80,
-         maxAmount: 300,
-         idealPercentage: 0.12
-     },
-     {
-         description: "Family member's wedding gift. How much to give?",
-         minAmount: 50,
-         maxAmount: 250,
-         idealPercentage: 0.1
-     },
-     {
-         description: "Annual insurance premium due. How much to allocate?",
-         minAmount: 200,
-         maxAmount: 800,
-         idealPercentage: 0.3
-     },
-     {
-         description: "Monthly entertainment budget. How much to set aside?",
-         minAmount: 40,
-         maxAmount: 200,
-         idealPercentage: 0.08
-     }
- ]
+    isActive: false,
+    budget: 1000,
+    remaining: 1000,
+    score: 0,
+    timeRemaining: 1800,
+    timer: null,
+    currentChallenge: null,
+    history: [],
+    challenges: [
+        {
+            description: "Unexpected car repair needed. How much will you spend?",
+            minAmount: 200,
+            maxAmount: 800,
+            idealPercentage: 0.3
+        },
+        {
+            description: "Monthly grocery shopping. How much will you allocate?",
+            minAmount: 100,
+            maxAmount: 500,
+            idealPercentage: 0.2
+        },
+        {
+            description: "Emergency medical expense. How much do you set aside?",
+            minAmount: 150,
+            maxAmount: 600,
+            idealPercentage: 0.25
+        },
+        {
+            description: "Phone bill and internet services due. How much to pay?",
+            minAmount: 50,
+            maxAmount: 200,
+            idealPercentage: 0.08
+        },
+        {
+            description: "Planning a weekend trip. What's your budget?",
+            minAmount: 100,
+            maxAmount: 400,
+            idealPercentage: 0.15
+        },
+        {
+            description: "Home maintenance repairs needed. How much to spend?",
+            minAmount: 150,
+            maxAmount: 700,
+            idealPercentage: 0.28
+        },
+        {
+            description: "New work clothes needed. Set your shopping budget:",
+            minAmount: 80,
+            maxAmount: 300,
+            idealPercentage: 0.12
+        },
+        {
+            description: "Family member's wedding gift. How much to give?",
+            minAmount: 50,
+            maxAmount: 250,
+            idealPercentage: 0.1
+        },
+        {
+            description: "Annual insurance premium due. How much to allocate?",
+            minAmount: 200,
+            maxAmount: 800,
+            idealPercentage: 0.3
+        },
+        {
+            description: "Monthly entertainment budget. How much to set aside?",
+            minAmount: 40,
+            maxAmount: 200,
+            idealPercentage: 0.08
+        }
+    ]
 };
 
 setupGameEventListeners(game);
@@ -953,8 +952,8 @@ const icon = darkModeToggle?.querySelector('i');
 
 // Set initial state
 if (isDarkMode) {
- document.body.classList.add('dark');
- icon?.classList.replace('fa-moon', 'fa-sun');
+    document.body.classList.add('dark');
+    icon?.classList.replace('fa-moon', 'fa-sun');
 }
 
 darkModeToggle?.addEventListener('click', () => {
