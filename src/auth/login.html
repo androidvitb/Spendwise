@@ -1,80 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Spendwise</title>
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <style>
-    .input-field {
-      @apply w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2 text-gray-700;
-    }
-    .login-btn {
-      background: linear-gradient(to right, #38bdf8, #a855f7);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .login-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    }
-  </style>
-</head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  
-  <!-- Login Card -->
-  <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm">
-    <!-- Header -->
-    <div class="text-center mb-6">
-      <h1 class="text-2xl font-semibold text-gray-800">Welcome</h1>
-      <div class="flex justify-center mt-2">
-        <div class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center">
-          <img src="/Images/SpendWise2.png" class="h-15" alt="Spendwise Logo" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Spendwise</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
+    <style>
+      /* Tailwind CDN can't expand @apply; using regular CSS so fields style correctly */
+      .input-field {
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #d1d5db;
+        padding: 0.5rem 0;
+        color: #374151;
+        background: transparent;
+        transition: border-color 0.2s ease;
+      }
+      .input-field:focus {
+        border-color: #377f8e; /* Changed from Blue to Teal */
+        outline: none;
+      }
+      /* Floating labels stay out of the way once the field has content or focus */
+      .floating-label {
+        position: absolute;
+        left: 0;
+        top: 0.9rem;
+        font-size: 0.95rem;
+        color: #6b7280;
+        transition: all 0.15s ease;
+        pointer-events: none;
+      }
+      .input-field:focus + .floating-label,
+      .input-field:not(:placeholder-shown) + .floating-label {
+        top: -0.2rem;
+        font-size: 0.75rem;
+        color: #377f8e; /* Changed from Blue to Teal */
+      }
+      .login-btn {
+        background: linear-gradient(to right, #377f8e, #2c6571); /* Changed to Teal Gradient */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .login-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm">
+      <div class="text-center mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800 font-['Playfair_Display']">Welcome</h1>
+        <div class="flex justify-center mt-2">
+          <div
+            class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center"
+          >
+            <a href="/">
+              <img
+                src="/Images/SpendWise2.png"
+                class="h-15"
+                alt="Spendwise Logo"
+              />
+            </a>
+          </div>
         </div>
       </div>
+
+      <form id="loginForm" class="space-y-6">
+        <div class="relative">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="input-field peer bg-transparent"
+            placeholder=" "
+          />
+          <label for="email" class="floating-label">Email</label>
+        </div>
+
+        <div class="relative">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            class="input-field peer bg-transparent pr-10"
+            placeholder=" "
+          />
+          <label for="password" class="floating-label">Password</label>
+          <span
+            class="absolute right-2 top-3 cursor-pointer text-gray-500"
+            onclick="togglePassword()"
+          >
+            <i class="material-icons" id="passwordToggleIcon">visibility</i>
+          </span>
+        </div>
+
+        <button
+          type="submit"
+          class="login-btn text-white py-3 w-full rounded-full font-semibold shadow-md"
+        >
+          LOGIN
+        </button>
+
+        <button
+          type="button"
+          id="googleLogin"
+          class="w-full flex items-center justify-center gap-2 py-3 rounded-full border border-gray-300 hover:border-[#377f8e] transition-all"
+        >
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            class="w-5 h-5"
+            alt="Google logo"
+          />
+          <span class="text-gray-700 font-medium">Continue with Google</span>
+        </button>
+      </form>
+
+      <p class="text-center text-gray-600 text-sm mt-4">
+        Don't have an account?
+        <a
+          href="/auth/signup.html"
+          class="text-[#377f8e] font-semibold hover:text-[#2c6571]"
+          >Sign Up</a
+        >
+      </p>
     </div>
-
-    <!-- Form -->
-    <form id="loginForm" class="space-y-6">
-      <!-- Email Field -->
-      <div class="relative">
-        <input type="email" id="email" name="email" required
-          class="input-field peer bg-transparent"
-          placeholder=" " />
-        <label for="email" class="absolute left-0 text-gray-500 top-2 text-sm peer-placeholder-shown:top-4 peer-placeholder-shown:text-base transition-all">Email</label>
-      </div>
-
-      <!-- Password Field -->
-      <div class="relative">
-        <input type="password" id="password" name="password" required
-          class="input-field peer bg-transparent pr-10"
-          placeholder=" " />
-        <label for="password" class="absolute left-0 text-gray-500 top-2 text-sm peer-placeholder-shown:top-4 peer-placeholder-shown:text-base transition-all">Password</label>
-        <span class="absolute right-2 top-3 cursor-pointer text-gray-500" onclick="togglePassword()">
-          <i class="material-icons">visibility</i>
-        </span>
-      </div>
-
-      <!-- Login Button -->
-      <button type="submit"  class="login-btn text-white py-3 w-full rounded-full font-semibold shadow-md">
-        LOGIN
-      </button>
-
-      <!-- Google Login -->
-      <button type="button" id="googleLogin"
-      class="w-full flex items-center justify-center gap-2 py-3 rounded-full border border-gray-300 hover:border-blue-400 transition-all">
-      <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google logo" />
-      <span class="text-gray-700 font-medium">Continue with Google</span>
-    </button>
-    </form>
-
-    <!-- Sign Up Link -->
-    <p class="text-center text-gray-600 text-sm mt-4">
-      Don't have an account? 
-      <a href="/auth/signup.html" class="text-blue-600 font-semibold hover:text-blue-800">Sign Up</a>
-    </p>
-  </div>
-  <script type="module" src="/js/auth.js"></script>
-</body>
+    <script type="module" src="/js/auth.js"></script>
+    <script>
+      // Toggle password visibility and update icon text
+      function togglePassword() {
+        const input = document.getElementById("password");
+        const icon = document.getElementById("passwordToggleIcon");
+        if (!input || !icon) return;
+        const isHidden = input.type === "password";
+        input.type = isHidden ? "text" : "password";
+        icon.innerText = isHidden ? "visibility_off" : "visibility";
+      }
+    </script>
+  </body>
 </html>
