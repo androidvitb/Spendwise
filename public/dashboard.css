@@ -1,4 +1,56 @@
 /* Dark mode styles - Updated */
+/* GLOBAL DARK MODE ---------------------------- */
+
+.dark {
+    background-color: #0f172a !important; /* same as homepage */
+    color: #f8fafc !important;
+}
+
+/* CARDS */
+.dark .card,
+.dark .bg-white {
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+}
+
+/* TEXT FIXES */
+.dark h1, 
+.dark h2, 
+.dark h3, 
+.dark h4, 
+.dark p, 
+.dark span, 
+.dark label {
+    color: #f8fafc !important;
+}
+
+/* INPUTS */
+.dark input,
+.dark select,
+.dark textarea {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+
+/* SIDEBAR */
+.dark #sidebar {
+    background-color: #1e293b !important;
+}
+
+/* TABLES */
+.dark table {
+    color: #f8fafc !important;
+}
+
+.dark thead {
+    background-color: #334155 !important;
+}
+
+.dark tbody tr {
+    background-color: #1e293b !important;
+    border-bottom: 1px solid #334155 !important;
+}
 
 .header {
 background-color: #1976d2;
