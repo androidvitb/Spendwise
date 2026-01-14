@@ -10,170 +10,183 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-    <!-- Google Sign-In API -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
     <style>
-      /* Tailwind CDN cannot process @apply; using plain CSS so inputs style correctly */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-up {
+        animation: fadeUp 0.6s ease-out forwards;
+      }
+
+      .input-group {
+        position: relative;
+      }
       .input-field {
         width: 100%;
         border: 0;
-        border-bottom: 1px solid #d1d5db;
-        padding: 0.5rem 0;
-        color: #111827;
+        border-bottom: 2px solid #e5e7eb;
+        padding: 0.15rem 0;
+        font-size: 1rem;
+        color: #1f2937;
         background: transparent;
-        transition: border-color 0.2s ease;
+        transition: border-color 0.3s ease;
       }
       .input-field:focus {
-        border-color: #3b82f6;
+        border-color: #377f8e;
         outline: none;
       }
-      /* Floating labels stay out of the way once the field has content or focus */
+      
       .floating-label {
         position: absolute;
         left: 0;
-        top: 0.9rem;
-        font-size: 0.95rem;
-        color: #6b7280;
-        transition: all 0.15s ease;
+        top: 0.75rem;
+        font-size: 1rem;
+        color: #9ca3af;
+        transition: all 0.2s ease-out;
         pointer-events: none;
       }
       .input-field:focus + .floating-label,
       .input-field:not(:placeholder-shown) + .floating-label {
-        top: -0.2rem;
+        top: -0.5rem;
         font-size: 0.75rem;
-        color: #3b82f6;
+        color: #377f8e;
+        font-weight: 600;
       }
+
       .signup-btn {
-        background: linear-gradient(to right, #38bdf8, #a855f4);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: linear-gradient(135deg, #377f8e 0%, #2c6571 100%);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
       }
       .signup-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -10px rgba(55, 127, 142, 0.5);
+      }
+      .signup-btn:active {
+        transform: scale(0.98);
       }
     </style>
   </head>
-  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <!-- Signup Card -->
-    <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm">
-      <!-- Header -->
-      <div class="text-center mb-6">
-        <h1 class="text-2xl font-semibold text-gray-800">Create Account</h1>
-        <div class="flex justify-center mt-2">
-          <div
-            class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center"
-          >
-            <a href="/">
+  <body class="bg-gray-50 flex items-center justify-center min-h-screen relative overflow-hidden">
+    
+    <div class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-[#377f8e]/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-[#2c6571]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md animate-fade-up relative z-10 border border-gray-100">
+      
+      <div class="text-center mb-8">
+        <div class="flex justify-center mb-4">
+            <a href="/" class="transition-transform hover:scale-110 duration-300">
               <img
                 src="/Images/SpendWise2.png"
-                class="h-15"
+                class="h-16 w-auto"
                 alt="Spendwise Logo"
               />
             </a>
-          </div>
         </div>
+        <h1 class="text-3xl font-bold text-gray-900 font-['Playfair_Display'] mb-2">Create Account</h1>
+        <p class="text-gray-500 text-sm">Join SpendWise to manage your finances</p>
       </div>
 
-      <!-- Form -->
-      <form id="signupForm" class="space-y-6">
-        <!-- Name Field -->
-        <div class="relative">
+      <form id="signupForm" class="space-y-5">
+        <div class="input-group">
           <input
             type="text"
             id="name"
             name="name"
             required
-            class="input-field peer bg-transparent"
+            class="input-field peer"
             placeholder=" "
           />
           <label for="name" class="floating-label">Full Name</label>
         </div>
 
-        <!-- Email Field -->
-        <div class="relative">
+        <div class="input-group">
           <input
             type="email"
             id="email"
             name="email"
             required
-            class="input-field peer bg-transparent"
+            class="input-field peer"
             placeholder=" "
           />
-          <label for="email" class="floating-label">Email</label>
+          <label for="email" class="floating-label">Email Address</label>
         </div>
 
-        <!-- Password Field -->
-        <div class="relative">
+        <div class="input-group">
           <input
             type="password"
             id="password"
             name="password"
             required
-            class="input-field peer bg-transparent pr-10"
+            class="input-field peer pr-10"
             placeholder=" "
           />
           <label for="password" class="floating-label">Password</label>
           <span
-            class="absolute right-2 top-3 cursor-pointer text-gray-500"
+            class="absolute right-0 top-3 cursor-pointer text-gray-400 hover:text-[#377f8e] transition-colors"
             onclick="togglePassword('password')"
           >
             <i class="material-icons" id="passwordToggleIcon">visibility</i>
           </span>
         </div>
 
-        <!-- Confirm Password Field -->
-        <div class="relative">
+        <div class="input-group">
           <input
             type="password"
             id="confirm_password"
             name="confirm_password"
             required
-            class="input-field peer bg-transparent pr-10"
+            class="input-field peer pr-10"
             placeholder=" "
           />
-          <label for="confirm_password" class="floating-label"
-            >Confirm Password</label
-          >
+          <label for="confirm_password" class="floating-label">Confirm Password</label>
           <span
-            class="absolute right-2 top-3 cursor-pointer text-gray-500"
+            class="absolute right-0 top-3 cursor-pointer text-gray-400 hover:text-[#377f8e] transition-colors"
             onclick="togglePassword('confirm_password')"
           >
-            <i class="material-icons" id="confirmPasswordToggleIcon"
-              >visibility</i
-            >
+            <i class="material-icons" id="confirmPasswordToggleIcon">visibility</i>
           </span>
         </div>
 
-        <!-- Signup Button -->
         <button
           type="submit"
-          class="signup-btn text-white py-3 w-full rounded-full font-semibold shadow-md"
+          class="signup-btn text-white py-3.5 w-full rounded-xl font-bold tracking-wide shadow-md mt-2"
         >
           SIGN UP
         </button>
 
-        <!-- Google Signup -->
+        <div class="flex items-center my-4">
+            <div class="flex-grow border-t border-gray-200"></div>
+            <span class="px-4 text-xs text-gray-400 uppercase tracking-wider">Or register with</span>
+            <div class="flex-grow border-t border-gray-200"></div>
+        </div>
+
         <button
           type="button"
           id="googleSignup"
-          class="w-full flex items-center justify-center gap-2 py-3 rounded-full border border-gray-300 hover:border-blue-400 transition-all"
+          class="w-full flex items-center justify-center gap-3 py-3 rounded-xl border-2 border-gray-100 hover:border-[#377f8e]/30 hover:bg-gray-50 transition-all duration-300 group"
         >
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
-            class="w-5 h-5"
+            class="w-5 h-5 group-hover:scale-110 transition-transform"
             alt="Google logo"
           />
-          <span class="text-gray-400 font-medium">Sign up with Google</span>
+          <span class="text-gray-600 font-medium group-hover:text-[#377f8e]">Sign up with Google</span>
         </button>
       </form>
 
-      <!-- Login Link -->
-      <p class="text-center text-gray-600 text-sm mt-4">
+      <p class="text-center text-gray-600 text-sm mt-8">
         Already have an account?
         <a
           href="/auth/login.html"
-          class="text-blue-600 font-semibold hover:text-blue-800"
-          >Login</a
+          class="text-[#377f8e] font-bold hover:text-[#2c6571] hover:underline transition-all"
+          >Login here</a
         >
       </p>
     </div>
