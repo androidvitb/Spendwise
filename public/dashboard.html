@@ -61,6 +61,11 @@
                         <i class="fas fa-chart-line"></i>
                         <span>Insights</span>
                     </a>
+                    <a href="#" data-tab="investment"
+                        class="tab-link flex items-center space-x-3 p-3 rounded-lg text-[#377f8e] hover:bg-gray-100">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Investments</span>
+                    </a>
                     <a href="#" data-tab="rewards" class="tab-link flex items-center space-x-3 p-3 rounded-lg text-[#377f8e] hover:bg-gray-100">
                         <i class="fas fa-gift"></i>
                         <span>Rewards</span>
@@ -383,6 +388,63 @@
                         </div>
                     </div>
                 </div>
+               
+                <!-- Investment Tab -->
+            <div id="investment" class="tab-content hidden">
+
+                <!-- Header -->
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                    <h2 class="text-xl font-semibold text-gray-700">
+                    📈 Investment Planning for the Future
+                    </h2>
+                    <p class="text-sm text-gray-500 mt-1">
+                    Plan your long-term goals and estimate future returns
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Investment Form -->
+                    <div class="bg-white p-6 rounded-lg shadow-md space-y-4">
+
+                    <input id="inv-goal" type="text"
+                        placeholder="Goal (e.g. House, Travel, Retirement)"
+                        class="w-full p-2 border rounded">
+
+                    <input id="inv-amount" type="number"
+                        placeholder="Monthly Investment (₹)"
+                        class="w-full p-2 border rounded">
+
+                    <input id="inv-years" type="number"
+                        placeholder="Investment Duration (Years)"
+                        class="w-full p-2 border rounded">
+
+                    <select id="inv-type" class="w-full p-2 border rounded">
+                        <option value="12">Mutual Funds (12%)</option>
+                        <option value="10">Stocks (10%)</option>
+                        <option value="7">Fixed Deposit (7%)</option>
+                        <option value="15">Crypto (15%) ⚠️</option>
+                    </select>
+
+                    <button onclick="calculateInvestment()"
+                        class="w-full bg-[#377f8e] text-white py-2 rounded hover:bg-[#2c6674]">
+                        Calculate Investment
+                    </button>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p><strong>Total Invested:</strong> ₹<span id="inv-invested">0</span></p>
+                    <p class="mt-2"><strong>Future Value:</strong> ₹<span id="inv-future">0</span></p>
+                    <p class="mt-2"><strong>Wealth Gain:</strong> ₹<span id="inv-gain">0</span></p>
+
+                    <canvas id="investmentChart" class="mt-6"></canvas>
+                    </div>
+
+                </div>
+            </div>
+
+
                 <!-- Game Tab -->
                 <div id="game" class="tab-content hidden">
     <!-- Game Header -->
