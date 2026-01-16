@@ -3,78 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Spendwise</title>
-  <link rel="icon" type="image/png" href="/favicon.png" />
+  <title>Login • SpendWise</title>
+
+  <link rel="icon" href="/favicon.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <style>
-    .input-field {
-      @apply w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2 text-gray-700;
-    }
-    .login-btn {
-      background: linear-gradient(to right, #38bdf8, #a855f7);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .login-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    }
-  </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  
-  <!-- Login Card -->
-  <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm">
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white w-full max-w-sm p-8 rounded-2xl shadow-xl">
+
     <!-- Header -->
     <div class="text-center mb-6">
-      <h1 class="text-2xl font-semibold text-gray-800">Welcome</h1>
-      <div class="flex justify-center mt-2">
-        <div class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center">
-          <img src="/Images/SpendWise2.png" class="h-15" alt="Spendwise Logo" />
-        </div>
-      </div>
+      <img src="/Images/SpendWise2.png" class="w-20 mx-auto mb-2" alt="SpendWise Logo">
+      <h1 class="text-2xl font-semibold text-gray-800">Welcome Back</h1>
+      <p class="text-sm text-gray-500">Login to continue</p>
     </div>
 
+    <!-- Error -->
+    <p id="errorMessage" class="hidden text-red-500 text-sm mb-3 text-center"></p>
+
     <!-- Form -->
-    <form id="loginForm" class="space-y-6">
-      <!-- Email Field -->
-      <div class="relative">
-        <input type="email" id="email" name="email" required
-          class="input-field peer bg-transparent"
-          placeholder=" " />
-        <label for="email" class="absolute left-0 text-gray-500 top-2 text-sm peer-placeholder-shown:top-4 peer-placeholder-shown:text-base transition-all">Email</label>
+    <form id="loginForm" class="space-y-5">
+
+      <div>
+        <label class="text-sm text-gray-600">Email</label>
+        <input id="email" type="email" required
+          class="w-full border-b py-2 focus:outline-none focus:border-blue-500" />
       </div>
 
-      <!-- Password Field -->
       <div class="relative">
-        <input type="password" id="password" name="password" required
-          class="input-field peer bg-transparent pr-10"
-          placeholder=" " />
-        <label for="password" class="absolute left-0 text-gray-500 top-2 text-sm peer-placeholder-shown:top-4 peer-placeholder-shown:text-base transition-all">Password</label>
-        <span class="absolute right-2 top-3 cursor-pointer text-gray-500" onclick="togglePassword()">
-          <i class="material-icons">visibility</i>
-        </span>
+        <label class="text-sm text-gray-600">Password</label>
+        <input id="password" type="password" required
+          class="w-full border-b py-2 pr-10 focus:outline-none focus:border-blue-500" />
+        <span class="material-icons absolute right-2 top-8 cursor-pointer text-gray-500"
+          onclick="togglePassword('password', this)">visibility</span>
       </div>
 
-      <!-- Login Button -->
-      <button type="submit"  class="login-btn text-white py-3 w-full rounded-full font-semibold shadow-md">
-        LOGIN
+      <button id="loginBtn"
+        class="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-sky-400 to-purple-500 hover:scale-105 transition">
+        Login
       </button>
 
-      <!-- Google Login -->
       <button type="button" id="googleLogin"
-      class="w-full flex items-center justify-center gap-2 py-3 rounded-full border border-gray-300 hover:border-blue-400 transition-all">
-      <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google logo" />
-      <span class="text-gray-700 font-medium">Continue with Google</span>
-    </button>
+        class="w-full flex items-center justify-center gap-2 py-3 rounded-full border hover:border-blue-400 transition">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5">
+        Continue with Google
+      </button>
+
     </form>
 
-    <!-- Sign Up Link -->
-    <p class="text-center text-gray-600 text-sm mt-4">
-      Don't have an account? 
-      <a href="/auth/signup.html" class="text-blue-600 font-semibold hover:text-blue-800">Sign Up</a>
+    <p class="text-center text-sm text-gray-600 mt-4">
+      Don’t have an account?
+      <a href="/auth/signup.html" class="text-blue-600 font-semibold">Sign up</a>
     </p>
+
   </div>
+
   <script type="module" src="/js/auth.js"></script>
+  <script>
+    function togglePassword(id, icon) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+      icon.textContent = input.type === "password" ? "visibility" : "visibility_off";
+    }
+  </script>
+
 </body>
 </html>

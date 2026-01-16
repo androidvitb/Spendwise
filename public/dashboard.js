@@ -585,7 +585,8 @@ const tabs = {
     budget: document.getElementById('budget'),
     insights: document.getElementById('insights'),
     rewards: document.getElementById('rewards'),
-    game: document.getElementById('game')
+    game: document.getElementById('game'),
+    investment:document.getElementById('investment')
 };
 
 function showTab(tabId) {
@@ -2455,3 +2456,61 @@ updateBudgetDisplay();
 window.initializeBudgetTab = initializeBudgetTab;
 
 // ...rest of existing code...
+
+
+
+let investmentChart;
+
+function calculateInvestment() {
+  const monthly = Number(document.getElementById("inv-amount").value);
+  const years = Number(document.getElementById("inv-years").value);
+  const rate = Number(document.getElementById("inv-type").value) / 100;
+
+  if (!monthly || !years) {
+    alert("Please fill all investment details");
+    return;
+  }
+
+  const months = years * 12;
+  const monthlyRate = rate / 12;
+
+  let futureValue = 0;
+  let growthData = [];
+
+  for (let i = 1; i <= months; i++) {
+    futureValue = (futureValue + monthly) * (1 + monthlyRate);
+    growthData.push(Math.round(futureValue));
+  }
+
+  const invested = monthly * months;
+
+  document.getElementById("inv-invested").innerText =
+    invested.toLocaleString();
+
+  document.getElementById("inv-future").innerText =
+    Math.round(futureValue).toLocaleString();
+
+  document.getElementById("inv-gain").innerText =
+    Math.round(futureValue - invested).toLocaleString();
+
+  drawInvestmentChart(growthData);
+}
+
+function drawInvestmentChart(data) {
+  const ctx = document.getElementById("investmentChart");
+
+  if (investmentChart) investmentChart.destroy();
+
+  investmentChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: data.map((_, i) => i + 1),
+      datasets: [{
+        label: "Investment Growth",
+        data,
+        borderWidth: 2,
+        tension: 0.4
+      }]
+    }
+  });
+}
