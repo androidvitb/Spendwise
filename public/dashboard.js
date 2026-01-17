@@ -2722,3 +2722,114 @@ document.addEventListener("DOMContentLoaded", () => {
   updateFinancialHealthUI();
 });
 
+
+
+let savingsGoals = [];
+
+/* --------------------
+   Modal Controls
+-------------------- */
+function openSavingsModal() {
+  document.getElementById("savings-modal").classList.remove("hidden");
+}
+
+function closeSavingsModal() {
+  document.getElementById("savings-modal").classList.add("hidden");
+}
+
+/* --------------------
+   Add Goal
+-------------------- */
+function addSavingsGoal() {
+  const name = document.getElementById("goal-name").value.trim();
+  const amount = Number(document.getElementById("goal-amount").value);
+  const deadline = document.getElementById("goal-deadline").value;
+
+  if (!name || !amount || !deadline) {
+    alert("Please fill all goal details");
+    return;
+  }
+
+  savingsGoals.push({
+    name,
+    amount,
+    deadline,
+    saved: 0
+  });
+
+  closeSavingsModal();
+  renderSavingsGoals();
+
+  document.getElementById("goal-name").value = "";
+  document.getElementById("goal-amount").value = "";
+  document.getElementById("goal-deadline").value = "";
+}
+
+/* --------------------
+   Helpers
+-------------------- */
+function daysRemaining(deadline) {
+  const today = new Date();
+  const end = new Date(deadline);
+  const diffTime = end - today;
+  return Math.max(Math.ceil(diffTime / (1000 * 60 * 60 * 24)), 1);
+}
+
+/* --------------------
+   Render Goals (UI CORE)
+-------------------- */
+function renderSavingsGoals() {
+  const container = document.getElementById("savings-goals-list");
+
+  if (savingsGoals.length === 0) {
+    container.innerHTML = `
+      <p class="text-gray-500 text-sm">
+        No savings goals added yet.
+      </p>`;
+    return;
+  }
+
+  container.innerHTML = "";
+
+  savingsGoals.forEach((goal) => {
+    const progress = Math.min((goal.saved / goal.amount) * 100, 100);
+    const daysLeft = daysRemaining(goal.deadline);
+    const monthlyRequired = (goal.amount - goal.saved) / (daysLeft / 30);
+    const dailyRequired = (goal.amount - goal.saved) / daysLeft;
+
+    container.innerHTML += `
+      <div class="border rounded-xl p-4 hover:shadow transition">
+
+        <div class="flex justify-between items-center mb-1">
+          <h4 class="font-semibold text-gray-800">
+            ${goal.name}
+          </h4>
+          <span class="text-sm text-gray-500">
+            ${Math.round(progress)}%
+          </span>
+        </div>
+
+        <p class="text-sm text-gray-600 mb-2">
+          Saved ₹${goal.saved.toLocaleString()} of ₹${goal.amount.toLocaleString()}
+        </p>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-gray-200 rounded-full h-2 mb-3">
+          <div
+            class="bg-[#377f8e] h-2 rounded-full"
+            style="width:${progress}%"
+          ></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm text-gray-600">
+          <div>⏳ <strong>${daysLeft}</strong> days left</div>
+          <div>📅 ₹${Math.ceil(monthlyRequired)} / month</div>
+          <div>📆 ₹${Math.ceil(dailyRequired)} / day</div>
+        </div>
+
+      </div>
+    `;
+  });
+}
+
+

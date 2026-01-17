@@ -361,6 +361,82 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Savings Goal Tracker -->
+<div class="bg-white p-6 rounded-xl shadow-md mt-6">
+  <div class="flex justify-between items-center mb-5">
+    <div>
+      <h3 class="text-lg font-semibold text-gray-800">
+        💸 Savings Goals
+      </h3>
+      <p class="text-sm text-gray-500">
+        Track your savings progress and deadlines
+      </p>
+    </div>
+
+    <button
+      onclick="openSavingsModal()"
+      class="bg-[#377f8e] text-white px-4 py-2 rounded-lg hover:bg-[#2c6674] transition"
+    >
+      + Add Goal
+    </button>
+  </div>
+
+  <div id="savings-goals-list" class="space-y-4">
+    <p class="text-gray-500 text-sm">
+      No savings goals added yet.
+    </p>
+  </div>
+</div>
+
+<!-- Savings Goal Modal -->
+<div
+  id="savings-modal"
+  class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+>
+  <div class="bg-white p-6 rounded-xl w-full max-w-md">
+    <h3 class="text-lg font-semibold mb-4">
+      🎯 Add Savings Goal
+    </h3>
+
+    <div class="space-y-3">
+      <input
+        id="goal-name"
+        type="text"
+        placeholder="Goal Name (e.g. Laptop, Trip)"
+        class="w-full p-2 border rounded-lg"
+      />
+
+      <input
+        id="goal-amount"
+        type="number"
+        placeholder="Target Amount (₹)"
+        class="w-full p-2 border rounded-lg"
+      />
+
+      <input
+        id="goal-deadline"
+        type="date"
+        class="w-full p-2 border rounded-lg"
+      />
+    </div>
+
+    <div class="flex justify-end gap-3 mt-5">
+      <button
+        onclick="closeSavingsModal()"
+        class="px-4 py-2 border rounded-lg"
+      >
+        Cancel
+      </button>
+      <button
+        onclick="addSavingsGoal()"
+        class="bg-[#377f8e] text-white px-4 py-2 rounded-lg"
+      >
+        Save Goal
+      </button>
+    </div>
+  </div>
+</div>
+
                 </div>
                 <!-- Insights Tab -->
                 <div id="insights" class="tab-content hidden">
