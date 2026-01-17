@@ -2612,3 +2612,113 @@ function drawInvestmentChart(data) {
     }
   });
 }
+
+
+
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function calculateFinancialHealthScore(data) {
+  let score = 0;
+
+  /* 1️⃣ Income vs Expense (30 points) */
+  const expenseRatio = data.expenses / data.income;
+  const incomeExpenseScore = clamp(
+    (1 - expenseRatio) * 30,
+    0,
+    30
+  );
+
+  /* 2️⃣ Savings Rate (25 points) */
+  const savingsRate =
+    (data.income - data.expenses) / data.income;
+  const savingsScore = clamp(savingsRate * 25, 0, 25);
+
+  /* 3️⃣ Budget Discipline (20 points) */
+  const budgetScore = clamp(
+    (data.budgetAdherence || 0) * 20,
+    0,
+    20
+  );
+
+  /* 4️⃣ Investment Consistency (15 points) */
+  const investmentScore = data.hasInvestment ? 15 : 5;
+
+  /* 5️⃣ Expense Stability (10 points) */
+  const stabilityScore = clamp(
+    (1 - data.expenseFluctuation) * 10,
+    0,
+    10
+  );
+
+  score =
+    incomeExpenseScore +
+    savingsScore +
+    budgetScore +
+    investmentScore +
+    stabilityScore;
+
+  return Math.round(clamp(score, 0, 100));
+}
+
+function getFinancialData() {
+  const income =
+    Number(
+      document.getElementById("monthly-income")
+        ?.innerText.replace(/[^\d]/g, "")
+    ) || 0;
+
+  const expenses =
+    Number(
+      document.getElementById("monthly-expenses")
+        ?.innerText.replace(/[^\d]/g, "")
+    ) || 0;
+
+  return {
+    income: income || 1, // avoid divide by zero
+    expenses,
+    budgetAdherence: 0.8, // placeholder (80%)
+    hasInvestment:
+      document.getElementById("inv-amount") !== null,
+    expenseFluctuation: 0.2 // placeholder
+  };
+}
+
+
+function updateFinancialHealthUI() {
+  const data = getFinancialData();
+  const score = calculateFinancialHealthScore(data);
+
+  const circle = document.getElementById("health-score-circle");
+  const status = document.getElementById("health-status");
+  const tip = document.getElementById("health-tip");
+
+  circle.innerText = score;
+
+  if (score >= 80) {
+    circle.className =
+      "w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold text-white bg-green-500";
+    status.innerText = "Excellent Financial Health";
+    tip.innerText =
+      "Great job! Keep saving and investing consistently.";
+  } else if (score >= 50) {
+    circle.className =
+      "w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold text-white bg-yellow-400";
+    status.innerText = "Moderate Financial Health";
+    tip.innerText =
+      "You’re doing okay. Try improving savings and budgets.";
+  } else {
+    circle.className =
+      "w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold text-white bg-red-500";
+    status.innerText = "Poor Financial Health";
+    tip.innerText =
+      "Reduce expenses and build an emergency fund.";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateFinancialHealthUI();
+});
+
