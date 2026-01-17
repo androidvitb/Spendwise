@@ -2109,6 +2109,104 @@ window.currentGame = game;
 setupGameEventListeners(game);
 });
 
+
+let interestGame = {
+  principal: 0,
+  rate: 0,
+  years: 0,
+  type: "",
+  correctAnswer: 0
+};
+
+function generateInterestQuestion() {
+  const principals = [5000, 8000, 10000, 15000];
+  const rates = [5, 8, 10, 12];
+  const yearsList = [2, 3, 5];
+  const types = ["Simple", "Compound"];
+
+  interestGame.principal =
+    principals[Math.floor(Math.random() * principals.length)];
+
+  interestGame.rate =
+    rates[Math.floor(Math.random() * rates.length)];
+
+  interestGame.years =
+    yearsList[Math.floor(Math.random() * yearsList.length)];
+
+  interestGame.type =
+    types[Math.floor(Math.random() * types.length)];
+
+  // Calculate correct answer
+  if (interestGame.type === "Simple") {
+    interestGame.correctAnswer =
+      interestGame.principal +
+      (interestGame.principal *
+        interestGame.rate *
+        interestGame.years) /
+        100;
+  } else {
+    interestGame.correctAnswer =
+      interestGame.principal *
+      Math.pow(
+        1 + interestGame.rate / 100,
+        interestGame.years
+      );
+  }
+
+  interestGame.correctAnswer = Math.round(interestGame.correctAnswer);
+
+  document.getElementById("interest-question").innerHTML = `
+    <strong>Type:</strong> ${interestGame.type} Interest<br>
+    <strong>Principal:</strong> ₹${interestGame.principal}<br>
+    <strong>Rate:</strong> ${interestGame.rate}% per year<br>
+    <strong>Time:</strong> ${interestGame.years} years<br>
+    <br>
+    👉 Calculate the <strong>final amount</strong>
+  `;
+
+  document.getElementById("interest-feedback").innerHTML = "";
+  document.getElementById("interest-answer").value = "";
+}
+
+function checkInterestAnswer() {
+  const userAnswer = Number(
+    document.getElementById("interest-answer").value
+  );
+
+  if (!userAnswer) {
+    alert("Please enter your answer");
+    return;
+  }
+
+  const feedback = document.getElementById("interest-feedback");
+
+  if (userAnswer === interestGame.correctAnswer) {
+    feedback.innerHTML = `
+      <p class="text-green-600 font-semibold">
+        🎉 Correct Answer!
+      </p>
+      <p>You unlocked a <strong>10% DISCOUNT</strong> 🎁</p>
+    `;
+  } else {
+    feedback.innerHTML = `
+      <p class="text-red-600 font-semibold">
+        ❌ Incorrect Answer
+      </p>
+      <p>
+        Correct Amount: ₹${interestGame.correctAnswer}
+      </p>
+      <p class="text-sm text-gray-600 mt-1">
+        ${
+          interestGame.type === "Simple"
+            ? "Simple Interest = P + (P × R × T / 100)"
+            : "Compound Interest = P × (1 + R/100)ᵀ"
+        }
+      </p>
+    `;
+  }
+}
+
+
 // ...rest of existing code...
 
 // Add these functions after the initialization code
