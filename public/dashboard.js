@@ -2832,4 +2832,98 @@ function renderSavingsGoals() {
   });
 }
 
+const GROQ_API_KEY = "your api"; // ⚠️ demo only
+
+async function askGroqAI() {
+  const input = document.getElementById("ai-input");
+  const chat = document.getElementById("ai-chat");
+  const question = input.value.trim();
+
+  if (!question) return;
+
+  // Show user message
+  chat.innerHTML += `
+    <div class="mb-2">
+      <strong>You:</strong> ${question}
+    </div>
+  `;
+  input.value = "";
+
+  // Collect SpendWise data
+  const income = Number(
+    document.getElementById("monthly-income")?.innerText.replace(/[^\d]/g, "")
+  ) || 0;
+
+  const expenses = Number(
+    document.getElementById("monthly-expenses")?.innerText.replace(/[^\d]/g, "")
+  ) || 0;
+
+  const savings = Math.max(0, income - expenses);
+
+  chat.innerHTML += `
+    <div class="text-gray-400 mb-2">AI is thinking...</div>
+  `;
+
+  const prompt = `
+You are a personal finance assistant.
+
+User financial data:
+- Monthly Income: ₹${income}
+- Monthly Expenses: ₹${expenses}
+- Monthly Savings: ₹${savings}
+
+User question:
+"${question}"
+
+Give short, practical, personalized financial advice.
+`;
+
+  try {
+const response = await fetch(
+  "https://api.groq.com/openai/v1/chat/completions",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${GROQ_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        { role: "user", content: prompt }
+      ],
+      temperature: 0.6
+    })
+  }
+);
+
+
+    const data = await response.json();
+
+    if (!data.choices || !data.choices.length) {
+    console.error("Groq API error response:", data);
+    chat.innerHTML += `
+        <div class="text-red-500 mb-2">
+        ❌ AI Error: ${data.error?.message || "Invalid response from Groq API"}
+        </div>
+    `;
+    return;
+    }
+
+    chat.innerHTML += `
+    <div class="mb-3">
+        <strong>AI:</strong> ${data.choices[0].message.content}
+    </div>
+    `;
+
+
+  } catch (error) {
+    chat.innerHTML += `
+      <div class="text-red-500">
+        Error fetching AI response
+      </div>
+    `;
+    console.error(error);
+  }
+}
 
