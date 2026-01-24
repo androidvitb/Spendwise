@@ -6,6 +6,8 @@
     --gray-50: #f9fafb;
     --gray-100: #f3f4f6;
     --gray-600: #4b5563;
+    /* --dark-text-color: #e5e7eb; */
+
 }
 
 /* Hero section styles */
@@ -921,6 +923,11 @@ body {
     margin-bottom: 25px;
     color: var(--light-text-color);
 }
+
+[data-theme="dark"] .testimonial-text {
+  color: #374151; /* dark gray, readable on white cards */
+}
+
 
 .profile {
     display: flex;
