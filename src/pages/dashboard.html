@@ -15,7 +15,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Load Chart.js before your script -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
@@ -41,7 +41,7 @@
         <!-- Sidebar -->
         <div id="sidebar" class="bg-white w-64 shadow-md flex flex-col transition-all duration-300">
             <div class="p-4 border-b">
-                <img src="Images/SpendWise2.png" class="h-15" alt="SpendWise">
+                <img src="/images/SpendWise2.png" class="h-15" alt="SpendWise">
             </div>
             <nav class="flex-1 p-4">
                 <div class="space-y-2">
@@ -77,7 +77,7 @@
                 </div>
             </nav>
             <div class="p-4 border-t">
-                <a href="index.html" class="flex items-center space-x-3 p-3 rounded-lg text-[#377f8e] hover:bg-gray-100">
+                <a href="/index.html" class="flex items-center space-x-3 p-3 rounded-lg text-[#377f8e] hover:bg-gray-100">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Back to Home</span>
                 </a>
@@ -112,27 +112,57 @@
                 <div id="overview" class="tab-content hidden">
 
                     <!-- Financial Health Score -->
-<div class="bg-white p-6 rounded-lg shadow-md mb-6">
-  <h3 class="text-lg font-semibold text-gray-700 mb-2">
-    🧠 Financial Health Score
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">
+                    🧠 Financial Health Score
+                </h3>
+
+                <div class="flex items-center gap-6">
+                    <div
+                    id="health-score-circle"
+                    class="w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold text-white bg-gray-400"
+                    >
+                    0
+                    </div>
+
+                    <div>
+                    <p id="health-status" class="text-lg font-semibold text-gray-600">
+                        Calculating...
+                    </p>
+                    <p id="health-tip" class="text-sm text-gray-500 mt-1">
+                        Add transactions to see your financial health
+                    </p>
+                    </div>
+                </div>
+                </div>
+
+
+    <div class="bg-white p-6 rounded-xl shadow-md mt-6">
+  <h3 class="text-lg font-semibold text-gray-800 mb-1">
+    🤖 Smart Financial Assistant
   </h3>
+  <p class="text-sm text-gray-500 mb-3">
+    Ask questions about your spending, savings, or investments
+  </p>
 
-  <div class="flex items-center gap-6">
-    <div
-      id="health-score-circle"
-      class="w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold text-white bg-gray-400"
+  <div
+    id="ai-chat"
+    class="h-64 overflow-y-auto border rounded-lg p-3 text-sm bg-gray-50 mb-3"
+  ></div>
+
+  <div class="flex gap-2">
+    <input
+      id="ai-input"
+      type="text"
+      placeholder="How can I save more this month?"
+      class="flex-1 p-2 border rounded-lg"
+    />
+    <button
+      onclick="askGroqAI()"
+      class="bg-[#377f8e] text-white px-4 rounded-lg hover:bg-[#2c6674]"
     >
-      0
-    </div>
-
-    <div>
-      <p id="health-status" class="text-lg font-semibold text-gray-600">
-        Calculating...
-      </p>
-      <p id="health-tip" class="text-sm text-gray-500 mt-1">
-        Add transactions to see your financial health
-      </p>
-    </div>
+      Ask
+    </button>
   </div>
 </div>
 
@@ -738,7 +768,7 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
     </style>
-    <script src="/dashboard.js"></script>
+    <script src="/js/dashboard.js"></script>
 
 </body>
 </html>
