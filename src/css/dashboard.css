@@ -66,12 +66,22 @@ font-size: 1rem;
 .logout-btn {
 background: transparent;
 border: none;
-color: white;
+color: #e3f2fd;
 font-size: 1.2rem;
 cursor: pointer;
+transition: color 0.2s ease;
 }
+
 .logout-btn:hover {
-color: #ccc;
+  color: #ffffff;
+}
+
+.dark .logout-btn {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dark .logout-btn:hover {
+  color: #ffffff;
 }
 .content {
 padding: 2rem;

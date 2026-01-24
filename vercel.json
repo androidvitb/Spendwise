@@ -1,8 +1,37 @@
 {
+  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/dashboard",
-      "destination": "/pages/dashboard.html"
+      "destination": "/dashboard/index.html"
+    },
+    {
+      "source": "/dashboard/",
+      "destination": "/dashboard/index.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/login/index.html"
+    },
+    {
+      "source": "/login/",
+      "destination": "/login/index.html"
+    },
+    {
+      "source": "/signup",
+      "destination": "/signup/index.html"
+    },
+    {
+      "source": "/signup/",
+      "destination": "/signup/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/about/",
+      "destination": "/about.html"
     },
     {
       "source": "/(.*)",

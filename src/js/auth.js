@@ -23,7 +23,7 @@ const showError = (message) => {
    Redirect
 ======================= */
 const redirectDashboard = () => {
-  window.location.href = "/pages/dashboard.html";
+  window.location.href = "/dashboard";
 };
 
 /* =======================
