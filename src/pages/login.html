@@ -1,79 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login • SpendWise</title>
-
-  <link rel="icon" href="/favicon.png" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-</head>
-
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-
-  <div class="bg-white w-full max-w-sm p-8 rounded-2xl shadow-xl">
-
-    <!-- Header -->
-    <div class="text-center mb-6">
-      <img src="/Images/SpendWise2.png" class="w-20 mx-auto mb-2" alt="SpendWise Logo">
-      <h1 class="text-2xl font-semibold text-gray-800">Welcome Back</h1>
-      <p class="text-sm text-gray-500">Login to continue</p>
-    </div>
-
-    <!-- Error -->
-    <p id="errorMessage" class="hidden text-red-500 text-sm mb-3 text-center"></p>
-
-    <!-- Form -->
-    <form id="loginForm" class="space-y-5">
-
-      <div>
-        <label class="text-sm text-gray-600">Email</label>
-        <input id="email" type="email" required
-          class="w-full border-b py-2 focus:outline-none focus:border-blue-500" />
-      </div>
-
-      <div class="relative">
-        <label class="text-sm text-gray-600">Password</label>
-        <input id="password" type="password" required
-          class="w-full border-b py-2 pr-10 focus:outline-none focus:border-blue-500" />
-        <span class="material-icons absolute right-2 top-8 cursor-pointer text-gray-500"
-          onclick="togglePassword('password', this)">visibility</span>
-      </div>
-
-      <button id="loginBtn"
-        class="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-sky-400 to-purple-500 hover:scale-105 transition">
-        Login
-      </button>
-
-      <button type="button" id="googleLogin"
-        class="w-full flex items-center justify-center gap-2 py-3 rounded-full border hover:border-blue-400 transition">
-        <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5">
-        Continue with Google
-      </button>
-
-    </form>
-
-    <p class="text-center text-sm text-gray-600 mt-4">
-      Don’t have an account?
-      <a href="/auth/signup.html" class="text-blue-600 font-semibold">Sign up</a>
-    </p>
-
-  </div>
-
-  <script type="module" src="/js/auth.js"></script>
-  <script>
-    function togglePassword(id, icon) {
-      const input = document.getElementById(id);
-      input.type = input.type === "password" ? "text" : "password";
-      icon.textContent = input.type === "password" ? "visibility" : "visibility_off";
-    }
-  </script>
-
-</body>
-</html>
-=======
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -161,7 +87,7 @@
         <div class="flex justify-center mb-4">
             <a href="/" class="transition-transform hover:scale-140 duration-300">
               <img
-                src="/Images/SpendWise2.png"
+                src="/images/SpendWise2.png"
                 class="h-16 w-auto"
                 alt="Spendwise Logo"
               />
@@ -236,7 +162,7 @@
       <p class="text-center text-gray-600 text-sm mt-8">
         Don't have an account?
         <a
-          href="/auth/signup.html"
+          href="/pages/signup.html"
           class="text-[#377f8e] font-bold hover:text-[#2c6571] hover:underline transition-all"
           >Create account</a
         >
@@ -255,4 +181,3 @@
     </script>
   </body>
 </html>
->>>>>>> 2dc3773b1ef04d5de41058c06cd87f683679a26a

@@ -5,17 +5,18 @@ import {
   signInWithEmailAndPassword, 
   signOut,
   signInWithPopup,
-  GoogleAuthProvider
+  GoogleAuthProvider,
+  updateProfile
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB_-m5pf_FRV2XvGx51JTOgZmQy1LTNQLE",
-  authDomain: "spendwise-a3dd4.firebaseapp.com",
-  projectId: "spendwise-a3dd4",
-  storageBucket: "spendwise-a3dd4.firebasestorage.app",
-  messagingSenderId: "585575423826",
-  appId: "1:585575423826:web:a5059af514d81a6032648b",
-  measurementId: "G-WH2SQGNM1W"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
@@ -28,5 +29,6 @@ export {
   signInWithEmailAndPassword,
   signOut,
   signInWithPopup,
-  googleProvider 
+  googleProvider,
+  updateProfile
 };

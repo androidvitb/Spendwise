@@ -79,37 +79,35 @@ Spendwise/
 │   │   ├── SpendWise.png
 │   │   └── SpendWise2.png
 │   ├── Firebase_Setup.md
-│   ├── about.html
-│   ├── dashboard.css
-│   ├── dashboard.html
-│   ├── dashboard.js
-│   ├── index.html
-│   ├── input.css
-│   ├── script.js
-
-├── .github/ISSUE_TEMPLATE/
-│   ├── bug.report.md/
-│   ├── feature_request.md/
-│   ├── general_issue.md/
+│   └── about.html
 
 ├── src/
-│   ├── auth/
+│   ├── css/
+│   │   ├── input.css
+│   │   └── dashboard.css
+│   ├── images/
+│   │   ├── main-bg.png
+│   │   ├── SpendWise.png
+│   │   └── SpendWise2.png
+│   ├── js/
+│   │   ├── main.js
+│   │   ├── auth.js
+│   │   ├── firebase.js
+│   │   └── dashboard.js
+│   ├── pages/
 │   │   ├── login.html
 │   │   ├── signup.html
-│   ├── js/
-│   │   ├── auth.js
-│   │   ├── authHandlers.js
-│   │   ├── dashboard.js
-│   │   ├── firebase.js
-│   │   ├── protectedRoute.js
-│   │   ├── script.js
+│   │   └── dashboard.html
+│   └── index.html
+
+├── .env.example
 ├── .gitignore
 ├── README.md
 ├── package.json
 ├── package-lock.json
 ├── postcss.config.js
 ├── tailwind.config.js
-├── index.html
+├── vite.config.js
 ```
 
 ## 🧑‍💻 Contributors
