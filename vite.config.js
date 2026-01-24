@@ -7,6 +7,44 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   root: 'src',
   publicDir: '../public',
+  appType: 'mpa',
+  plugins: [
+    {
+      name: 'mpa-route-rewrites',
+      configureServer(server) {
+        server.middlewares.use((req, _res, next) => {
+          const url = req.url || '';
+          try {
+            const { pathname } = new URL(url, 'http://localhost');
+            if (pathname === '/dashboard' || pathname === '/dashboard/') {
+              req.url = '/dashboard/index.html';
+            } else if (pathname === '/login' || pathname === '/login/') {
+              req.url = '/login/index.html';
+            } else if (pathname === '/signup' || pathname === '/signup/') {
+              req.url = '/signup/index.html';
+            }
+          } catch {}
+          next();
+        });
+      },
+      configurePreviewServer(server) {
+        server.middlewares.use((req, _res, next) => {
+          const url = req.url || '';
+          try {
+            const { pathname } = new URL(url, 'http://localhost');
+            if (pathname === '/dashboard' || pathname === '/dashboard/') {
+              req.url = '/dashboard/index.html';
+            } else if (pathname === '/login' || pathname === '/login/') {
+              req.url = '/login/index.html';
+            } else if (pathname === '/signup' || pathname === '/signup/') {
+              req.url = '/signup/index.html';
+            }
+          } catch {}
+          next();
+        });
+      }
+    }
+  ],
   build: {
     outDir: '../dist',
     emptyOutDir: true,

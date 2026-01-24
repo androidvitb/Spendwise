@@ -1,5 +1,31 @@
+import { auth, onAuthStateChanged, signOut } from './firebase.js';
+
 // Add base URL configuration
 const BASE_URL = window.location.origin;
+
+const loginLink = document.getElementById('loginLink');
+const signupLink = document.getElementById('signupLink');
+const dashboardLink = document.getElementById('dashboardLink');
+const mobileDashboardLink = document.getElementById('mobileDashboardLink');
+const logoutButton = document.getElementById('logout');
+
+onAuthStateChanged(auth, (user) => {
+    const isAuthenticated = Boolean(user);
+    loginLink?.classList.toggle('hidden', isAuthenticated);
+    signupLink?.classList.toggle('hidden', isAuthenticated);
+    dashboardLink?.classList.toggle('hidden', !isAuthenticated);
+    mobileDashboardLink?.classList.toggle('hidden', !isAuthenticated);
+    logoutButton?.classList.toggle('hidden', !isAuthenticated);
+});
+
+logoutButton?.addEventListener('click', async () => {
+    try {
+        await signOut(auth);
+        window.location.href = '/login';
+    } catch (error) {
+        console.error('Logout error:', error);
+    }
+});
 
 // Mobile menu toggle
 const mobileMenuButton = document.getElementById('mobile-menu-button');

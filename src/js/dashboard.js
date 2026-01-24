@@ -1,11 +1,22 @@
-// Get the user id from sessionStorage (or however you pass data)
-const userId = sessionStorage.getItem('userId') || 'Unknown User';
-document.getElementById('user-id-display').textContent = 'User: ' + userId;
+import { auth, onAuthStateChanged, signOut } from './firebase.js';
+
+onAuthStateChanged(auth, (user) => {
+    const userInfoEl = document.getElementById('user-id-display');
+    if (!user) {
+        if (userInfoEl) userInfoEl.textContent = 'User: Not signed in';
+        window.location.href = '/login';
+        return;
+    }
+    const name = user.displayName || user.email || 'User';
+    if (userInfoEl) userInfoEl.textContent = 'User: ' + name;
+});
 
 // Logout functionality: clear session and redirect to login
-document.getElementById('logout-btn').addEventListener('click', () => {
-    sessionStorage.removeItem('userId');
-    window.location.href = '/auth/login.html';
+document.getElementById('logout-btn')?.addEventListener('click', async () => {
+    try {
+        await signOut(auth);
+    } catch (_) {}
+    window.location.href = '/login';
 });
 // Global variables and utilities
 window.categories = {
@@ -178,23 +189,6 @@ function showNotification(message, type = 'success') {
 notificationSystem.show(message, type);
 }
 
-// Update document ready handler to initialize notification system
-document.addEventListener('DOMContentLoaded', () => {
-notificationSystem.init();
-initializeTabSystem();
-initializeSidebar();
-initializeCurrencySystem();
-initializeTransactionSystem();
-setupEventListeners();
-updateTransactionsList();
-updateBalances();
-initializeRewardsSystem();
-makeTableResponsive();
-window.addEventListener('resize', debounce(updateChartDimensions, 250));
-updateChartDimensions();
-initializeMobileOptimizations();
-});
-
 // Transaction Management
 function createTransaction(formData) {
 const category = window.categories[formData.type].find(c => c.name === formData.category);
@@ -287,6 +281,7 @@ return `
 
     // Initialize everything when DOM is loaded
     document.addEventListener('DOMContentLoaded', () => {
+    notificationSystem.init();
     initializeTabSystem();
     initializeSidebar();
     initializeCurrencySystem();
@@ -307,8 +302,6 @@ return `
     window.handleReceiptUpload = handleReceiptUpload;
     window.viewReceipt = viewReceipt;
     window.deleteTransaction = deleteTransaction;
-    window.transactions = transactions;
-    window.categories = categories;
     window.currencySymbols = currencySymbols;
     window.initializeExpensesTab = initializeExpensesTab;
     window.initializeInsightsTab = initializeInsightsTab;
@@ -1045,39 +1038,6 @@ return window.transactions.filter(t => {
 });
 }
 
-// Receipt Processing Functions
-async function processReceipt(file) {
-const preview = document.getElementById('receipt-preview');
-const image = document.getElementById('receipt-image');
-const status = document.getElementById('scanning-status');
-
-try {
- preview.classList.remove('hidden');
- image.src = URL.createObjectURL(file);
- status.textContent = 'Scanning receipt...';
-
- const result = await Tesseract.recognize(file, 'eng', {
-     logger: m => {
-         if (m.status === 'recognizing text') {
-             status.textContent = `Scanning: ${Math.round(m.progress * 100)}%`;
-         }
-     }
- });
-
- const extractedData = parseReceiptText(result.data.text);
- if (extractedData) {
-     status.textContent = 'Receipt scanned successfully!';
-     displayExtractedData(extractedData);
-     populateFormWithData(extractedData);
- } else {
-     status.textContent = 'Could not extract data. Please fill in manually.';
- }
-} catch (error) {
- status.textContent = 'Error scanning receipt. Please try again.';
- console.error('Receipt scanning error:', error);
-}
-}
-
 // Insights Functions
 function updateTrendsChart() {
 const ctx = document.getElementById('trends-chart')?.getContext('2d');
@@ -1305,6 +1265,18 @@ return {
      .filter(t => t.type === 'expense')
      .reduce((sum, t) => sum + t.amount, 0)
 };
+}
+
+function getCurrentMonthTransactions() {
+const today = new Date();
+const currentMonth = today.getMonth();
+const currentYear = today.getFullYear();
+
+return window.transactions.filter(t => {
+ const date = new Date(t.date);
+ return date.getMonth() === currentMonth && 
+        date.getFullYear() === currentYear;
+});
 }
 
 // Add event listener for receipt upload
@@ -1799,317 +1771,6 @@ if (!formData.description || !formData.amount || !formData.category || !formData
 checkBudgetLimits(formData);
 originalHandleTransactionSubmit.call(this, e);
 };
-
-// Fix game system
-function initializeGameTab() {
-const game = {
- isActive: false,
- budget: 1000,
- remaining: 1000,
- score: 0,
- timeRemaining: 1800,
- timer: null,
- currentChallenge: null,
- history: [],
- challenges: [
-     {
-         description: "Unexpected car repair needed. How much will you spend?",
-         minAmount: 200,
-         maxAmount: 800,
-         idealPercentage: 0.3
-     },
-     {
-         description: "Monthly grocery shopping. How much will you allocate?",
-         minAmount: 100,
-         maxAmount: 500,
-         idealPercentage: 0.2
-     },
-     {
-         description: "Emergency medical expense. How much do you set aside?",
-         minAmount: 150,
-         maxAmount: 600,
-         idealPercentage: 0.25
-     },
-     {
-         description: "Phone bill and internet services due. How much to pay?",
-         minAmount: 50,
-         maxAmount: 200,
-         idealPercentage: 0.08
-     },
-     {
-         description: "Planning a weekend trip. What's your budget?",
-         minAmount: 100,
-         maxAmount: 400,
-         idealPercentage: 0.15
-     },
-     {
-         description: "Home maintenance repairs needed. How much to spend?",
-         minAmount: 150,
-         maxAmount: 700,
-         idealPercentage: 0.28
-     },
-     {
-         description: "New work clothes needed. Set your shopping budget:",
-         minAmount: 80,
-         maxAmount: 300,
-         idealPercentage: 0.12
-     },
-     {
-         description: "Family member's wedding gift. How much to give?",
-         minAmount: 50,
-         maxAmount: 250,
-         idealPercentage: 0.1
-     },
-     {
-         description: "Annual insurance premium due. How much to allocate?",
-         minAmount: 200,
-         maxAmount: 800,
-         idealPercentage: 0.3
-     },
-     {
-         description: "Monthly entertainment budget. How much to set aside?",
-         minAmount: 40,
-         maxAmount: 200,
-         idealPercentage: 0.08
-     }
- ]
-};
-
-setupGameEventListeners(game);
-return game;
-}
-
-function startGame(game) {
-console.log('Starting game with:', game);
-if (!game) {
- console.error('Game object is undefined');
- return;
-}
-
-// Reset game state
-game.isActive = true;
-game.budget = 1000;
-game.remaining = 1000;
-game.score = 0;
-game.timeRemaining = 1800;
-game.history = [];
-
-// Update UI elements
-const modal = document.getElementById('game-over-modal');
-const actions = document.getElementById('challenge-actions');
-const timerDisplay = document.getElementById('game-timer');
-
-if (modal) modal.classList.add('hidden');
-if (actions) actions.classList.remove('hidden');
-if (timerDisplay) timerDisplay.textContent = '30:00';
-
-updateGameStatus(game);
-generateNewChallenge(game);
-startGameTimer(game);
-
-const symbol = getCurrencySymbol();
-showNotification(`Game started! Budget: ${symbol}${game.budget.toFixed(2)}`, 'success');
-}
-
-// Make sure to expose required functions
-window.updateTopCategories = updateTopCategories;
-window.updateRecommendations = updateRecommendations;
-window.startGame = startGame;
-window.handleGameDecision = handleGameDecision;
-window.generateNewChallenge = generateNewChallenge;
-window.initializeGameTab = initializeGameTab;
-
-// ...rest of existing code...
-
-// Add missing receipt parsing function
-function parseReceiptText(text) {
-const data = {
- amount: null,
- date: null,
- description: ''
-};
-
-// Look for amount (matches patterns like $123.45 or 123.45)
-const amountMatch = text.match(/(?:\$\s*)?(\d+\.\d{2})/);
-if (amountMatch) {
- data.amount = parseFloat(amountMatch[1]);
-}
-
-// Look for date (matches common date formats)
-const dateMatch = text.match(/\d{1,2}[-/]\d{1,2}[-/]\d{2,4}/);
-if (dateMatch) {
- const date = new Date(dateMatch[0]);
- if (!isNaN(date)) {
-     data.date = date.toISOString().split('T')[0];
- }
-}
-
-// Get first line as merchant/description
-const lines = text.split('\n').map(line => line.trim()).filter(Boolean);
-if (lines.length > 0) {
- data.description = lines[0].substring(0, 50);
-}
-
-return Object.values(data).some(value => value) ? data : null;
-}
-
-// Add missing getCurrentMonthTransactions function
-function getCurrentMonthTransactions() {
-const today = new Date();
-const currentMonth = today.getMonth();
-const currentYear = today.getFullYear();
-
-return window.transactions.filter(t => {
- const date = new Date(t.date);
- return date.getMonth() === currentMonth && 
-        date.getFullYear() === currentYear;
-});
-}
-
-// Fix game system initialization
-function setupGameEventListeners(game) {
-const startButton = document.getElementById('start-game');
-const submitButton = document.getElementById('submit-decision');
-const playAgainButton = document.getElementById('play-again');
-
-// Store game instance in window to maintain state
-window.currentGame = game;
-
-startButton?.addEventListener('click', () => {
- startGame(window.currentGame);
-});
-
-submitButton?.addEventListener('click', () => {
- if (!window.currentGame?.isActive) {
-     showNotification('Please start a new game first', 'error');
-     return;
- }
- handleGameDecision(window.currentGame);
-});
-
-playAgainButton?.addEventListener('click', () => {
- document.getElementById('game-over-modal').classList.add('hidden');
- startGame(window.currentGame);
-});
-}
-
-// Fix game start function
-function startGame(game) {
-console.log('Starting game with:', game);
-if (!game) {
- console.error('Game object is undefined');
- return;
-}
-
-// Reset game state
-game.isActive = true;
-game.budget = 1000;
-game.remaining = 1000;
-game.score = 0;
-game.timeRemaining = 1800;
-game.history = [];
-
-// Update UI elements
-const modal = document.getElementById('game-over-modal');
-const actions = document.getElementById('challenge-actions');
-const timerDisplay = document.getElementById('game-timer');
-
-if (modal) modal.classList.add('hidden');
-if (actions) actions.classList.remove('hidden');
-if (timerDisplay) timerDisplay.textContent = '30:00';
-
-updateGameStatus(game);
-generateNewChallenge(game);
-startGameTimer(game);
-
-const symbol = getCurrencySymbol();
-showNotification(`Game started! Budget: ${symbol}${game.budget.toFixed(2)}`, 'success');
-}
-
-// Add this to fix game initialization
-document.addEventListener('DOMContentLoaded', () => {
-// ...existing initialization code...
-
-// Initialize game with proper scope
-const game = {
- isActive: false,
- budget: 1000,
- remaining: 1000,
- score: 0,
- timeRemaining: 1800,
- timer: null,
- currentChallenge: null,
- history: [],
- challenges: [
-     {
-         description: "Unexpected car repair needed. How much will you spend?",
-         minAmount: 200,
-         maxAmount: 800,
-         idealPercentage: 0.3
-     },
-     {
-         description: "Monthly grocery shopping. How much will you allocate?",
-         minAmount: 100,
-         maxAmount: 500,
-         idealPercentage: 0.2
-     },
-     {
-         description: "Emergency medical expense. How much do you set aside?",
-         minAmount: 150,
-         maxAmount: 600,
-         idealPercentage: 0.25
-     },
-     {
-         description: "Phone bill and internet services due. How much to pay?",
-         minAmount: 50,
-         maxAmount: 200,
-         idealPercentage: 0.08
-     },
-     {
-         description: "Planning a weekend trip. What's your budget?",
-         minAmount: 100,
-         maxAmount: 400,
-         idealPercentage: 0.15
-     },
-     {
-         description: "Home maintenance repairs needed. How much to spend?",
-         minAmount: 150,
-         maxAmount: 700,
-         idealPercentage: 0.28
-     },
-     {
-         description: "New work clothes needed. Set your shopping budget:",
-         minAmount: 80,
-         maxAmount: 300,
-         idealPercentage: 0.12
-     },
-     {
-         description: "Family member's wedding gift. How much to give?",
-         minAmount: 50,
-         maxAmount: 250,
-         idealPercentage: 0.1
-     },
-     {
-         description: "Annual insurance premium due. How much to allocate?",
-         minAmount: 200,
-         maxAmount: 800,
-         idealPercentage: 0.3
-     },
-     {
-         description: "Monthly entertainment budget. How much to set aside?",
-         minAmount: 40,
-         maxAmount: 200,
-         idealPercentage: 0.08
-     }
- ]
-};
-
-// Setup game with proper scope
-window.currentGame = game;
-setupGameEventListeners(game);
-});
-
-
 let interestGame = {
   principal: 0,
   rate: 0,
@@ -2527,14 +2188,6 @@ document.addEventListener('touchstart', (e) => {
  }
 }, { passive: true });
 }
-
-// Add to the initialization
-document.addEventListener('DOMContentLoaded', () => {
-/* ...existing initialization code... */
-initializeMobileOptimizations();
-makeTableResponsive();
-updateChartDimensions();
-});
 
 /* ...rest of existing code... */
 
