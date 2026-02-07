@@ -1,5 +1,7 @@
 import { auth, onAuthStateChanged, signOut } from './firebase.js';
+import { ForecastingService } from './ForecastingService.js';
 
+// PASTE THIS BACK AT THE TOP
 onAuthStateChanged(auth, (user) => {
     const userInfoEl = document.getElementById('user-id-display');
     if (!user) {
@@ -295,6 +297,7 @@ return `
     window.addEventListener('resize', debounce(updateChartDimensions, 250));
     updateChartDimensions();
     initializeMobileOptimizations();
+    updateForecastingWidget();
     });
 
     // Make functions globally available
@@ -643,6 +646,66 @@ if (activeTab) {
 }
 }
 
+function updateForecastingWidget() {
+    // 1. Instantiate the Service
+    const forecaster = new ForecastingService(window.transactions, window.budgets);
+    const forecast = forecaster.getMonthlyForecast();
+    
+    // 2. Get UI Elements
+    const badgeEl = document.getElementById('forecast-badge');
+    const currentEl = document.getElementById('forecast-current');
+    const predictedEl = document.getElementById('forecast-predicted');
+    const messageEl = document.getElementById('forecast-message');
+    const barActual = document.getElementById('bar-actual');
+    const barProjected = document.getElementById('bar-projected');
+    const percentageEl = document.getElementById('forecast-percentage');
+    const symbol = getCurrencySymbol();
+
+    // 3. Handle Insufficient Data
+    if (forecast.status === 'INSUFFICIENT_DATA') {
+        messageEl.textContent = "We need at least 3 days of expenses this month to generate a prediction.";
+        return;
+    }
+
+    // 4. Update Numbers
+    currentEl.textContent = `${symbol}${forecast.currentSpend.toFixed(2)}`;
+    predictedEl.textContent = `${symbol}${forecast.predictedTotal.toFixed(2)}`;
+    
+    // 5. Update Badge
+    badgeEl.textContent = forecast.health.label.toUpperCase();
+    badgeEl.className = `px-3 py-1 rounded-full text-xs font-bold text-white bg-${forecast.health.color}-500`;
+    
+    // 6. Calculate Progress Bars
+    // How much of the budget is ALREADY spent?
+    const actualPercent = Math.min((forecast.currentSpend / forecast.totalBudget) * 100, 100);
+    
+    // How much MORE do we predict to spend?
+    // Predicted Total - Current Spend = Remaining Predicted Spend
+    const remainingPredicted = Math.max(0, forecast.predictedTotal - forecast.currentSpend);
+    const projectedPercent = Math.min((remainingPredicted / forecast.totalBudget) * 100, 100 - actualPercent);
+
+    barActual.style.width = `${actualPercent}%`;
+    barProjected.style.width = `${projectedPercent}%`; // This stacks next to actual because of flex
+    percentageEl.textContent = `${Math.round((forecast.predictedTotal / forecast.totalBudget) * 100)}% of Budget`;
+
+    // 7. Dynamic Messaging
+    if (forecast.health.status === 'DANGER') {
+        const overrun = forecast.predictedTotal - forecast.totalBudget;
+        messageEl.textContent = `⚠️ Careful! At this rate, you will exceed your budget by ${symbol}${overrun.toFixed(0)}. Try reducing daily spend.`;
+        messageEl.className = "text-sm mt-2 text-red-600 italic border-l-4 border-red-500 pl-3";
+        predictedEl.className = "text-2xl font-bold text-red-600";
+    } else if (forecast.health.status === 'SAFE') {
+        const savings = forecast.totalBudget - forecast.predictedTotal;
+        messageEl.textContent = `🎉 Great job! You are on track to save ${symbol}${savings.toFixed(0)} this month!`;
+        messageEl.className = "text-sm mt-2 text-green-600 italic border-l-4 border-green-500 pl-3";
+        predictedEl.className = "text-2xl font-bold text-green-600";
+    } else {
+        messageEl.textContent = `You are close to your limit. Keep an eye on your expenses.`;
+        messageEl.className = "text-sm mt-2 text-orange-600 italic border-l-4 border-orange-500 pl-3";
+        predictedEl.className = "text-2xl font-bold text-orange-600";
+    }
+}
+
 function initializeCurrencySystem() {
 const currencySelect = document.getElementById('currency-select');
 if (currencySelect) {
@@ -725,7 +788,7 @@ e.target.reset();
 updateTransactionsList();
 updateBalances();
 updateExpenseChart();
-
+updateForecastingWidget();
 showNotification('Transaction added successfully');
 
 // Add responsive form reset
@@ -776,6 +839,7 @@ if (category && amount) {
     localStorage.setItem('budgets', JSON.stringify(window.budgets));
     document.getElementById('budget-modal').classList.add('hidden');
     updateBudgetDisplay();
+    updateForecastingWidget();
     showNotification('Budget updated successfully');
 }
 }
